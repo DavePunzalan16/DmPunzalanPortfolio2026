@@ -37,7 +37,7 @@ export const Navbar = () => {
     return (
         <>
             <nav className={cn(
-                "fixed top-0 left-0 w-full z-999 transition-all duration-300",
+                "fixed top-0 left-0 w-full z-50 transition-all duration-300",
                 scrolled ? "py-3 bg-background/90 backdrop-blur-md shadow-sm" : "py-5"
             )}>
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
@@ -46,6 +46,7 @@ export const Navbar = () => {
                         <span className="ml-1 text-primary">Portfolio</span>
                     </a>
 
+                    {/* Desktop Nav */}
                     <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
                         {navItems.map((item, key) => (
                             <a
@@ -58,9 +59,11 @@ export const Navbar = () => {
                         ))}
                     </div>
 
+                    {/* RIGHT SIDE: Hamburger only (ThemeToggle is separate fixed button) */}
                     <button
                         onClick={() => setMenuOpen((prev) => !prev)}
-                        className="lg:hidden p-2 text-foreground hover:text-primary transition-colors relative z-9999"
+                        className="lg:hidden p-2 text-foreground hover:text-primary transition-colors"
+                        style={{ zIndex: 9999 }}
                         aria-label={menuOpen ? "Close menu" : "Open menu"}
                     >
                         {menuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -68,15 +71,17 @@ export const Navbar = () => {
                 </div>
             </nav>
 
+            {/* Mobile Menu Overlay */}
             <div className={cn(
-                "fixed inset-0 z-998 flex flex-col items-center justify-center lg:hidden",
+                "fixed inset-0 z-40 flex flex-col items-center justify-center lg:hidden",
                 "bg-background/95 backdrop-blur-md",
                 "transition-opacity duration-300",
                 menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             )}>
                 <button
                     onClick={() => setMenuOpen(false)}
-                    className="absolute top-5 right-4 p-2 text-foreground hover:text-primary transition-colors z-9999"
+                    className="absolute top-5 right-4 p-2 text-foreground hover:text-primary transition-colors"
+                    style={{ zIndex: 9999 }}
                     aria-label="Close menu"
                 >
                     <X size={22} />

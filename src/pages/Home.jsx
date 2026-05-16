@@ -21,7 +21,7 @@ export const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
       <ThemeToggle />
       <StarBackground />
       <Navbar />
@@ -39,7 +39,7 @@ export const Home = () => {
 
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`fixed bottom-8 right-8 z-999 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-110 hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-110 hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all duration-300 ${
           showTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
         aria-label="Scroll to top"
