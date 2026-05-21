@@ -6,6 +6,7 @@ import { AboutSection } from "../components/AboutSection";
 import { SkillsSection } from "../components/SkillsSection";
 import { VolunteerSection } from "../components/VolunteerSection";
 import { ProjectsSection } from "../components/ProjectsSection";
+import { CertificatesSection } from "../components/CertificatesSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { ArrowUp } from "lucide-react";
@@ -32,6 +33,7 @@ export const Home = () => {
         <SkillsSection />
         <VolunteerSection />
         <ProjectsSection />
+        <CertificatesSection />
         <ContactSection />
       </main>
 
