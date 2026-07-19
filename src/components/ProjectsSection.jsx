@@ -11,7 +11,8 @@ const projects = [
         tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
         demoUrl: "https://davepunzalan16.github.io/2025Portfolio/",
         githubUrl: "https://github.com/DavePunzalan16/2025Portfolio",
-        badge: null,
+        badge: "Live",
+        comingSoon: false,
     },
     {
         id: 2,
@@ -21,7 +22,8 @@ const projects = [
         tags: ["HTML", "CSS", "Vanilla JS", "Github Actions"],
         demoUrl: "https://acss-space-invader-game.vercel.app/",
         githubUrl: "https://github.com/DavePunzalan16/ACSS-SPACE-INVADER-GAME",
-        badge: null,
+        badge: "Game",
+        comingSoon: false,
     },
     {
         id: 3,
@@ -31,7 +33,8 @@ const projects = [
         tags: ["ReactJS", "Tailwind CSS", "Typescript", "Netlify"],
         demoUrl: "https://legendary-sable-b03450.netlify.app/",
         githubUrl: "https://github.com/DavePunzalan16/acss-nfc-websiteReact",
-        badge: null,
+        badge: "Live",
+        comingSoon: false,
     },
     {
         id: 4,
@@ -41,7 +44,8 @@ const projects = [
         tags: ["HTML", "CSS", "Vanilla JS", "Github Actions"],
         demoUrl: "https://davepunzalan16.github.io/YFA-MATCHING-PET-GAME-2025-PROJECT/game.html",
         githubUrl: "https://github.com/DavePunzalan16/YFA-MATCHING-PET-GAME-2025-PROJECT",
-        badge: null,
+        badge: "Game",
+        comingSoon: false,
     },
     {
         id: 5,
@@ -51,7 +55,8 @@ const projects = [
         tags: ["ReactJS", "Supabase", "Typescript", "Netlify"],
         demoUrl: "https://funny-clafoutis-8c4f75.netlify.app/",
         githubUrl: "https://github.com/DavePunzalan16/VitalWarriosPR",
-        badge: null,
+        badge: "Live",
+        comingSoon: false,
     },
     {
         id: 6,
@@ -61,7 +66,8 @@ const projects = [
         tags: ["HTML", "CSS", "JavaScript", "Vercel"],
         demoUrl: "https://acssofficialwebsite2526.vercel.app/",
         githubUrl: "https://github.com/DavePunzalan16/ACSSWEBSITE2526",
-        badge: null,
+        badge: "Live",
+        comingSoon: false,
     },
     {
         id: 7,
@@ -69,9 +75,10 @@ const projects = [
         description: "An AI-powered SEO analysis tool built with Firecrawl and Gemini AI that can rank and audit any website, uncovering hidden issues and optimizing performance to outrank the competition.",
         image: "assets/PROJECT7.jpg",
         tags: ["Firecrawl", "Gemini AI", "Vercel", "JavaScript"],
-        demoUrl: "https://website-tracker-two.vercel.app/",
+        demoUrl: "#",
         githubUrl: "https://github.com/DavePunzalan16/WebsiteTracker",
         badge: "AI",
+        comingSoon: true,
     },
     {
         id: 8,
@@ -82,6 +89,7 @@ const projects = [
         demoUrl: "https://github.com/DavePunzalan16/DMPStockMarket",
         githubUrl: "https://github.com/DavePunzalan16/DMPStockMarket",
         badge: "Live",
+        comingSoon: false,
     },
     {
         id: 9,
@@ -89,9 +97,10 @@ const projects = [
         description: "A full-featured Java-powered learning management system for front-end lovers — featuring 50+ courses, coding challenges, video lessons, quizzes, XP system, level-ups, and badge collection.",
         image: "assets/PROJECT9.jpg",
         tags: ["Java", "Full Stack", "LMS", "ReactJS"],
-        demoUrl: "https://github.com/DavePunzalan16/DMPFullStackAcademyFrontendLearning",
+        demoUrl: "#",
         githubUrl: "https://github.com/DavePunzalan16/DMPFullStackAcademyFrontendLearning",
         badge: "Full Stack",
+        comingSoon: true,
     },
     {
         id: 10,
@@ -99,9 +108,10 @@ const projects = [
         description: "A full-stack social media platform for the UE Caloocan Manga, Anime & Game Enthusiasts Guild — featuring 60+ arcade games, musical SFX integration, 2FA security, dynamic theme engine, events, feed, gallery, and officer management.",
         image: "assets/PROJECT10.jpg",
         tags: ["Full Stack", "Social Media", "2FA", "Game Engine"],
-        demoUrl: "#",
-        githubUrl: "#",
+        demoUrl: "https://officialmagewebsite.vercel.app/",
+        githubUrl: "https://github.com/DavePunzalan16/magewebsite20262027",
         badge: "Featured",
+        comingSoon: false,
     },
 ];
 
@@ -130,11 +140,12 @@ const tagColors = [
     "bg-pink-500/20 text-pink-400 border-pink-500/30 hover:bg-pink-500/40",
 ];
 
-const badgeColors = {
-    "AI":         "bg-blue-500/20 text-blue-300 border-blue-400/40",
-    "Live":       "bg-green-500/20 text-green-300 border-green-400/40",
-    "Full Stack": "bg-orange-500/20 text-orange-300 border-orange-400/40",
-    "Featured":   "bg-primary/20 text-primary border-primary/40",
+const badgeStyles = {
+    "Live":       { style: "bg-green-500/20 text-green-300 border-green-400/40",   icon: "🟢" },
+    "Game":       { style: "bg-yellow-500/20 text-yellow-300 border-yellow-400/40", icon: "🎮" },
+    "AI":         { style: "bg-blue-500/20 text-blue-300 border-blue-400/40",       icon: "🤖" },
+    "Full Stack": { style: "bg-orange-500/20 text-orange-300 border-orange-400/40", icon: "⚡" },
+    "Featured":   { style: "bg-primary/20 text-primary border-primary/40",          icon: "✦" },
 };
 
 export const ProjectsSection = () => {
@@ -177,140 +188,152 @@ export const ProjectsSection = () => {
 
                 {/* Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    {displayed.map((project, key) => (
-                        <div
-                            key={key}
-                            onMouseEnter={() => setHovered(key)}
-                            onMouseLeave={() => setHovered(null)}
-                            className={cn(
-                                "group relative bg-card rounded-2xl overflow-hidden flex flex-col",
-                                "border border-border/50 transition-all duration-500",
-                                hovered === key
-                                    ? "shadow-[0_0_30px_rgba(139,92,246,0.2)] border-primary/40 -translate-y-1"
-                                    : "shadow-md hover:shadow-lg"
-                            )}
-                        >
-                            {/* Badge */}
-                            {project.badge && (
-                                <div className="absolute top-3 left-3 z-20">
-                                    <span className={cn(
-                                        "text-xs font-bold px-2.5 py-1 rounded-full border backdrop-blur-sm",
-                                        badgeColors[project.badge]
-                                    )}>
-                                        ✦ {project.badge}
-                                    </span>
-                                </div>
-                            )}
-
-                            {/* Image */}
-                            <div className="relative h-48 sm:h-44 md:h-48 overflow-hidden bg-secondary/30">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    onError={(e) => {
-                                        e.target.style.display = "none";
-                                        e.target.nextSibling.style.display = "flex";
-                                    }}
-                                />
-                                <div style={{ display: "none" }} className="w-full h-full">
-                                    <ImageFallback title={project.title} />
-                                </div>
-
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                {/* Hover buttons */}
-                                <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                                    {project.demoUrl !== "#" && (
-                                        <a
-                                            href={project.demoUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg hover:scale-105 transition-transform duration-200"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            <ExternalLink size={14} /> Live Demo
-                                        </a>
-                                    )}
-                                    {project.githubUrl !== "#" && (
-                                        <a
-                                            href={project.githubUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/90 text-foreground text-sm font-medium border border-border shadow-lg hover:scale-105 transition-transform duration-200"
-                                            onClick={(e) => e.stopPropagation()}
-                                        >
-                                            <GithubIcon /> GitHub
-                                        </a>
-                                    )}
-                                    {project.demoUrl === "#" && project.githubUrl === "#" && (
-                                        <span className="px-4 py-2 rounded-full bg-background/90 text-muted-foreground text-sm font-medium border border-border">
-                                            Coming Soon
+                    {displayed.map((project, key) => {
+                        const badge = badgeStyles[project.badge];
+                        return (
+                            <div
+                                key={key}
+                                onMouseEnter={() => setHovered(key)}
+                                onMouseLeave={() => setHovered(null)}
+                                className={cn(
+                                    "group relative bg-card rounded-2xl overflow-hidden flex flex-col",
+                                    "border border-border/50 transition-all duration-500",
+                                    hovered === key
+                                        ? "shadow-[0_0_30px_rgba(139,92,246,0.2)] border-primary/40 -translate-y-1"
+                                        : "shadow-md hover:shadow-lg"
+                                )}
+                            >
+                                {/* Badge */}
+                                {badge && (
+                                    <div className="absolute top-3 left-3 z-20">
+                                        <span className={cn(
+                                            "text-xs font-bold px-2.5 py-1 rounded-full border backdrop-blur-sm flex items-center gap-1",
+                                            badge.style
+                                        )}>
+                                            {badge.icon} {project.badge}
                                         </span>
-                                    )}
+                                    </div>
+                                )}
+
+                                {/* Coming Soon ribbon */}
+                                {project.comingSoon && (
+                                    <div className="absolute top-3 right-3 z-20">
+                                        <span className="text-xs font-bold px-2.5 py-1 rounded-full border backdrop-blur-sm bg-secondary/80 text-muted-foreground border-border">
+                                            🚧 Coming Soon
+                                        </span>
+                                    </div>
+                                )}
+
+                                {/* Image */}
+                                <div className="relative h-48 sm:h-44 md:h-48 overflow-hidden bg-secondary/30">
+                                    <img
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        onError={(e) => {
+                                            e.target.style.display = "none";
+                                            e.target.nextSibling.style.display = "flex";
+                                        }}
+                                    />
+                                    <div style={{ display: "none" }} className="w-full h-full">
+                                        <ImageFallback title={project.title} />
+                                    </div>
+
+                                    <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                    {/* Hover buttons */}
+                                    <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                        {!project.comingSoon && project.demoUrl !== "#" ? (
+                                            <a
+                                                href={project.demoUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg hover:scale-105 transition-transform duration-200"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <ExternalLink size={14} /> Live Demo
+                                            </a>
+                                        ) : project.comingSoon ? (
+                                            <span className="px-4 py-2 rounded-full bg-secondary/90 text-muted-foreground text-sm font-medium border border-border">
+                                                🚧 Coming Soon
+                                            </span>
+                                        ) : null}
+
+                                        {project.githubUrl !== "#" && (
+                                            <a
+                                                href={project.githubUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/90 text-foreground text-sm font-medium border border-border shadow-lg hover:scale-105 transition-transform duration-200"
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <GithubIcon /> GitHub
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
+
+                                {/* Content */}
+                                <div className="p-5 flex flex-col flex-1">
+                                    <div className="flex flex-wrap gap-2 mb-3">
+                                        {project.tags.map((tag, index) => (
+                                            <span
+                                                key={index}
+                                                className={cn(
+                                                    "text-xs font-semibold px-3 py-1 rounded-full border transition-colors duration-300",
+                                                    tagColors[index % tagColors.length]
+                                                )}
+                                            >
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    <h3 className="text-lg font-bold mb-2 leading-snug group-hover:text-primary transition-colors duration-300">
+                                        {project.title}
+                                    </h3>
+
+                                    <p className="text-muted-foreground text-sm leading-relaxed flex-1">
+                                        {project.description}
+                                    </p>
+
+                                    {/* Bottom links */}
+                                    <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border/50 sm:group-hover:opacity-0 transition-opacity duration-300">
+                                        {!project.comingSoon && project.demoUrl !== "#" ? (
+                                            <a
+                                                href={project.demoUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
+                                            >
+                                                <ExternalLink size={14} /> Live Demo
+                                            </a>
+                                        ) : (
+                                            <span className="flex items-center gap-1.5 text-sm text-muted-foreground/50">
+                                                🚧 Coming Soon
+                                            </span>
+                                        )}
+                                        {project.githubUrl !== "#" && (
+                                            <a
+                                                href={project.githubUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
+                                            >
+                                                <GithubIcon /> GitHub
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Ring glow */}
+                                <div className={cn(
+                                    "absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ring-1 ring-primary/0",
+                                    hovered === key && "ring-primary/30 ring-1"
+                                )} />
                             </div>
-
-                            {/* Content */}
-                            <div className="p-5 flex flex-col flex-1">
-                                <div className="flex flex-wrap gap-2 mb-3">
-                                    {project.tags.map((tag, index) => (
-                                        <span
-                                            key={index}
-                                            className={cn(
-                                                "text-xs font-semibold px-3 py-1 rounded-full border transition-colors duration-300",
-                                                tagColors[index % tagColors.length]
-                                            )}
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                <h3 className="text-lg font-bold mb-2 leading-snug group-hover:text-primary transition-colors duration-300">
-                                    {project.title}
-                                </h3>
-
-                                <p className="text-muted-foreground text-sm leading-relaxed flex-1">
-                                    {project.description}
-                                </p>
-
-                                {/* Bottom links — visible on mobile, fades on desktop hover */}
-                                <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border/50 sm:group-hover:opacity-0 transition-opacity duration-300">
-                                    {project.demoUrl !== "#" ? (
-                                        <a
-                                            href={project.demoUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
-                                        >
-                                            <ExternalLink size={14} /> Live Demo
-                                        </a>
-                                    ) : (
-                                        <span className="flex items-center gap-1.5 text-sm text-muted-foreground/50">
-                                            <ExternalLink size={14} /> Coming Soon
-                                        </span>
-                                    )}
-                                    {project.githubUrl !== "#" && (
-                                        <a
-                                            href={project.githubUrl}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
-                                        >
-                                            <GithubIcon /> GitHub
-                                        </a>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Ring glow */}
-                            <div className={cn(
-                                "absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ring-1 ring-primary/0",
-                                hovered === key && "ring-primary/30 ring-1"
-                            )} />
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* Show More / Less */}
