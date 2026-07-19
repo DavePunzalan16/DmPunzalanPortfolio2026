@@ -9,6 +9,7 @@ import { ProjectsSection } from "../components/ProjectsSection";
 import { CertificatesSection } from "../components/CertificatesSection";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "@/components/Footer";
+import { Chatbot } from "@/components/Chatbot";
 import { ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -39,6 +40,10 @@ export const Home = () => {
 
       <Footer />
 
+      {/* Chatbot */}
+      <Chatbot />
+
+      {/* Scroll to top */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         className={`fixed bottom-8 right-8 z-50 p-3 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-110 hover:shadow-[0_0_15px_rgba(139,92,246,0.5)] transition-all duration-300 ${

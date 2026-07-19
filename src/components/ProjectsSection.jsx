@@ -11,6 +11,7 @@ const projects = [
         tags: ["HTML", "CSS", "JavaScript", "Tailwind CSS"],
         demoUrl: "https://davepunzalan16.github.io/2025Portfolio/",
         githubUrl: "https://github.com/DavePunzalan16/2025Portfolio",
+        badge: null,
     },
     {
         id: 2,
@@ -20,6 +21,7 @@ const projects = [
         tags: ["HTML", "CSS", "Vanilla JS", "Github Actions"],
         demoUrl: "https://acss-space-invader-game.vercel.app/",
         githubUrl: "https://github.com/DavePunzalan16/ACSS-SPACE-INVADER-GAME",
+        badge: null,
     },
     {
         id: 3,
@@ -29,6 +31,7 @@ const projects = [
         tags: ["ReactJS", "Tailwind CSS", "Typescript", "Netlify"],
         demoUrl: "https://legendary-sable-b03450.netlify.app/",
         githubUrl: "https://github.com/DavePunzalan16/acss-nfc-websiteReact",
+        badge: null,
     },
     {
         id: 4,
@@ -38,6 +41,7 @@ const projects = [
         tags: ["HTML", "CSS", "Vanilla JS", "Github Actions"],
         demoUrl: "https://davepunzalan16.github.io/YFA-MATCHING-PET-GAME-2025-PROJECT/game.html",
         githubUrl: "https://github.com/DavePunzalan16/YFA-MATCHING-PET-GAME-2025-PROJECT",
+        badge: null,
     },
     {
         id: 5,
@@ -47,6 +51,7 @@ const projects = [
         tags: ["ReactJS", "Supabase", "Typescript", "Netlify"],
         demoUrl: "https://funny-clafoutis-8c4f75.netlify.app/",
         githubUrl: "https://github.com/DavePunzalan16/VitalWarriosPR",
+        badge: null,
     },
     {
         id: 6,
@@ -56,6 +61,47 @@ const projects = [
         tags: ["HTML", "CSS", "JavaScript", "Vercel"],
         demoUrl: "https://acssofficialwebsite2526.vercel.app/",
         githubUrl: "https://github.com/DavePunzalan16/ACSSWEBSITE2526",
+        badge: null,
+    },
+    {
+        id: 7,
+        title: "AI-Powered SEO Website Ranker",
+        description: "An AI-powered SEO analysis tool built with Firecrawl and Gemini AI that can rank and audit any website, uncovering hidden issues and optimizing performance to outrank the competition.",
+        image: "assets/PROJECT7.jpg",
+        tags: ["Firecrawl", "Gemini AI", "Vercel", "JavaScript"],
+        demoUrl: "https://website-tracker-two.vercel.app/",
+        githubUrl: "https://github.com/DavePunzalan16/WebsiteTracker",
+        badge: "AI",
+    },
+    {
+        id: 8,
+        title: "DMP Live Stock Market App",
+        description: "A real-time stock market dashboard featuring live stock charts, heatmaps, watchlists, personalized investment goals, country selection, and risk tolerance settings for data-driven investors.",
+        image: "assets/PROJECT8.jpg",
+        tags: ["ReactJS", "TailwindCSS", "Stock API", "Real-time"],
+        demoUrl: "https://github.com/DavePunzalan16/DMPStockMarket",
+        githubUrl: "https://github.com/DavePunzalan16/DMPStockMarket",
+        badge: "Live",
+    },
+    {
+        id: 9,
+        title: "DMP Full Stack Academy",
+        description: "A full-featured Java-powered learning management system for front-end lovers — featuring 50+ courses, coding challenges, video lessons, quizzes, XP system, level-ups, and badge collection.",
+        image: "assets/PROJECT9.jpg",
+        tags: ["Java", "Full Stack", "LMS", "ReactJS"],
+        demoUrl: "https://github.com/DavePunzalan16/DMPFullStackAcademyFrontendLearning",
+        githubUrl: "https://github.com/DavePunzalan16/DMPFullStackAcademyFrontendLearning",
+        badge: "Full Stack",
+    },
+    {
+        id: 10,
+        title: "M.A.G.E. — Guild Social Platform",
+        description: "A full-stack social media platform for the UE Caloocan Manga, Anime & Game Enthusiasts Guild — featuring 60+ arcade games, musical SFX integration, 2FA security, dynamic theme engine, events, feed, gallery, and officer management.",
+        image: "assets/PROJECT10.jpg",
+        tags: ["Full Stack", "Social Media", "2FA", "Game Engine"],
+        demoUrl: "#",
+        githubUrl: "#",
+        badge: "Featured",
     },
 ];
 
@@ -84,28 +130,54 @@ const tagColors = [
     "bg-pink-500/20 text-pink-400 border-pink-500/30 hover:bg-pink-500/40",
 ];
 
+const badgeColors = {
+    "AI":         "bg-blue-500/20 text-blue-300 border-blue-400/40",
+    "Live":       "bg-green-500/20 text-green-300 border-green-400/40",
+    "Full Stack": "bg-orange-500/20 text-orange-300 border-orange-400/40",
+    "Featured":   "bg-primary/20 text-primary border-primary/40",
+};
+
 export const ProjectsSection = () => {
     const [hovered, setHovered] = useState(null);
+    const [showAll, setShowAll] = useState(false);
+
+    const INITIAL_COUNT = 6;
+    const displayed = showAll ? projects : projects.slice(0, INITIAL_COUNT);
 
     return (
         <section id="projects" className="py-24 px-4 relative">
             <div className="container mx-auto max-w-6xl">
 
+                {/* Header */}
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
                         Featured{" "}
                         <span className="text-primary">Projects</span>
                     </h2>
                     <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-                        A collection of projects I've built from interactive games to
-                        front-end web apps, each solving real-world problems with modern tech. 
-                        Click on any project to see a live demo and explore the code on GitHub!
-                        Fullstack projects coming soon!
+                        A collection of projects I've built — from interactive games to AI-powered tools
+                        and full-stack platforms, each solving real-world problems with modern tech.
                     </p>
+
+                    {/* Stats */}
+                    <div className="flex flex-wrap justify-center gap-6 mt-8">
+                        {[
+                            { value: `${projects.length}+`, label: "Projects Built" },
+                            { value: "4", label: "Full Stack Apps" },
+                            { value: "2", label: "AI Projects" },
+                            { value: "10+", label: "Technologies" },
+                        ].map((s, i) => (
+                            <div key={i} className="text-center">
+                                <div className="text-2xl font-bold text-primary">{s.value}</div>
+                                <div className="text-xs text-muted-foreground">{s.label}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
+                {/* Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                    {projects.map((project, key) => (
+                    {displayed.map((project, key) => (
                         <div
                             key={key}
                             onMouseEnter={() => setHovered(key)}
@@ -118,6 +190,19 @@ export const ProjectsSection = () => {
                                     : "shadow-md hover:shadow-lg"
                             )}
                         >
+                            {/* Badge */}
+                            {project.badge && (
+                                <div className="absolute top-3 left-3 z-20">
+                                    <span className={cn(
+                                        "text-xs font-bold px-2.5 py-1 rounded-full border backdrop-blur-sm",
+                                        badgeColors[project.badge]
+                                    )}>
+                                        ✦ {project.badge}
+                                    </span>
+                                </div>
+                            )}
+
+                            {/* Image */}
                             <div className="relative h-48 sm:h-44 md:h-48 overflow-hidden bg-secondary/30">
                                 <img
                                     src={project.image}
@@ -132,32 +217,42 @@ export const ProjectsSection = () => {
                                     <ImageFallback title={project.title} />
                                 </div>
 
-                                <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                                    <a
-                                        href={project.demoUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg hover:scale-105 transition-transform duration-200"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <ExternalLink size={14} /> Live Demo
-                                    </a>
-                                    <a
-                                        href={project.githubUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/90 text-foreground text-sm font-medium border border-border shadow-lg hover:scale-105 transition-transform duration-200"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <GithubIcon /> GitHub
-                                    </a>
+                                {/* Hover buttons */}
+                                <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                                    {project.demoUrl !== "#" && (
+                                        <a
+                                            href={project.demoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium shadow-lg hover:scale-105 transition-transform duration-200"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <ExternalLink size={14} /> Live Demo
+                                        </a>
+                                    )}
+                                    {project.githubUrl !== "#" && (
+                                        <a
+                                            href={project.githubUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-background/90 text-foreground text-sm font-medium border border-border shadow-lg hover:scale-105 transition-transform duration-200"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <GithubIcon /> GitHub
+                                        </a>
+                                    )}
+                                    {project.demoUrl === "#" && project.githubUrl === "#" && (
+                                        <span className="px-4 py-2 rounded-full bg-background/90 text-muted-foreground text-sm font-medium border border-border">
+                                            Coming Soon
+                                        </span>
+                                    )}
                                 </div>
                             </div>
 
+                            {/* Content */}
                             <div className="p-5 flex flex-col flex-1">
-
                                 <div className="flex flex-wrap gap-2 mb-3">
                                     {project.tags.map((tag, index) => (
                                         <span
@@ -171,42 +266,73 @@ export const ProjectsSection = () => {
                                         </span>
                                     ))}
                                 </div>
+
                                 <h3 className="text-lg font-bold mb-2 leading-snug group-hover:text-primary transition-colors duration-300">
                                     {project.title}
                                 </h3>
+
                                 <p className="text-muted-foreground text-sm leading-relaxed flex-1">
                                     {project.description}
                                 </p>
+
+                                {/* Bottom links — visible on mobile, fades on desktop hover */}
                                 <div className="flex items-center gap-4 mt-4 pt-4 border-t border-border/50 sm:group-hover:opacity-0 transition-opacity duration-300">
-                                    <a
-                                        href={project.demoUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
-                                    >
-                                        <ExternalLink size={14} /> Live Demo
-                                    </a>
-                                    <a
-                                        href={project.githubUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
-                                    >
-                                        <GithubIcon /> GitHub
-                                    </a>
+                                    {project.demoUrl !== "#" ? (
+                                        <a
+                                            href={project.demoUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
+                                        >
+                                            <ExternalLink size={14} /> Live Demo
+                                        </a>
+                                    ) : (
+                                        <span className="flex items-center gap-1.5 text-sm text-muted-foreground/50">
+                                            <ExternalLink size={14} /> Coming Soon
+                                        </span>
+                                    )}
+                                    {project.githubUrl !== "#" && (
+                                        <a
+                                            href={project.githubUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-1.5 text-sm text-foreground/70 hover:text-primary transition-colors duration-300"
+                                        >
+                                            <GithubIcon /> GitHub
+                                        </a>
+                                    )}
                                 </div>
                             </div>
 
+                            {/* Ring glow */}
                             <div className={cn(
-                                "absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500",
-                                "ring-1 ring-primary/0",
+                                "absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 ring-1 ring-primary/0",
                                 hovered === key && "ring-primary/30 ring-1"
                             )} />
                         </div>
                     ))}
                 </div>
 
-                <div className="text-center mt-16">
+                {/* Show More / Less */}
+                <div className="text-center mt-10">
+                    <button
+                        onClick={() => setShowAll(!showAll)}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-primary text-primary hover:bg-primary/10 transition-all duration-300 font-medium hover:scale-105 mb-8"
+                    >
+                        {showAll ? "Show Less" : `Show All ${projects.length} Projects`}
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16" height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            className={cn("transition-transform duration-300", showAll && "rotate-180")}
+                        >
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </button>
+
                     <p className="text-muted-foreground mb-4">Want to see more of my work?</p>
                     <a
                         href="https://github.com/DavePunzalan16"
