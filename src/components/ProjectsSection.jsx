@@ -156,11 +156,11 @@ export const ProjectsSection = () => {
     const displayed = showAll ? projects : projects.slice(0, INITIAL_COUNT);
 
     return (
-        <section id="projects" className="py-24 px-4 relative">
+        <section id="projects" className="py-16 sm:py-20 md:py-24 px-4 relative">
             <div className="container mx-auto max-w-6xl">
 
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-10 md:mb-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
                         Featured{" "}
                         <span className="text-primary">Projects</span>

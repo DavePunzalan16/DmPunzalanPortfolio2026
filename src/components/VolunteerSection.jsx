@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import {
-    Users, Code, Shield, Megaphone, BookOpen,
+    Code, Shield, Megaphone, BookOpen,
     Heart, Cpu, Globe, Star, Award, Briefcase, Zap
 } from "lucide-react";
 

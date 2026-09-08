@@ -1,15 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { MessageCircle, X, Send, Bot, User, Sparkles } from "lucide-react";
-import { getResponse } from "@/data/davebot-data";
-
-const suggestedQuestions = [
-    "Who is Dave Punzalan?",
-    "Anong mga projects ni Dave?",
-    "What are Dave's skills?",
-    "Is Dave available for hire?",
-    "Sino gumawa ng website na ito?",
-];
+import { getResponse, suggestedQuestions } from "@/data/davebot-data";
 
 const renderMessage = (content) => {
     return content
@@ -18,11 +10,11 @@ const renderMessage = (content) => {
 };
 
 export const Chatbot = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpenState] = useState(false);
     const [messages, setMessages] = useState([
         {
             role: "assistant",
-            content: "Hi! I'm **DaveBot** 🤖 — Dave's personal assistant! Ask me anything about Dave in English or Tagalog. What would you like to know?",
+            content: "Hi! I'm **DaveBot** 🤖 — Dave's portfolio assistant. Ask me about his skills, projects, AWS experience, community involvement, or how to get in touch. I only answer with what's in his portfolio.",
         },
     ]);
     const [input, setInput] = useState("");
@@ -35,10 +27,18 @@ export const Chatbot = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages, isTyping]);
 
+    // Open/close handler owns the "seen" side effect so we don't call
+    // setState synchronously inside an effect (avoids cascading renders).
+    const setIsOpen = (next) => {
+        const open = typeof next === "function" ? next(isOpen) : next;
+        setIsOpenState(open);
+        if (open) setHasNewMessage(false);
+    };
+
     useEffect(() => {
         if (isOpen) {
-            setHasNewMessage(false);
-            setTimeout(() => inputRef.current?.focus(), 300);
+            const t = setTimeout(() => inputRef.current?.focus(), 300);
+            return () => clearTimeout(t);
         }
     }, [isOpen]);
 
@@ -50,8 +50,8 @@ export const Chatbot = () => {
         setMessages((prev) => [...prev, { role: "user", content: userText }]);
         setIsTyping(true);
 
-        // Simulate typing delay for natural feel
-        const delay = 600 + Math.random() * 600;
+        // Fixed, natural-feeling typing delay (kept deterministic to stay pure).
+        const delay = 800;
         setTimeout(() => {
             const reply = getResponse(userText);
             setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
@@ -72,10 +72,11 @@ export const Chatbot = () => {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
+                style={{ bottom: "calc(1.25rem + env(safe-area-inset-bottom, 0px))" }}
                 className={cn(
-                    "fixed bottom-24 right-8 z-998 p-4 rounded-full shadow-lg transition-all duration-300",
+                    "fixed right-4 sm:right-6 z-[998] p-4 rounded-full shadow-lg transition-all duration-300",
                     "bg-primary text-primary-foreground",
-                    "hover:scale-110 hover:shadow-[0_0_20px_rgba(139,92,246,0.6)]",
+                    "hover:scale-110 hover:shadow-[0_0_20px_hsl(var(--primary)/0.6)]",
                     isOpen ? "rotate-90 scale-110" : "rotate-0"
                 )}
                 aria-label="Toggle chatbot"
@@ -89,15 +90,18 @@ export const Chatbot = () => {
             {/* Chat Window */}
             <div
                 className={cn(
-                    "fixed bottom-40 right-8 z-997 rounded-2xl shadow-2xl border border-primary/20",
+                    "fixed right-4 sm:right-6 z-[997] rounded-2xl shadow-2xl border border-primary/20",
                     "bg-background/95 backdrop-blur-md flex flex-col overflow-hidden",
                     "transition-all duration-500 origin-bottom-right",
-                    "w-85 sm:w-95",
+                    "w-[calc(100vw-2rem)] max-w-sm",
                     isOpen
                         ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
                         : "opacity-0 scale-90 translate-y-4 pointer-events-none"
                 )}
-                style={{ maxHeight: "540px" }}
+                style={{
+                    bottom: "calc(5.5rem + env(safe-area-inset-bottom, 0px))",
+                    maxHeight: "min(70vh, 540px)",
+                }}
             >
                 {/* Header */}
                 <div className="flex items-center gap-3 px-4 py-3 bg-primary/10 border-b border-primary/20 shrink-0">

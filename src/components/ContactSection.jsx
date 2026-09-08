@@ -73,10 +73,10 @@ export const ContactSection = () => {
     };
 
     return (
-        <section id="contact" className="py-24 px-4 relative">
+        <section id="contact" className="py-16 sm:py-20 md:py-24 px-4 relative">
             <div className="container mx-auto max-w-5xl">
 
-                <div className="text-center mb-16">
+                <div className="text-center mb-10 md:mb-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
                         Get In <span className="text-primary">Touch</span>
                     </h2>
@@ -144,7 +144,7 @@ export const ContactSection = () => {
                     </div>
 
                     {/* Right — Form */}
-                    <div className="gradient-border p-8 rounded-2xl">
+                    <div className="gradient-border p-5 sm:p-8 rounded-2xl">
                         <h3 className="text-2xl font-semibold mb-1">Send a Message</h3>
                         <p className="text-muted-foreground text-sm mb-6">I'll get back to you within 24 hours!</p>
 

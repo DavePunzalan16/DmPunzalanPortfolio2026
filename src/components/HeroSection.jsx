@@ -33,8 +33,11 @@ export const HeroSection = () => {
                     setDisplayed(displayed.slice(0, -1));
                 }, 40);
             } else {
-                setCurrentRole((prev) => (prev + 1) % roles.length);
-                setTyping(true);
+                // Schedule asynchronously so we don't setState during the effect body.
+                timeout = setTimeout(() => {
+                    setCurrentRole((prev) => (prev + 1) % roles.length);
+                    setTyping(true);
+                }, 200);
             }
         }
 
@@ -44,10 +47,10 @@ export const HeroSection = () => {
     return (
         <section
             id="hero"
-            className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20"
+            className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-28 pb-16 sm:pt-24 sm:pb-20"
         >
             <div className="container max-w-5xl mx-auto z-10">
-                <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+                <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
 
                     <div className="flex-1 text-center lg:text-left space-y-6">
 
@@ -138,15 +141,26 @@ export const HeroSection = () => {
                     </div>
                     <div className="shrink-0 opacity-0 animate-fade-in-delay-2">
                         <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80">
-                            <div className="absolute inset-0 rounded-full border-2 border-dashed border-primary/40 animate-[spin_20s_linear_infinite]" />
+                            {/* Local keyframes so the orbit always spins regardless of Tailwind's spin utility. */}
+                            <style>{`@keyframes heroOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+                            <div
+                                className="absolute inset-0 rounded-full border-2 border-dashed border-primary/40"
+                                style={{ animation: "heroOrbit 20s linear infinite" }}
+                            />
                             <div className="absolute inset-4 rounded-full bg-primary/10 blur-xl" />
-                            <div className="absolute inset-0 rounded-full animate-[spin_8s_linear_infinite]">
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary shadow-[0_0_10px_rgba(139,92,246,0.8)]" />
+                            <div
+                                className="absolute inset-0 rounded-full"
+                                style={{ animation: "heroOrbit 8s linear infinite" }}
+                            >
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-primary shadow-[0_0_12px_rgba(139,92,246,0.8)]" />
                             </div>
-                            <div className="absolute inset-0 rounded-full animate-[spin_12s_linear_infinite_reverse]">
-                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+                            <div
+                                className="absolute inset-0 rounded-full"
+                                style={{ animation: "heroOrbit 12s linear infinite reverse" }}
+                            >
+                                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.9)]" />
                             </div>
-                            <div className="absolute inset-3 rounded-full overflow-hidden border-2 border-primary/50 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+                            <div className="absolute inset-3 rounded-full overflow-hidden border-2 border-primary/50 shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
                                 <img
                                     src="assets/DavePFP.jpg"
                                     alt="Dave Punzalan"

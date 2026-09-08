@@ -1,131 +1,177 @@
-export const daveBotData = [
-    // ─── WHO IS DAVE ───────────────────────────────────────────────────────────
-    {
-        keywords: ["sino si dave", "who is dave", "sino ka", "who are you", "tell me about dave", "about dave", "dave punzalan", "davethegreat", "creator", "gumawa", "who made", "sino gumawa", "may gawa", "portfolio owner"],
-        response: `👨‍💻 Si **Dave Matthew S. Punzalan** ang gumawa ng website na ito! Siya ay isang BS Computer Science graduate mula sa University of the East Caloocan (2026), specializing in Web Development. Siya ay passionate developer, tech volunteer, at student leader na aktibong nag-aambag sa iba't ibang tech organizations. Available siya para sa freelance, full-time roles, at collaborations!`,
-    },
-    {
-        keywords: ["who created this", "who built this", "who designed this", "who made this website", "creator of this site", "developer of this site"],
-        response: `✨ This portfolio was designed and built by **Dave Matthew S. Punzalan** himself using **ReactJS** and **TailwindCSS**! He coded every section from scratch — the star background, the animations, the chatbot (that's me! 🤖), everything. Pretty impressive, right?`,
-    },
+// ============================================================================
+// DaveBot response engine.
+// Uses intent scoring against a centralized knowledge base (chatbotKnowledge.js)
+// and the shared skills dataset (skills.js). No hardcoded facts live here — this
+// file only maps user intent -> a formatter that reads from the knowledge base.
+//
+// STRICT RULE: if no intent scores high enough, return the explicit
+// "no information" fallback. Never fabricate.
+// ============================================================================
 
-    // ─── EDUCATION ─────────────────────────────────────────────────────────────
-    {
-        keywords: ["education", "school", "college", "university", "paaralan", "nag-aral", "degree", "course", "ue", "university of the east", "bs computer science", "bscs"],
-        response: `🎓 **Dave's Education:**\n\n🏫 **College:** BS Computer Science (Major in Web Development)\nUniversity of the East Caloocan — 2022 to 2026\n\n🏫 **High School:** College of St. Catherine Quezon City — 2016 to 2022\n\n🏫 **Elementary:** St. Dominic Savio School of Kalookan City — 2010 to 2016`,
-    },
+import {
+    profile, education, community, experience, itSupport, networking,
+    aws, certifications, contact, projects, suggestedQuestions,
+} from "@/data/chatbotKnowledge";
+import { skillsByCategory, currentlyLearning, SKILL_STATUS } from "@/data/skills";
 
-    // ─── SKILLS ────────────────────────────────────────────────────────────────
-    {
-        keywords: ["skills", "technologies", "tech stack", "what can dave do", "programming", "languages", "frontend", "backend", "tools", "kakayahan", "alam", "knows", "expertise"],
-        response: `💻 **Dave's Tech Stack:**\n\n**Languages:** JavaScript (ES6+), Python, PHP, Java, C++\n\n**Frontend:** React.js, HTML5, CSS3, TailwindCSS, Bootstrap\n\n**Backend:** Flask, Django, PHP, Node.js, REST APIs\n\n**Database:** MySQL, phpMyAdmin\n\n**Tools:** Git, GitHub, Firebase, Figma\n\n**Concepts:** Responsive Design, API Integration, MVC Architecture, Data Structures & Algorithms`,
-    },
-    {
-        keywords: ["react", "reactjs", "tailwind", "javascript", "python", "flask", "node", "java", "css", "html", "typescript"],
-        response: `⚡ Yes, Dave works with that! His main stack is **ReactJS + TailwindCSS** for frontend, and **Flask/Node.js** for backend. He also knows Python, Java, PHP, TypeScript, and more. Check the Skills section for the full breakdown with proficiency levels!`,
-    },
+export { suggestedQuestions };
 
-    // ─── PROJECTS ──────────────────────────────────────────────────────────────
-    {
-        keywords: ["projects", "proyekto", "portfolio projects", "what did dave build", "mga gawa", "built", "created", "developed", "apps", "websites"],
-        response: `🚀 **Dave's Featured Projects:**\n\n1. 🌐 **Portfolio 2025** — Personal portfolio (HTML/CSS/JS)\n2. 🎮 **ACSS Space Invader Game** — 8-bit game for ACSS Org Week\n3. 📋 **ACSS NFC Attendance System** — NFC-based event attendance (ReactJS)\n4. 🐾 **YFA Matching Pet Game** — Pet matching game for advocacy\n5. ⚕️ **Vital Warriors** — Health detection via camera APIs\n6. 🏫 **ACSS Official Website** — Org website (HTML/CSS/JS)\n7. 🤖 **AI SEO Ranker** — AI-powered SEO audit tool (Firecrawl + Gemini)\n8. 📈 **DMP Stock Market App** — Real-time stock dashboard\n9. 🎓 **DMP Full Stack Academy** — Java-powered LMS\n10. ⚔️ **M.A.G.E. Guild Platform** — Full-stack social media with 60 arcade games!\n\nScroll to the Projects section to see them all! 👆`,
-    },
-    {
-        keywords: ["mage", "guild", "social media", "arcade", "manga anime game", "2fa", "theme engine", "sfx"],
-        response: `⚔️ **M.A.G.E. (Manga, Anime & Game Enthusiast's Guild)** is one of Dave's most ambitious projects! It's a full-stack social media platform for UE Caloocan's MAGE Guild featuring:\n\n🎮 60+ Arcade Games\n🔐 2FA Security\n🎵 Musical SFX integration\n🎨 Dynamic Theme Engine\n📰 Events, Feed, Gallery, Officer Management\n\nLive: https://officialmagewebsite.vercel.app/`,
-    },
-    {
-        keywords: ["seo", "website tracker", "firecrawl", "gemini", "ai tool", "rank website"],
-        response: `🤖 **AI-Powered SEO Website Ranker** — Dave built a tool using **Firecrawl** and **Google Gemini AI** that can audit and rank any website! It uncovers hidden SEO issues and optimization opportunities. GitHub: github.com/DavePunzalan16/WebsiteTracker`,
-    },
-    {
-        keywords: ["stock market", "dmp stock", "stocks", "heatmap", "watchlist", "investment"],
-        response: `📈 **DMP Live Stock Market App** is a real-time stock dashboard Dave built featuring live stock charts, heatmaps, watchlists, country selection, and personalized investment goal settings. GitHub: github.com/DavePunzalan16/DMPStockMarket`,
-    },
-    {
-        keywords: ["academy", "lms", "learning management", "full stack academy", "courses", "java learning"],
-        response: `🎓 **DMP Full Stack Academy** is a Java-powered Learning Management System Dave built for front-end lovers! It features 50+ courses, video lessons, coding challenges, quizzes, an XP system, level-ups, and badge collection. Coming soon live! GitHub: github.com/DavePunzalan16/DMPFullStackAcademyFrontendLearning`,
-    },
-    {
-        keywords: ["nfc", "attendance", "acss nfc", "card attendance"],
-        response: `📋 The **ACSS NFC Card Attendance System** is a React-based web app Dave built for the Association of Computer Studies Students. It uses NFC card identification to streamline event check-ins and track student attendance. Live at: legendary-sable-b03450.netlify.app`,
-    },
-    {
-        keywords: ["space invader", "game", "acss game", "space invaders", "laro"],
-        response: `🎮 The **ACSS Space Invader Game** is an 8-bit style interactive web game Dave developed specifically for the ACSS 2025 Org Week! Built with Vanilla JavaScript and HTML5 Canvas. Play it at: acss-space-invader-game.vercel.app`,
-    },
-    {
-        keywords: ["vital warriors", "vitalwarriors", "health", "camera", "temperature", "supabase"],
-        response: `⚕️ **Vital Warriors** is a hardware + software integrated web app Dave built that detects health vitals using open camera APIs. Built with ReactJS, TailwindCSS, TypeScript, and Supabase. It scans faces to predict health metrics for UE Warriors!`,
-    },
+const listSkills = (arr) => arr.map((s) => s.name).join(", ");
 
-    // ─── EXPERIENCE ────────────────────────────────────────────────────────────
-    {
-        keywords: ["experience", "work", "job", "internship", "intern", "trabaho", "nagtrabaho", "nag-intern", "jg superstore", "choco plug"],
-        response: `💼 **Dave's Work Experience:**\n\n1. 👨‍💻 **Web Development Intern** | JG Superstore | May–July 2025\n   • Developed and maintained e-commerce web features\n   • Debugged front-end issues and optimized performance\n\n2. 🏫 **Organization Web Developer** | ACSS\n   • Built official ACSS website + NFC Attendance System\n   • Developed ACSS Space Invader Game & YFA Pet Game\n\n3. 🍫 **Co-Owner & Digital Operations Lead** | The Choco Plug | 2025–2026\n   • Managed digital operations and social media presence\n   • Handled online orders and customer communications`,
-    },
+// ── Intent formatters ───────────────────────────────────────────────────────
 
-    // ─── VOLUNTEER / LEADERSHIP ────────────────────────────────────────────────
-    {
-        keywords: ["volunteer", "leadership", "organizations", "org", "acss", "vp", "vice president", "secretary", "aws", "gdsc", "red cross", "yfa", "pythonasia", "ensc", "lamps"],
-        response: `🏆 **Dave's Leadership & Volunteer Roles (11+ Organizations!):**\n\n⭐ VP External / Business Manager | ACSS | 2023–2026\n📢 Assistant PRO | CSC & RCYC | 2025–2026\n💻 Tech Lead | AWS Learning Club UE | 2025–2026\n🛡️ Team Lead CoC & Security | PythonAsia 2026\n🎮 Associate Game Dev Lead | GDSC | 2024–2026\n☁️ Tech Support Co-Lead | AWS User Group | 2025–2026\n❤️ Executive Secretary | YFA | 2025–2026\n📝 Executive Secretary | College Y Club | 2025–2026\n🎨 Creative Committee | ENSC | 2024–2026\n📚 Committee Secretary | LAMPS | 2024–2026\n🔍 Auditor | CCP | 2025–2026`,
-    },
+const answerCommunity = () => {
+    const orgs = community.map((c) => `• **${c.organization}** — ${c.role} (${c.period})`).join("\n");
+    return `🌐 Dave is active in several tech communities:\n\n${orgs}\n\nHis involvement spans technical support, operations, leadership, security / code-of-conduct work, and organization roles.`;
+};
 
-    // ─── CERTIFICATES ──────────────────────────────────────────────────────────
-    {
-        keywords: ["certificates", "certifications", "cert", "sertipiko", "achievements", "awards", "mga cert", "na-certify"],
-        response: `🏅 Dave has **75+ certificates** across multiple categories!\n\n**Key highlights:**\n• ⚛️ Front-End Engineering with React — CodeSignal\n• ⚛️ React Basics — Meta\n• 🌐 Intro to Front-End Dev — Meta\n• 🔐 Microsoft Cybersecurity Analyst — Microsoft\n• 📊 Power BI Data Analyst — Data Sense Analytics\n• 🐍 Algorithms & Data Structures in Python — CodeSignal\n• ☁️ Azure Fundamentals — STYAVA.DEV\n• 🤖 Building AI Agents with Azure AI Foundry\n• And 65+ more!\n\nCheck the Certificates section for the full list! 🎓`,
-    },
+const answerProfile = () =>
+    `👨‍💻 **${profile.name}** — ${profile.positioning}\n\n${profile.status}\n\n${profile.focus}`;
 
-    // ─── CONTACT ───────────────────────────────────────────────────────────────
-    {
-        keywords: ["contact", "email", "phone", "reach", "hire", "makipag-ugnayan", "numero", "how to contact", "message dave", "email dave"],
-        response: `📬 **Contact Dave:**\n\n📧 Email: dave16punzalan@gmail.com\n📞 Phone: 09058412887\n📍 Location: Caloocan City, Philippines\n💼 LinkedIn: linkedin.com/in/davematthewpunzalan/\n🐱 GitHub: github.com/DavePunzalan16\n\nOr just scroll to the **Contact section** and fill out the form! Dave responds within 24 hours. 😊`,
-    },
-    {
-        keywords: ["available", "hire", "freelance", "open to work", "job", "collaboration", "collab", "pwede ba", "makipagtulungan"],
-        response: `✅ **Yes! Dave is currently open to:**\n\n💼 Full-time Front-End / Full-Stack Developer roles\n🛠️ Freelance web development projects\n🤝 Tech collaborations and partnerships\n🎓 Mentorship and community contributions\n\nReach out at dave16punzalan@gmail.com or via the Contact section! 🚀`,
-    },
+const answerEducation = () =>
+    `🎓 **Education:** ${education.degree}\n${education.university} · ${education.period}`;
 
-    // ─── SOCIAL LINKS ──────────────────────────────────────────────────────────
-    {
-        keywords: ["github", "linkedin", "social media", "tiktok", "instagram", "facebook", "links", "portfolio link"],
-        response: `🔗 **Dave's Social Links:**\n\n🐱 GitHub: github.com/DavePunzalan16\n💼 LinkedIn: linkedin.com/in/davematthewpunzalan/\n📘 Facebook: facebook.com/Davethegreat16\n📸 Instagram: instagram.com/punzalan_dave\n🎵 TikTok: tiktok.com/@davethegreat_ph2\n🌐 Old Portfolio: davepunzalan16.github.io/2025Portfolio/`,
-    },
+const answerExperience = () => {
+    const rows = experience.map((e) => `• **${e.role}** — ${e.org} (${e.period})\n  ${e.notes}`).join("\n\n");
+    return `💼 **Experience:**\n\n${rows}`;
+};
 
-    // ─── FUN / PERSONALITY ─────────────────────────────────────────────────────
-    {
-        keywords: ["fun fact", "hobby", "hobbies", "interesting", "about yourself", "personal", "passion", "libangan", "interesado"],
-        response: `🌟 **Fun facts about Dave:**\n\n🎮 He built a space invader game AND a full social media platform with 60 arcade games!\n🐾 He's passionate about animal welfare — he helped build YFA's matching pet game for advocacy\n☁️ He organized an AWS cloud computing event as a student\n🛡️ He served as Code of Conduct Lead at PythonAsia 2026 — a major Asia-wide conference!\n🍫 He co-owns a confectionery business (The Choco Plug) while being a full-time dev!\n\nDave truly does it all! 💪`,
-    },
-    {
-        keywords: ["hello", "hi", "hey", "kumusta", "kamusta", "magandang", "good morning", "good afternoon", "good evening", "oi", "helo", "musta"],
-        response: `👋 Hello! I'm **DaveBot**, Dave Matthew Punzalan's personal AI assistant! I know everything about Dave — his skills, projects, experience, certifications, and more. Ask me anything! 😊\n\nOr click one of the suggested questions below to get started! 💡`,
-    },
-    {
-        keywords: ["thank", "thanks", "salamat", "ty", "thx", "maraming salamat"],
-        response: `😊 You're welcome! If you have more questions about Dave, feel free to ask anytime! Don't forget to check out his projects and reach out if you'd like to collaborate. Have a great day! 🌟`,
-    },
-    {
-        keywords: ["bye", "goodbye", "paalam", "see you", "cya", "ingat"],
-        response: `👋 Goodbye! Thanks for visiting Dave's portfolio! Feel free to come back if you have more questions. Have a wonderful day! 🌟`,
-    },
-    {
-        keywords: ["davebot", "chatbot", "bot", "ai", "robot", "ikaw", "who are you bot", "what are you"],
-        response: `🤖 I'm **DaveBot** — a smart keyword-based chatbot built into Dave's portfolio! I was created to help visitors learn about Dave Matthew S. Punzalan quickly and easily. I understand both English and Tagalog! Ask me about Dave's skills, projects, experience, or anything else about him!`,
-    },
+const answerSkills = () => {
+    const cats = Object.entries(skillsByCategory)
+        .filter(([, arr]) => arr.length)
+        .map(([cat, arr]) => `**${cat}:** ${listSkills(arr)}`)
+        .join("\n\n");
+    return `💻 **Dave's tech stack** (grouped by area):\n\n${cats}`;
+};
+
+const answerFrontend = () =>
+    `🎨 **Frontend:** ${listSkills(skillsByCategory["Frontend"])}. React and Tailwind are his primary tools.`;
+
+const answerBackend = () =>
+    `🛠️ **Backend:** ${listSkills(skillsByCategory["Backend"])}. Databases: ${listSkills(skillsByCategory["Database"])}.`;
+
+const answerAws = () => {
+    const awsOrgs = community.filter((c) => /aws/i.test(c.organization))
+        .map((c) => `• ${c.organization} — ${c.role}`).join("\n");
+    return `☁️ **AWS & cloud:** ${aws.join(", ")}.\n\nHe built the **AWS Inventory Management Platform** (EC2, RDS, S3, VPC, Cognito, API Gateway, Amplify) and is active in AWS communities:\n${awsOrgs}`;
+};
+
+const answerItSupport = () =>
+    `🧰 **IT support & systems:** ${itSupport.join(", ")}.\n\n**Networking:** ${networking.join(", ")}.`;
+
+const answerNetworking = () =>
+    `🌐 **Networking fundamentals:** ${networking.join(", ")}.`;
+
+const answerCertifications = () =>
+    `🏅 Dave has **${certifications.count} certificates**. Highlights:\n\n${certifications.highlights.map((h) => `• ${h}`).join("\n")}`;
+
+const answerContact = () =>
+    `📬 **Contact Dave:**\n• Email: ${contact.email}\n• Phone: ${contact.phone}\n• LinkedIn: ${contact.linkedin}\n• GitHub: ${contact.github}\n• Location: ${contact.location}`;
+
+const answerLearning = () => {
+    const items = currentlyLearning
+        .map((s) => `• ${s.name} — ${SKILL_STATUS[s.status].label}`)
+        .join("\n");
+    return `📚 **Currently learning / exploring:**\n\n${items}\n\nHe also uses AI-assisted dev tools (Kiro, Cursor) to speed up development.`;
+};
+
+const answerOpenToWork = () =>
+    `✅ Yes — ${profile.status} He's open to full-time roles, freelance projects, and collaborations. Reach him at ${contact.email}.`;
+
+const answerAllProjects = () => {
+    const list = projects.map((p) => `• **${p.name}** — ${p.description}`).join("\n");
+    return `🚀 **Dave's projects:**\n\n${list}\n\nAsk about any one for its tech stack and the problem it solves.`;
+};
+
+const answerProject = (project) => {
+    const live = project.live ? `\n🔗 Live: ${project.live}` : "";
+    return `**${project.name}**\n${project.description}\n\n**Problem solved:** ${project.problem}\n**Tech:** ${project.tech.join(", ")}${live}`;
+};
+
+const fallback = () =>
+    `I don't have that information in Dave's portfolio right now. You can ask me about his **profile, skills, projects, AWS/cloud experience, IT support background, communities, certifications, what he's currently learning, or how to contact him**.`;
+
+const greeting = () =>
+    `👋 Hi! I'm **DaveBot**. Ask me about Dave's skills, projects, AWS experience, community involvement, or how to reach him.`;
+
+// ── Intent registry (scored by keyword hits) ────────────────────────────────
+// Order matters only for ties; scoring picks the best match.
+
+// priority: higher = more specific topic; used to break ties when hit counts are equal.
+const intents = [
+    { id: "greeting", priority: 1, keywords: ["hello", "hi", "hey", "kumusta", "kamusta", "good morning", "good afternoon", "good evening"], answer: greeting },
+    // Community is a first-class intent — must beat generic/profile matching.
+    { id: "community", priority: 9, keywords: ["community", "communities", "organization", "organizations", "orgs", "involved", "involvement", "devcon", "user group", "aws community", "pythonasia", "python asia", "n8n", "gdsc", "acss", "volunteer", "volunteering", "volunteered"], answer: answerCommunity },
+    { id: "aws", priority: 8, keywords: ["aws", "cloud", "ec2", "rds", "s3", "vpc", "cognito", "amplify", "api gateway"], answer: answerAws },
+    { id: "itSupport", priority: 8, keywords: ["it support", "troubleshoot", "troubleshooting", "technical support", "help desk", "helpdesk", "hardware", "user support"], answer: answerItSupport },
+    { id: "networking", priority: 8, keywords: ["networking", "tcp", "ip", "dns", "wifi", "wi-fi", "connectivity", "rbac"], answer: answerNetworking },
+    { id: "frontend", priority: 7, keywords: ["frontend", "front-end", "front end", "react", "tailwind", "next.js", "nextjs"], answer: answerFrontend },
+    { id: "backend", priority: 7, keywords: ["backend", "back-end", "back end", "server", "flask", "express", "postgres"], answer: answerBackend },
+    { id: "learning", priority: 8, keywords: ["learning", "studying", "exploring", "react native", "kiro", "cursor"], answer: answerLearning },
+    { id: "certifications", priority: 7, keywords: ["certificate", "certificates", "certification", "certifications", "cert", "achievement", "achievements"], answer: answerCertifications },
+    { id: "education", priority: 6, keywords: ["education", "school", "college", "university", "degree", "bscs", "graduate", "university of the east"], answer: answerEducation },
+    { id: "experience", priority: 5, keywords: ["experience", "work history", "job", "internship", "intern", "employment", "jg superstore", "choco plug"], answer: answerExperience },
+    { id: "contact", priority: 7, keywords: ["contact", "email", "phone", "reach", "linkedin", "github", "get in touch"], answer: answerContact },
+    { id: "openToWork", priority: 6, keywords: ["available", "open to work", "hire", "hiring", "freelance", "collaborate", "collaboration"], answer: answerOpenToWork },
+    { id: "skills", priority: 4, keywords: ["skill", "skills", "tech stack", "technologies", "stack", "expertise", "programming languages"], answer: answerSkills },
+    { id: "allProjects", priority: 4, keywords: ["projects", "proyekto", "built", "what did dave build", "apps", "applications"], answer: answerAllProjects },
+    { id: "profile", priority: 3, keywords: ["who is dave", "who are you", "tell me about dave", "kind of developer", "positioning", "sino si dave", "dave punzalan"], answer: answerProfile },
 ];
 
-export const getResponse = (input) => {
-    const lower = input.toLowerCase().trim();
+// Match on word boundaries so "aws" doesn't hide behind "experience", and score
+// by number of distinct keyword hits (not raw length). A per-intent priority
+// breaks ties toward the more specific topic.
+const matchesWord = (text, kw) => {
+    if (kw.includes(" ")) return text.includes(kw);
+    const re = new RegExp(`(^|[^a-z0-9])${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^a-z0-9]|$)`, "i");
+    return re.test(text);
+};
 
-    for (const item of daveBotData) {
-        for (const keyword of item.keywords) {
-            if (lower.includes(keyword.toLowerCase())) {
-                return item.response;
-            }
-        }
+const scoreKeywords = (text, keywords) => {
+    let hits = 0;
+    for (const kw of keywords) {
+        if (matchesWord(text, kw)) hits += 1;
+    }
+    return hits;
+};
+
+export const getResponse = (input) => {
+    const text = (input || "").toLowerCase().trim();
+    if (!text) return fallback();
+
+    // 1) Specific project match wins if a project alias/name is mentioned.
+    let bestProject = null;
+    let bestProjectScore = 0;
+    for (const p of projects) {
+        const names = [p.name.toLowerCase(), ...(p.aliases || [])];
+        const s = scoreKeywords(text, names);
+        if (s > bestProjectScore) { bestProjectScore = s; bestProject = p; }
     }
 
-    return `🤔 Hmm, hindi ko sure kung ano ang tinutukoy mo. Try asking about:\n\n• Dave's **skills** or **projects**\n• His **experience** or **education**\n• His **certificates** or **volunteer work**\n• How to **contact** or **hire** Dave\n\nOr type "Who is Dave?" to start! 😊`;
+    // 2) Intent scoring. Combine keyword hits with the intent's specificity
+    //    priority so a specific topic (e.g. "aws") beats a generic word
+    //    (e.g. "experience") when both appear.
+    // Score = keyword hits (dominant) with the intent priority as a decimal
+    // tiebreak, so a more specific topic wins when both matched equally often.
+    let bestIntent = null;
+    let bestIntentHits = 0;
+    let bestIntentScore = 0;
+    for (const intent of intents) {
+        const hits = scoreKeywords(text, intent.keywords);
+        if (hits === 0) continue;
+        const s = hits + (intent.priority || 0) / 100;
+        if (s > bestIntentScore) { bestIntentScore = s; bestIntentHits = hits; bestIntent = intent; }
+    }
+
+    // A concrete project reference beats a generic intent only when it matched
+    // at least as strongly (same hit-based scale).
+    if (bestProject && bestProjectScore >= bestIntentHits) {
+        return answerProject(bestProject);
+    }
+
+    if (bestIntent) {
+        return bestIntent.answer();
+    }
+
+    return fallback();
 };

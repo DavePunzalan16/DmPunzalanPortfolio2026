@@ -287,7 +287,7 @@ export const CertificatesSection = () => {
     ];
 
     return (
-        <section id="certificates" className="py-24 px-4 relative bg-secondary/20">
+        <section id="certificates" className="py-16 sm:py-20 md:py-24 px-4 relative bg-secondary/20">
             <div className="container mx-auto max-w-6xl">
 
                 {/* Header */}

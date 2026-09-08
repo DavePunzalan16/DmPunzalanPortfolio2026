@@ -56,13 +56,17 @@ export const Footer = () => {
         link.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const particles = Array.from({ length: 20 }, (_, i) => ({
-        id: i,
-        size: Math.random() * 3 + 1,
-        left: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: Math.random() * 10 + 10,
-    }));
+    // Computed once via a lazy initializer so particle positions stay stable
+    // across re-renders (keeps render pure — no Math.random during render).
+    const [particles] = useState(() =>
+        Array.from({ length: 20 }, (_, i) => ({
+            id: i,
+            size: Math.random() * 3 + 1,
+            left: Math.random() * 100,
+            delay: Math.random() * 5,
+            duration: Math.random() * 10 + 10,
+        }))
+    );
 
     return (
         <footer className="relative overflow-hidden bg-card border-t border-border">
