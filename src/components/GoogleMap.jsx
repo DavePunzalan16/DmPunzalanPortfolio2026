@@ -1,7 +1,7 @@
 import { MapPin } from "lucide-react";
 
 const MAP_SRC =
-    "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1147.483932574306!2d121.00234556983865!3d14.67519813107259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s415%20Rose%20Street%2C%20Caloocan%20City%2C%20Metro%20Manila!5e0!3m2!1sen!2sph!4v1788873934479!5m2!1sen!2sph";
+    "https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3608.4391527393273!2d121.01190974999997!3d14.671642749999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBaesa%20232%20Quirino%20Hwy%2C%20Quezon%20City%2C%201106%20Metro%20Manila!5e1!3m2!1sen!2sph!4v1791197527296!5m2!1sen!2sph";
 
 export const GoogleMap = () => {
     return (
@@ -17,8 +17,8 @@ export const GoogleMap = () => {
                         Find <span className="text-primary">Me</span>
                     </h2>
                     <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
-                        Based in Caloocan City, Metro Manila — open to on-site, hybrid, and remote
-                        opportunities across the Philippines and beyond.
+                        Baesa, 232 Quirino Hwy, Quezon City, 1106 Metro Manila — open to on-site,
+                        hybrid, and remote opportunities across the Philippines and beyond.
                     </p>
                 </div>
 
@@ -27,7 +27,7 @@ export const GoogleMap = () => {
                     <div className="relative w-full aspect-[16/9] md:aspect-[21/9]">
                         <iframe
                             src={MAP_SRC}
-                            title="Map showing Dave's location in Caloocan City, Metro Manila"
+                            title="Map showing Dave's location in Baesa, Quirino Hwy, Quezon City, Metro Manila"
                             className="absolute inset-0 w-full h-full border-0"
                             style={{ border: 0 }}
                             allowFullScreen

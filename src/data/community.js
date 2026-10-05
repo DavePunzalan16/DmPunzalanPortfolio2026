@@ -59,4 +59,43 @@ export const communityMoments = [
             "assets/V16.png",
         ],
     },
+    {
+        id: "hermes-devcon",
+        category: "Tech Volunteer",
+        title: "Hermes Agent x DEVCON Philippines",
+        description:
+            "Volunteered as a tech volunteer from 2 PM to 12 midnight at a mini hackathon, supporting the event technically and helping participants and organizers throughout.",
+        images: [
+            "assets/hermes.jpg",
+            "assets/hermes2.jpg",
+            "assets/hermes3.jpg",
+            "assets/hermes4.jpg",
+        ],
+    },
+    {
+        id: "pyworks",
+        category: "Attendee",
+        title: "PyWorks",
+        description:
+            "Attended a hands-on PyWorks workshop on how AI works in Python and how to write effective prompts.",
+        images: [
+            "assets/pyworks.jpg",
+            "assets/pyworks2.jpg",
+            "assets/pyworks3.jpg",
+            "assets/pyworks4.jpg",
+        ],
+    },
+    {
+        id: "cyberph-huawei",
+        category: "Tech Volunteer",
+        title: "CyberPH x Huawei Cloud Developer Group",
+        description:
+            "Joined as a tech volunteer and enjoyed learning about cybersecurity, hacking, and networking. Met many tech enthusiasts, including Australian guests, and promoted my organization, PyWorks.",
+        images: [
+            "assets/cyber1.jpg",
+            "assets/cyber2.jpg",
+            "assets/cyber3.jpg",
+            "assets/cyber4.jpg",
+        ],
+    },
 ];

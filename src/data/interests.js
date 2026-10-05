@@ -70,6 +70,8 @@ export const cubeHighlight = {
     count: "60+",
     title: "Cubes Collected",
     icon: "Box",
+    image: "assets/rubik.jpg",
+    imageAlt: "Rubik's Cube solving",
     description:
         "A personal collection built from my interest in puzzles, problem-solving, and exploring different cube designs.",
 };

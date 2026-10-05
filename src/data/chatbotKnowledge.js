@@ -10,7 +10,7 @@ export const profile = {
     positioning: "Full Stack Developer with a strong front-end focus (React / Next.js) and practical AWS cloud project experience.",
     status: "Fresh graduate — BS Computer Science (2026), open to work.",
     focus: "Builds full-stack web applications, has IT troubleshooting / technical support foundations, and is active in tech communities.",
-    location: "Caloocan City, Metro Manila, Philippines",
+    location: "Baesa, 232 Quirino Hwy, Quezon City, 1106 Metro Manila",
     openToWork: true,
 };
 
@@ -22,18 +22,29 @@ export const education = {
 
 // Community & organization involvement (source of truth for the community intent).
 export const community = [
+    { organization: "Technopixel", role: "Founder / Vice President — a non-profit community built around gaming, tech, and anime", period: "2026 – Present" },
+    { organization: "n8n", role: "Volunteer", period: "2026 – Present" },
+    { organization: "CyberPH", role: "Tech Volunteer", period: "2025–2026" },
     { organization: "AWS User Group Philippines", role: "Tech Support Co-Lead", period: "2025–2026" },
     { organization: "AWS Community Day Philippines", role: "Volunteer / Technical and Operations Support", period: "2025–2026" },
     { organization: "AWS Learning Club – UE Caloocan", role: "Executive Secretary / Logistics & Tech Team Lead", period: "2025–2026" },
     { organization: "Python Asia 2026", role: "Team Lead – Code of Conduct & Security", period: "2026" },
     { organization: "DevCon University of the East Chapter", role: "Secretary", period: "2025–2026" },
-    { organization: "n8n Community Philippines", role: "Community Participant", period: "2025–2026" },
     { organization: "Google Developer Student Clubs", role: "Associate Game Developer Lead", period: "2024–2026" },
     { organization: "Association of Computer Studies Students (ACSS)", role: "Vice President for External Affairs / Business Manager", period: "2023–2026" },
 ];
 
+// Community events Dave took part in (photo galleries in the Community Moments section).
+export const communityMoments = [
+    { event: "Hermes Agent x DEVCON Philippines", role: "Tech Volunteer", notes: "Volunteered as a tech volunteer from 2 PM to 12 midnight at a mini hackathon, supporting the event technically and helping participants and organizers throughout." },
+    { event: "PyWorks", role: "Attendee", notes: "Attended a hands-on workshop on how AI works in Python and how to write effective prompts." },
+    { event: "CyberPH x Huawei Cloud Developer Group", role: "Tech Volunteer", notes: "Learned about cybersecurity, hacking, and networking; met many tech enthusiasts including Australian guests, and promoted the PyWorks organization." },
+];
+
 export const experience = [
-    { role: "Web Development Intern", org: "JG Superstore", period: "May–Jul 2025", notes: "Developed and maintained e-commerce web features; debugged front-end issues and optimized performance." },
+    { role: "Freelance Full-Stack Developer (Self-Employed)", org: "TLTXTRA.Labs", period: "2026 – Present", notes: "Works as an independent full-stack developer; self-employed, building and delivering projects for clients." },
+    { role: "TSR (Telephone Sales Representative)", org: "Harte Hanks", period: "2026 – Present", notes: "Project-based TSR on the NBA Season 2026 Project; works night-shift hours as part of the project." },
+    { role: "Web Development Intern", org: "JG Superstore", period: "May 2025 – July 2025", notes: "Edited and improved responsive web pages on Shopify; added details and updated web documentation." },
     { role: "Organization Web Developer", org: "ACSS", period: "2023–2026", notes: "Built the official ACSS website, NFC Attendance System, Space Invader Game, and YFA Pet Game." },
     { role: "Co-Owner & Digital Operations Lead", org: "The Choco Plug", period: "2025–2026", notes: "Managed digital operations, social media, and online orders." },
 ];
@@ -69,7 +80,7 @@ export const contact = {
     phone: "+63 905 841 2887",
     linkedin: "linkedin.com/in/davematthewpunzalan/",
     github: "github.com/DavePunzalan16",
-    location: "Caloocan City, Philippines",
+    location: "Baesa, 232 Quirino Hwy, Quezon City, 1106 Metro Manila",
 };
 
 // Key projects with problem/tech/features (used for project + relational intents).
@@ -152,10 +163,13 @@ export const projects = [
 // Suggested question chips for the UI.
 export const suggestedQuestions = [
     "Who is Dave?",
+    "What's his work experience?",
     "What's his tech stack?",
+    "What mobile skills do you have?",
+    "Do you do volunteer work?",
     "What communities is he involved in?",
     "What's his AWS experience?",
     "What is Dave currently learning?",
-    "Does Dave have IT support experience?",
+    "Where is Dave located?",
     "How can I contact Dave?",
 ];

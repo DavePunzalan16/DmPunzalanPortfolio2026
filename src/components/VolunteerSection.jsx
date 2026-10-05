@@ -9,6 +9,45 @@ const categories = ["All", "Leadership", "Tech", "Advocacy", "Creative"];
 
 const experiences = [
     {
+        role: "Founder / Vice President",
+        org: "Technopixel",
+        period: "2026 – Present",
+        category: "Leadership",
+        icon: Star,
+        color: "text-yellow-400",
+        bg: "bg-yellow-400/10",
+        border: "border-yellow-400/30",
+        description:
+            "Founded and co-lead Technopixel, a non-profit community built around gaming, tech, and anime — bringing enthusiasts together through events and shared interests.",
+        skills: ["Leadership", "Community Building", "Events", "Non-Profit"],
+    },
+    {
+        role: "Volunteer",
+        org: "n8n",
+        period: "2026 – Present",
+        category: "Tech",
+        icon: Zap,
+        color: "text-cyan-400",
+        bg: "bg-cyan-400/10",
+        border: "border-cyan-400/30",
+        description:
+            "Volunteering with the n8n community, supporting workflow automation initiatives and engaging with fellow automation enthusiasts.",
+        skills: ["Automation", "n8n", "Community", "Workflows"],
+    },
+    {
+        role: "Tech Volunteer",
+        org: "CyberPH",
+        period: "2025 – 2026",
+        category: "Tech",
+        icon: Shield,
+        color: "text-blue-400",
+        bg: "bg-blue-400/10",
+        border: "border-blue-400/30",
+        description:
+            "Volunteered as a tech volunteer with CyberPH, supporting cybersecurity-focused events and learning alongside the security community.",
+        skills: ["Cybersecurity", "Networking", "Tech Support", "Community"],
+    },
+    {
         role: "Vice President - External / Business Manager",
         org: "Association of Computer Studies Students (ACSS)",
         period: "Jul 2023 – Jun 2026",
@@ -194,9 +233,9 @@ export const VolunteerSection = () => {
                 {/* Stats Row */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12">
                     {[
-                        { label: "Organizations", value: "11+" },
+                        { label: "Organizations", value: "14+" },
                         { label: "Years Active", value: "3+" },
-                        { label: "Leadership Roles", value: "8+" },
+                        { label: "Leadership Roles", value: "9+" },
                         { label: "Tech Projects", value: "10+" },
                     ].map((stat, i) => (
                         <div

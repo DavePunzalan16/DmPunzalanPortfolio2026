@@ -9,7 +9,7 @@
 // ============================================================================
 
 import {
-    profile, education, community, experience, itSupport, networking,
+    profile, education, community, communityMoments, experience, itSupport, networking,
     aws, certifications, contact, projects, suggestedQuestions,
 } from "@/data/chatbotKnowledge";
 import { skillsByCategory, currentlyLearning, SKILL_STATUS } from "@/data/skills";
@@ -22,7 +22,8 @@ const listSkills = (arr) => arr.map((s) => s.name).join(", ");
 
 const answerCommunity = () => {
     const orgs = community.map((c) => `• **${c.organization}** — ${c.role} (${c.period})`).join("\n");
-    return `🌐 Dave is active in several tech communities:\n\n${orgs}\n\nHis involvement spans technical support, operations, leadership, security / code-of-conduct work, and organization roles.`;
+    const moments = communityMoments.map((m) => `• **${m.event}** (${m.role}) — ${m.notes}`).join("\n");
+    return `🌐 Dave is active in several tech communities:\n\n${orgs}\n\n**Community moments / events:**\n${moments}\n\nHis involvement spans technical support, operations, leadership, security / code-of-conduct work, and organization roles.`;
 };
 
 const answerProfile = () =>
@@ -49,6 +50,16 @@ const answerFrontend = () =>
 
 const answerBackend = () =>
     `🛠️ **Backend:** ${listSkills(skillsByCategory["Backend"])}. Databases: ${listSkills(skillsByCategory["Database"])}.`;
+
+const answerMobile = () => {
+    const mobile = skillsByCategory["Mobile"] ?? [];
+    if (!mobile.length) return `📱 Dave is starting to explore mobile development.`;
+    const items = mobile.map((s) => `${s.name} (${SKILL_STATUS[s.status]?.label ?? s.status})`).join(", ");
+    return `📱 **Mobile development:** ${items}. These are technologies he is currently learning.`;
+};
+
+const answerLocation = () =>
+    `📍 Dave is based in **${profile.location}**. He's open to on-site, hybrid, and remote opportunities.`;
 
 const answerAws = () => {
     const awsOrgs = community.filter((c) => /aws/i.test(c.organization))
@@ -101,7 +112,7 @@ const greeting = () =>
 const intents = [
     { id: "greeting", priority: 1, keywords: ["hello", "hi", "hey", "kumusta", "kamusta", "good morning", "good afternoon", "good evening"], answer: greeting },
     // Community is a first-class intent — must beat generic/profile matching.
-    { id: "community", priority: 9, keywords: ["community", "communities", "organization", "organizations", "orgs", "involved", "involvement", "devcon", "user group", "aws community", "pythonasia", "python asia", "n8n", "gdsc", "acss", "volunteer", "volunteering", "volunteered"], answer: answerCommunity },
+    { id: "community", priority: 9, keywords: ["community", "communities", "organization", "organizations", "orgs", "involved", "involvement", "devcon", "user group", "aws community", "pythonasia", "python asia", "n8n", "gdsc", "acss", "volunteer", "volunteering", "volunteered", "technopixel", "cyberph", "cyber ph", "hermes", "pyworks", "huawei", "hackathon"], answer: answerCommunity },
     { id: "aws", priority: 8, keywords: ["aws", "cloud", "ec2", "rds", "s3", "vpc", "cognito", "amplify", "api gateway"], answer: answerAws },
     { id: "itSupport", priority: 8, keywords: ["it support", "troubleshoot", "troubleshooting", "technical support", "help desk", "helpdesk", "hardware", "user support"], answer: answerItSupport },
     { id: "networking", priority: 8, keywords: ["networking", "tcp", "ip", "dns", "wifi", "wi-fi", "connectivity", "rbac"], answer: answerNetworking },
@@ -110,7 +121,9 @@ const intents = [
     { id: "learning", priority: 8, keywords: ["learning", "studying", "exploring", "react native", "kiro", "cursor"], answer: answerLearning },
     { id: "certifications", priority: 7, keywords: ["certificate", "certificates", "certification", "certifications", "cert", "achievement", "achievements"], answer: answerCertifications },
     { id: "education", priority: 6, keywords: ["education", "school", "college", "university", "degree", "bscs", "graduate", "university of the east"], answer: answerEducation },
-    { id: "experience", priority: 5, keywords: ["experience", "work history", "job", "internship", "intern", "employment", "jg superstore", "choco plug"], answer: answerExperience },
+    { id: "experience", priority: 5, keywords: ["experience", "work history", "work experience", "job", "internship", "intern", "employment", "jg superstore", "choco plug", "tltxtra", "harte hanks", "nba", "tsr", "freelance", "full-stack developer"], answer: answerExperience },
+    { id: "mobile", priority: 8, keywords: ["mobile", "flutter", "dart", "react native", "mobile app", "mobile development", "mobile skills"], answer: answerMobile },
+    { id: "location", priority: 8, keywords: ["location", "located", "based", "where is dave", "address", "quezon city", "baesa", "where do you live", "where are you"], answer: answerLocation },
     { id: "contact", priority: 7, keywords: ["contact", "email", "phone", "reach", "linkedin", "github", "get in touch"], answer: answerContact },
     { id: "openToWork", priority: 6, keywords: ["available", "open to work", "hire", "hiring", "freelance", "collaborate", "collaboration"], answer: answerOpenToWork },
     { id: "skills", priority: 4, keywords: ["skill", "skills", "tech stack", "technologies", "stack", "expertise", "programming languages"], answer: answerSkills },

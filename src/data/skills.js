@@ -76,6 +76,7 @@ export const skillCategories = [
     "DevOps & Tools",
     "IT Support & Systems",
     "Networking",
+    "Security",
     "Productivity & Data",
     "Automation & AI",
     "Mobile",
@@ -101,6 +102,7 @@ export const skills = [
     { name: "REST APIs", category: "Backend", status: "HANDS-ON", description: "Designing and consuming APIs across projects.", projects: ["Stock Market Analytics Platform", "PHOTON"] },
     { name: "WebSockets", category: "Backend", status: "HANDS-ON", description: "Real-time bidirectional communication.", projects: ["PHOTON"] },
     { name: "Prisma", category: "Backend", status: "WORKING KNOWLEDGE", description: "Type-safe ORM for PostgreSQL.", projects: ["AWS Inventory Management Platform"] },
+    { name: "Authentication", category: "Backend", status: "HANDS-ON", description: "Implementing sign-in, sessions, and access control in apps.", projects: ["M.A.G.E.", "AWS Inventory Management Platform", "Stock Market Analytics Platform"] },
 
     // ─── Database ──────────────────────────────────────────────
     { name: "PostgreSQL", category: "Database", status: "HANDS-ON", description: "Relational database for full-stack applications.", projects: ["AWS Inventory Management Platform", "M.A.G.E."] },
@@ -141,6 +143,9 @@ export const skills = [
     { name: "Wi-Fi / Connectivity", category: "Networking", status: "WORKING KNOWLEDGE", description: "Wireless and connectivity troubleshooting.", projects: [] },
     { name: "Authentication & Access", category: "Networking", status: "WORKING KNOWLEDGE", description: "User access, authentication, and RBAC.", projects: ["AWS Inventory Management Platform", "M.A.G.E."] },
 
+    // ─── Security ──────────────────────────────────────────────
+    { name: "Cybersecurity (Basics)", category: "Security", status: "WORKING KNOWLEDGE", description: "Foundational security concepts — explored through CyberPH volunteering and hands-on sessions on cybersecurity, hacking, and networking.", projects: [] },
+
     // ─── Productivity & Data ───────────────────────────────────
     { name: "Microsoft Office", category: "Productivity & Data", status: "HANDS-ON", description: "Documents, spreadsheets, and presentations.", projects: [] },
     { name: "Excel", category: "Productivity & Data", status: "HANDS-ON", description: "Spreadsheets, formulas, and data handling.", projects: [] },
@@ -153,6 +158,7 @@ export const skills = [
     { name: "Cursor", category: "Automation & AI", status: "AI-ASSISTED DEVELOPMENT", description: "AI-assisted code editor.", projects: [] },
     { name: "OCR", category: "Automation & AI", status: "HANDS-ON", description: "Optical character recognition integration.", projects: ["PHOTON"] },
     { name: "Inngest", category: "Automation & AI", status: "WORKING KNOWLEDGE", description: "Event-driven background jobs and workflows.", projects: ["Stock Market Analytics Platform"] },
+    { name: "Hermes Agent", category: "Automation & AI", status: "EXPLORING", description: "AI agent tooling explored while volunteering at the Hermes Agent x DEVCON mini hackathon.", projects: [] },
 
     // ─── Languages (extras) ────────────────────────────────────
     { name: "C++", category: "Backend", status: "WORKING KNOWLEDGE", description: "Programming fundamentals and problem solving.", projects: [] },
@@ -160,6 +166,8 @@ export const skills = [
 
     // ─── Mobile ────────────────────────────────────────────────
     { name: "React Native", category: "Mobile", status: "CURRENTLY LEARNING", description: "Cross-platform mobile development — actively learning.", projects: [] },
+    { name: "Flutter", category: "Mobile", status: "CURRENTLY LEARNING", description: "Cross-platform mobile app development with Dart — actively learning.", projects: [] },
+    { name: "Dart", category: "Mobile", status: "CURRENTLY LEARNING", description: "Language behind Flutter for building mobile apps — actively learning.", projects: [] },
 ];
 
 // Convenience groupings reused by UI and chatbot.
