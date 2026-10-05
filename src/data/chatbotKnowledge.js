@@ -43,7 +43,7 @@ export const communityMoments = [
 
 export const experience = [
     { role: "Freelance Full-Stack Developer (Self-Employed)", org: "TLTXTRA.Labs", period: "2026 – Present", notes: "Works as an independent full-stack developer; self-employed, building and delivering projects for clients." },
-    { role: "TSR (Telephone Sales Representative)", org: "Harte Hanks", period: "2026 – Present", notes: "Project-based TSR on the NBA Season 2026 Project; works night-shift hours as part of the project." },
+    { role: "TSR (Technical Support Representative)", org: "Harte Hanks", period: "2026 – Present", notes: "Project-based TSR on the NBA Season 2026 Project; works night-shift hours as part of the project." },
     { role: "Web Development Intern", org: "JG Superstore", period: "May 2025 – July 2025", notes: "Edited and improved responsive web pages on Shopify; added details and updated web documentation." },
     { role: "Organization Web Developer", org: "ACSS", period: "2023–2026", notes: "Built the official ACSS website, NFC Attendance System, Space Invader Game, and YFA Pet Game." },
     { role: "Co-Owner & Digital Operations Lead", org: "The Choco Plug", period: "2025–2026", notes: "Managed digital operations, social media, and online orders." },

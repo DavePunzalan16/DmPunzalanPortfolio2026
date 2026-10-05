@@ -17,7 +17,7 @@ const experiences = [
         ],
     },
     {
-        role: "TSR (Telephone Sales Representative)",
+        role: "TSR (Technical Support Representative)",
         org: "Harte Hanks",
         period: "2026 – Present",
         icon: Headphones,
