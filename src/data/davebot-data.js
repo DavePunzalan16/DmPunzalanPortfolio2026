@@ -10,7 +10,7 @@
 
 import {
     profile, education, community, communityMoments, experience, itSupport, networking,
-    aws, certifications, contact, projects, suggestedQuestions,
+    aws, certifications, contact, projects, hobbies, suggestedQuestions,
 } from "@/data/chatbotKnowledge";
 import { skillsByCategory, currentlyLearning, SKILL_STATUS } from "@/data/skills";
 
@@ -60,6 +60,17 @@ const answerMobile = () => {
 
 const answerLocation = () =>
     `📍 Dave is based in **${profile.location}**. He's open to on-site, hybrid, and remote opportunities.`;
+
+const answerHobbies = () =>
+    `🎯 **Beyond the code**, Dave enjoys:\n${hobbies.map((h) => `• ${h}`).join("\n")}`;
+
+const answerGameDev = () => {
+    const gameProjects = projects.filter((p) =>
+        /godot|unity|pygame|pixel art/i.test((p.tech || []).join(" "))
+    );
+    const list = gameProjects.map((p) => `• **${p.name}** — ${p.description}`).join("\n");
+    return `🎮 **Game development:** Dave works with Godot 4, Unity, Pixel Art, and Photoshop.\n\n${list}`;
+};
 
 const answerAws = () => {
     const awsOrgs = community.filter((c) => /aws/i.test(c.organization))
@@ -123,10 +134,12 @@ const intents = [
     { id: "education", priority: 6, keywords: ["education", "school", "college", "university", "degree", "bscs", "graduate", "university of the east"], answer: answerEducation },
     { id: "experience", priority: 5, keywords: ["experience", "work history", "work experience", "job", "internship", "intern", "employment", "jg superstore", "choco plug", "tltxtra", "harte hanks", "nba", "tsr", "freelance", "full-stack developer"], answer: answerExperience },
     { id: "mobile", priority: 8, keywords: ["mobile", "flutter", "dart", "react native", "mobile app", "mobile development", "mobile skills"], answer: answerMobile },
+    { id: "gamedev", priority: 8, keywords: ["game dev", "game development", "godot", "unity", "pygame", "pixel art", "gamedev", "make games"], answer: answerGameDev },
+    { id: "hobbies", priority: 7, keywords: ["hobby", "hobbies", "interests", "free time", "rubik", "rubiks", "cube", "travel", "traveling", "japan", "beyond the code", "outside work"], answer: answerHobbies },
     { id: "location", priority: 8, keywords: ["location", "located", "based", "where is dave", "address", "quezon city", "baesa", "where do you live", "where are you"], answer: answerLocation },
     { id: "contact", priority: 7, keywords: ["contact", "email", "phone", "reach", "linkedin", "github", "get in touch"], answer: answerContact },
     { id: "openToWork", priority: 6, keywords: ["available", "open to work", "hire", "hiring", "freelance", "collaborate", "collaboration"], answer: answerOpenToWork },
-    { id: "skills", priority: 4, keywords: ["skill", "skills", "tech stack", "technologies", "stack", "expertise", "programming languages"], answer: answerSkills },
+    { id: "skills", priority: 4, keywords: ["skill", "skills", "tech stack", "technologies", "stack", "expertise", "programming languages", "deployment", "hosting", "openrouter", "vercel", "render", "cloudflare", "hostinger", "neon", "mongodb", "database", "databases"], answer: answerSkills },
     { id: "allProjects", priority: 4, keywords: ["projects", "proyekto", "built", "what did dave build", "apps", "applications"], answer: answerAllProjects },
     { id: "profile", priority: 3, keywords: ["who is dave", "who are you", "tell me about dave", "kind of developer", "positioning", "sino si dave", "dave punzalan"], answer: answerProfile },
 ];

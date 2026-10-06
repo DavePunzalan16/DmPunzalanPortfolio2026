@@ -4,6 +4,61 @@ import { cn } from "@/lib/utils";
 
 const projects = [
     {
+        id: 11,
+        title: "AWS Full Inventory System",
+        description: "A PERN stack inventory system with a simple add-inventory flow and a login feature, built with the help of Kiro and deployed with AWS.",
+        image: "assets/PROJECT11.jpg",
+        tags: ["PERN", "PostgreSQL", "Express", "React", "Node.js", "AWS", "Kiro"],
+        demoUrl: "https://frontend-seven-chi-7eoqpd8c6o.vercel.app/",
+        githubUrl: "https://github.com/DavePunzalan16/Fullstack-Inventory-System-with-AWS",
+        badge: "Live",
+        comingSoon: false,
+    },
+    {
+        id: 12,
+        title: "AI Builder",
+        description: "An AI assistant that builds websites instantly. Users create an account, chat in real time, edit the generated site live, then publish it or download it as a ZIP.",
+        image: "assets/PROJECT12.jpg",
+        tags: ["MERN", "AI Integration", "OpenRouter", "Real-time"],
+        demoUrl: "https://ai-builder-dmp.vercel.app/",
+        githubUrl: "https://github.com/DavePunzalan16/AI-Builder-DMP",
+        badge: "AI",
+        comingSoon: false,
+    },
+    {
+        id: 13,
+        title: "METUS",
+        description: "A Zoom/Google Meet-style video meeting app with real-time features and a SaaS Premium plan for unlimited call time.",
+        image: "assets/PROJECT13.jpg",
+        tags: ["Video Meeting", "SaaS", "Real-time", "WebRTC"],
+        demoUrl: "#",
+        githubUrl: "https://github.com/DavePunzalan16/metus",
+        badge: "Featured",
+        comingSoon: true,
+    },
+    {
+        id: 14,
+        title: "CHRONOBIT",
+        description: "Game built for the 2025 Game Hackathon at DEVCON Manila. Placed Top 7 out of 50 teams. Developed with Godot 4 and Unity, with pixel art assets made in Photoshop.",
+        image: "assets/PROJECT14.jpg",
+        tags: ["Godot 4", "Unity", "Pixel Art", "Photoshop", "Hackathon"],
+        demoUrl: "#",
+        githubUrl: "#",
+        badge: "Top 7 / 50 teams",
+        comingSoon: false,
+    },
+    {
+        id: 15,
+        title: "Shatterdart 2.1: Retro Neon Rhythm",
+        description: "A sleek arcade-style game menu with neon cityscape vibes and music selection. Built only with Python and Pygame, using built-in sounds and pixel art assets. A vibrant 2D world with retro-futuristic energy.",
+        image: "assets/PROJECT15.jpg",
+        tags: ["Python", "Pygame", "Pixel Art", "Freshman Project (2023)"],
+        demoUrl: "#",
+        githubUrl: "https://github.com/DavePunzalan16/Mini-Projects",
+        badge: "Game",
+        comingSoon: false,
+    },
+    {
         id: 1,
         title: "David Portfolio 2025 Website",
         description: "A personal portfolio website built with HTML/CSS and JavaScript, showcasing my skills, projects, and experience in a visually appealing and responsive design.",
@@ -146,6 +201,7 @@ const badgeStyles = {
     "AI":         { style: "bg-blue-500/20 text-blue-300 border-blue-400/40",       icon: "🤖" },
     "Full Stack": { style: "bg-orange-500/20 text-orange-300 border-orange-400/40", icon: "⚡" },
     "Featured":   { style: "bg-primary/20 text-primary border-primary/40",          icon: "✦" },
+    "Top 7 / 50 teams": { style: "bg-amber-500/20 text-amber-300 border-amber-400/40", icon: "🏆" },
 };
 
 export const ProjectsSection = () => {
@@ -174,9 +230,9 @@ export const ProjectsSection = () => {
                     <div className="flex flex-wrap justify-center gap-6 mt-8">
                         {[
                             { value: `${projects.length}+`, label: "Projects Built" },
-                            { value: "4", label: "Full Stack Apps" },
+                            { value: "5+", label: "Full Stack Apps" },
                             { value: "2", label: "AI Projects" },
-                            { value: "10+", label: "Technologies" },
+                            { value: "2", label: "Game Projects" },
                         ].map((s, i) => (
                             <div key={i} className="text-center">
                                 <div className="text-2xl font-bold text-primary">{s.value}</div>
@@ -308,11 +364,11 @@ export const ProjectsSection = () => {
                                             >
                                                 <ExternalLink size={14} /> Live Demo
                                             </a>
-                                        ) : (
+                                        ) : project.comingSoon ? (
                                             <span className="flex items-center gap-1.5 text-sm text-muted-foreground/50">
                                                 🚧 Coming Soon
                                             </span>
-                                        )}
+                                        ) : null}
                                         {project.githubUrl !== "#" && (
                                             <a
                                                 href={project.githubUrl}

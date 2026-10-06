@@ -86,6 +86,43 @@ export const contact = {
 // Key projects with problem/tech/features (used for project + relational intents).
 export const projects = [
     {
+        name: "AWS Full Inventory System",
+        aliases: ["aws full inventory", "full inventory", "pern inventory", "inventory system"],
+        description: "A PERN stack inventory system with a simple add-inventory flow and a login feature, built with the help of Kiro and deployed with AWS.",
+        problem: "Managing inventory with a simple full-stack PERN app, login, and AWS deployment.",
+        tech: ["PERN", "PostgreSQL", "Express", "React", "Node.js", "AWS", "Kiro"],
+        live: "https://frontend-seven-chi-7eoqpd8c6o.vercel.app/",
+    },
+    {
+        name: "AI Builder",
+        aliases: ["ai builder", "website builder", "ai assistant builder"],
+        description: "An AI assistant that builds websites instantly — users create an account, chat in real time, edit the generated site live, then publish it or download it as a ZIP.",
+        problem: "Letting anyone build and publish a website through an AI chat.",
+        tech: ["MERN", "AI Integration", "OpenRouter", "Real-time"],
+        live: "https://ai-builder-dmp.vercel.app/",
+    },
+    {
+        name: "METUS",
+        aliases: ["metus", "video meeting", "video call"],
+        description: "A Zoom/Google Meet-style video meeting app with real-time features and a SaaS Premium plan for unlimited call time. (Coming soon.)",
+        problem: "Real-time video meetings with a premium SaaS tier.",
+        tech: ["Video Meeting", "SaaS", "Real-time"],
+    },
+    {
+        name: "CHRONOBIT",
+        aliases: ["chronobit", "game hackathon", "devcon game"],
+        description: "A game built for the 2025 Game Hackathon at DEVCON Manila that placed Top 7 out of 50 teams. Developed with Godot 4 and Unity, with pixel art assets made in Photoshop.",
+        problem: "Building a game under hackathon time constraints.",
+        tech: ["Godot 4", "Unity", "Pixel Art", "Photoshop"],
+    },
+    {
+        name: "Shatterdart 2.1: Retro Neon Rhythm",
+        aliases: ["shatterdart", "retro neon", "pygame"],
+        description: "A sleek arcade-style game menu with neon cityscape vibes and music selection, built only with Python and Pygame using built-in sounds and pixel art assets. A 2023 freshman project.",
+        problem: "A retro-futuristic 2D arcade game menu experience.",
+        tech: ["Python", "Pygame", "Pixel Art"],
+    },
+    {
         name: "AWS Inventory Management Platform",
         aliases: ["inventory", "aws inventory", "inventory management"],
         description: "A full-stack inventory management platform deployed on AWS.",
@@ -160,16 +197,24 @@ export const projects = [
     },
 ];
 
+// Personal hobbies / interests outside work.
+export const hobbies = [
+    "Solving the Rubik's Cube (with a 60+ cube collection)",
+    "Traveling and exploring new places (including Japan)",
+    "Puzzles, board games, and chess",
+    "Game development, pixel art, drawing, cooking, and sports",
+];
+
 // Suggested question chips for the UI.
 export const suggestedQuestions = [
     "Who is Dave?",
-    "What's his work experience?",
+    "What projects have you built?",
+    "Do you have game dev experience?",
     "What's his tech stack?",
     "What mobile skills do you have?",
     "Do you do volunteer work?",
-    "What communities is he involved in?",
+    "What are Dave's hobbies?",
     "What's his AWS experience?",
-    "What is Dave currently learning?",
     "Where is Dave located?",
     "How can I contact Dave?",
 ];

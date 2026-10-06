@@ -160,3 +160,75 @@
   padding: 0;
   text-align: center;
 }
+
+/* ─── Animated thin grid background (Task: subtle moving grid, both themes) ───
+   Fixed full-screen layer placed BEHIND content and on top of the base
+   background. Thin 1px lines, very low opacity, slow seamless pan via transform.
+   Fades toward the edges with a radial mask so it never competes with text. */
+
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* radial vignette so the grid fades at the edges */
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 35%, transparent 85%);
+  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 85%);
+}
+
+/* Oversized inner layer (translated by exactly one cell for a seamless loop). */
+.grid-bg__layer {
+  position: absolute;
+  inset: -8px;              /* bleed so the translate never shows an edge */
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 7px 7px; /* thin cells */
+  animation: grid-pan 24s linear infinite;
+  will-change: transform;
+}
+
+/* Dark theme: faint violet/blue lines that coexist with the stars. */
+.grid-bg__layer {
+  --grid-line: hsl(250 70% 70% / 0.06);
+}
+
+/* Light theme: soft lavender grid + a touch higher presence (plain light theme
+   gets more interesting). Paired with a gradient wash + glows from GridBackground. */
+:root:not(.dark) .grid-bg__layer {
+  --grid-line: hsl(250 45% 55% / 0.07);
+}
+
+/* Soft gradient wash + faint radial glows behind the hero (light theme boost). */
+.grid-bg__wash {
+  position: absolute;
+  inset: 0;
+}
+:root:not(.dark) .grid-bg__wash {
+  background:
+    radial-gradient(60% 50% at 25% 15%, hsl(250 60% 60% / 0.10), transparent 70%),
+    radial-gradient(55% 45% at 80% 10%, hsl(220 70% 60% / 0.08), transparent 70%),
+    linear-gradient(180deg, hsl(250 40% 97%) 0%, transparent 40%);
+}
+/* In dark theme the starfield already provides depth; keep the wash minimal. */
+.dark .grid-bg__wash {
+  background:
+    radial-gradient(55% 45% at 80% 8%, hsl(250 70% 55% / 0.06), transparent 70%);
+}
+
+@keyframes grid-pan {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-7px, -7px, 0); } /* exactly one cell → seamless */
+}
+
+/* Keep it light on small screens (slightly lower opacity). */
+@media (max-width: 640px) {
+  .grid-bg__layer { --grid-line: hsl(250 70% 70% / 0.045); }
+  :root:not(.dark) .grid-bg__layer { --grid-line: hsl(250 45% 55% / 0.05); }
+}
+
+/* Respect reduced motion — stop the pan. */
+@media (prefers-reduced-motion: reduce) {
+  .grid-bg__layer { animation: none; }
+}

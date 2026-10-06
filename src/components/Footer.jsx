@@ -18,12 +18,17 @@ const LinkedInIcon = ({ className }) => (
 
 const footerLinks = {
     navigation: [
-        { name: "Home", href: "#hero" },
-        { name: "About", href: "#about" },
-        { name: "Skills", href: "#skills" },
-        { name: "Volunteer", href: "#volunteer" },
-        { name: "Projects", href: "#projects" },
-        { name: "Contact", href: "#contact" },
+        { name: "Home", href: "#hero", keywords: ["home", "start", "top", "hero", "intro"] },
+        { name: "About", href: "#about", keywords: ["about", "bio", "who", "profile"] },
+        { name: "Beyond the Code", href: "#beyond-the-code", keywords: ["beyond", "hobbies", "interests", "rubik", "japan", "travel", "personal"] },
+        { name: "Skills", href: "#skills", keywords: ["skills", "tech", "stack", "technologies", "tools", "frontend", "backend", "mobile", "game dev"] },
+        { name: "Experience", href: "#experience", keywords: ["experience", "work", "job", "intern", "internship", "freelance", "tsr", "harte hanks", "jg superstore", "tltxtra", "career"] },
+        { name: "Volunteer", href: "#volunteer", keywords: ["volunteer", "community", "leadership", "org", "organization", "technopixel", "cyberph", "n8n", "aws"] },
+        { name: "Projects", href: "#projects", keywords: ["projects", "portfolio", "apps", "work", "builds", "games", "ai builder", "metus", "chronobit"] },
+        { name: "Certificates", href: "#certificates", keywords: ["certificates", "certs", "achievements", "awards", "credentials"] },
+        { name: "Community", href: "#community", keywords: ["community", "moments", "events", "hermes", "pyworks", "devcon", "gallery", "photos"] },
+        { name: "Location", href: "#location", keywords: ["location", "map", "find me", "address", "quezon city", "baesa", "based"] },
+        { name: "Contact", href: "#contact", keywords: ["contact", "email", "message", "reach", "hire", "get in touch"] },
     ],
     resources: [
         { name: "GitHub", href: "https://github.com/DavePunzalan16", external: true },
@@ -52,9 +57,14 @@ export const Footer = () => {
 
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-    const filteredNav = footerLinks.navigation.filter((link) =>
-        link.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredNav = footerLinks.navigation.filter((link) => {
+        const q = searchQuery.toLowerCase().trim();
+        if (!q) return true;
+        return (
+            link.name.toLowerCase().includes(q) ||
+            (link.keywords || []).some((kw) => kw.includes(q) || q.includes(kw))
+        );
+    });
 
     // Computed once via a lazy initializer so particle positions stay stable
     // across re-renders (keeps render pure — no Math.random during render).

@@ -1,4 +1,6 @@
 import { StarBackground } from "@/components/StarBackground";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { GridBackground } from "@/components/GridBackground";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
@@ -27,6 +29,8 @@ export const Home = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden relative">
+      <ScrollProgress />
+      <GridBackground />
       <StarBackground />
       <Navbar />
 

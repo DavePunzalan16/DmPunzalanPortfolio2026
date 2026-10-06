@@ -72,6 +72,8 @@ export const cubeHighlight = {
     icon: "Box",
     image: "assets/rubik.jpg",
     imageAlt: "Rubik's Cube solving",
+    secondImage: "assets/japan.jpg",
+    secondImageAlt: "Exploring Japan",
     description:
         "A personal collection built from my interest in puzzles, problem-solving, and exploring different cube designs.",
 };

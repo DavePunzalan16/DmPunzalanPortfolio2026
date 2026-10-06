@@ -73,10 +73,12 @@ export const skillCategories = [
     "Backend",
     "Database",
     "Cloud & AWS",
+    "Deployment & Hosting",
     "DevOps & Tools",
     "IT Support & Systems",
     "Networking",
     "Security",
+    "Game Development",
     "Productivity & Data",
     "Automation & AI",
     "Mobile",
@@ -107,6 +109,7 @@ export const skills = [
     // ─── Database ──────────────────────────────────────────────
     { name: "PostgreSQL", category: "Database", status: "HANDS-ON", description: "Relational database for full-stack applications.", projects: ["AWS Inventory Management Platform", "M.A.G.E."] },
     { name: "Supabase", category: "Database", status: "HANDS-ON", description: "Postgres backend-as-a-service with auth.", projects: ["M.A.G.E.", "Vital Warriors"] },
+    { name: "MongoDB", category: "Database", status: "HANDS-ON", description: "NoSQL document database for MERN-stack apps.", projects: ["AI Builder"] },
     { name: "MySQL", category: "Database", status: "WORKING KNOWLEDGE", description: "Relational data modeling and queries.", projects: [] },
     { name: "SQL", category: "Database", status: "HANDS-ON", description: "Querying and managing relational data.", projects: ["AWS Inventory Management Platform"] },
 
@@ -119,12 +122,24 @@ export const skills = [
     { name: "API Gateway", category: "Cloud & AWS", status: "WORKING KNOWLEDGE", description: "Managed API endpoints on AWS.", projects: ["AWS Inventory Management Platform"] },
     { name: "AWS Amplify", category: "Cloud & AWS", status: "WORKING KNOWLEDGE", description: "Front-end hosting and deployment on AWS.", projects: ["AWS Inventory Management Platform"] },
 
+    // ─── Deployment & Hosting ──────────────────────────────────
+    { name: "Vercel", category: "Deployment & Hosting", status: "HANDS-ON", description: "Deploying front-end and full-stack apps.", projects: ["M.A.G.E.", "AWS Full Inventory System", "AI Builder"] },
+    { name: "Render", category: "Deployment & Hosting", status: "HANDS-ON", description: "Hosting backend services and APIs.", projects: [] },
+    { name: "Cloudflare", category: "Deployment & Hosting", status: "WORKING KNOWLEDGE", description: "DNS, CDN, and web performance/security.", projects: [] },
+    { name: "Hostinger", category: "Deployment & Hosting", status: "WORKING KNOWLEDGE", description: "Web hosting and domain management.", projects: [] },
+    { name: "Neon", category: "Deployment & Hosting", status: "WORKING KNOWLEDGE", description: "Serverless PostgreSQL hosting.", projects: [] },
+
+    // ─── Game Development ───────────────────────────────────────
+    { name: "Godot 4", category: "Game Development", status: "HANDS-ON", description: "Game engine used at the DEVCON Manila Game Hackathon.", projects: ["CHRONOBIT"] },
+    { name: "Unity", category: "Game Development", status: "WORKING KNOWLEDGE", description: "Game engine for 2D/3D game development.", projects: ["CHRONOBIT"] },
+    { name: "Pixel Art", category: "Game Development", status: "HANDS-ON", description: "Creating pixel art assets for games.", projects: ["CHRONOBIT", "Shatterdart 2.1"] },
+    { name: "Adobe Photoshop", category: "Game Development", status: "WORKING KNOWLEDGE", description: "Designing and editing pixel art and game assets.", projects: ["CHRONOBIT"] },
+
     // ─── DevOps & Tools ────────────────────────────────────────
     { name: "Git", category: "DevOps & Tools", status: "PRIMARY", description: "Version control for all projects.", projects: [] },
     { name: "GitHub", category: "DevOps & Tools", status: "PRIMARY", description: "Repositories, GitHub Actions, and collaboration.", projects: ["ACSS Space Invader Game", "YFA Matching Pet Game"] },
     { name: "GitHub Actions", category: "DevOps & Tools", status: "WORKING KNOWLEDGE", description: "CI/CD automation for builds and deploys.", projects: ["AWS Inventory Management Platform", "ACSS Space Invader Game"] },
-    { name: "Vercel", category: "DevOps & Tools", status: "HANDS-ON", description: "Deploying React and full-stack apps.", projects: ["M.A.G.E.", "ACSS Official Website"] },
-    { name: "Netlify", category: "DevOps & Tools", status: "HANDS-ON", description: "Hosting and CI for front-end projects.", projects: ["ACSS NFC Attendance System", "Vital Warriors"] },
+    { name: "Netlify", category: "Deployment & Hosting", status: "HANDS-ON", description: "Hosting and CI for front-end projects.", projects: ["ACSS NFC Attendance System", "Vital Warriors"] },
     { name: "VS Code", category: "DevOps & Tools", status: "PRIMARY", description: "Primary development environment.", projects: [] },
     { name: "Figma", category: "DevOps & Tools", status: "WORKING KNOWLEDGE", description: "UI/UX design and prototyping.", projects: [] },
 
@@ -159,6 +174,7 @@ export const skills = [
     { name: "OCR", category: "Automation & AI", status: "HANDS-ON", description: "Optical character recognition integration.", projects: ["PHOTON"] },
     { name: "Inngest", category: "Automation & AI", status: "WORKING KNOWLEDGE", description: "Event-driven background jobs and workflows.", projects: ["Stock Market Analytics Platform"] },
     { name: "Hermes Agent", category: "Automation & AI", status: "EXPLORING", description: "AI agent tooling explored while volunteering at the Hermes Agent x DEVCON mini hackathon.", projects: [] },
+    { name: "OpenRouter", category: "Automation & AI", status: "HANDS-ON", description: "AI model API integration (via API keys) for AI-powered features.", projects: ["AI Builder"] },
 
     // ─── Languages (extras) ────────────────────────────────────
     { name: "C++", category: "Backend", status: "WORKING KNOWLEDGE", description: "Programming fundamentals and problem solving.", projects: [] },
