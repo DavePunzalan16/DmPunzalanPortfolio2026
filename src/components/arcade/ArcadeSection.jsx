@@ -24,9 +24,9 @@ const GAMES = [
         id: "plinko",
         name: "Plinko",
         icon: "🔵",
-        description: "Physics ball drop with multipliers and combos.",
-        controls: "Click / Space to drop",
-        load: null,
+        description: "Physics ball drop with multipliers and combos. Just for fun.",
+        controls: "Move to aim · Click / Space to drop · N new round",
+        load: () => import("@/components/arcade/PlinkoGame.jsx"),
     },
     {
         id: "dungeon",
