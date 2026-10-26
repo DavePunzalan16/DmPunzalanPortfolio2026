@@ -183,30 +183,57 @@ export const BeyondTheCode = () => {
                             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-left">
                                 {alwaysExploring.description}
                             </p>
+
+                            {/* Task 3: image directly below the paragraph, with a gentle hover
+                                zoom (wrapper has overflow-hidden; zoom disabled under reduced motion). */}
+                            <div className="mt-5 overflow-hidden rounded-xl border border-border shadow-md">
+                                <img
+                                    src={alwaysExploring.image}
+                                    alt={alwaysExploring.imageAlt}
+                                    width="800"
+                                    height="450"
+                                    loading="lazy"
+                                    decoding="async"
+                                    className={cn(
+                                        "w-full aspect-[16/9] object-cover transition-transform duration-500",
+                                        !reduced && "hover:scale-105"
+                                    )}
+                                />
+                            </div>
                         </div>
                     </Reveal>
 
                     {/* Cube collection highlight */}
                     <Reveal reduced={reduced} delay={200}>
                         <div className="group rounded-2xl p-6 sm:p-8 h-full border border-border bg-card text-center flex flex-col items-center justify-center card-hover">
-                            {/* Photos — Rubik's Cube + exploring Japan, side by side on desktop, stacked on mobile */}
+                            {/* Task 2: single Rubik's cube image only.
+                                NOTE: the previous side-by-side Rubik + Japan layout is commented
+                                out below (kept, not deleted) per the "comment out old markup" rule. */}
+                            {/*
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mb-4">
                                 <div className="aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
-                                    <img
-                                        src={cubeHighlight.image}
-                                        alt={cubeHighlight.imageAlt}
-                                        loading="lazy"
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
+                                    <img src={cubeHighlight.image} alt={cubeHighlight.imageAlt} loading="lazy"
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                 </div>
                                 <div className="aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md">
-                                    <img
-                                        src={cubeHighlight.secondImage}
-                                        alt={cubeHighlight.secondImageAlt}
-                                        loading="lazy"
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                    />
+                                    <img src={cubeHighlight.secondImage} alt={cubeHighlight.secondImageAlt} loading="lazy"
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                 </div>
+                            </div>
+                            */}
+                            <div className="w-full max-w-xs aspect-[4/3] overflow-hidden rounded-xl border border-border shadow-md mb-4">
+                                <img
+                                    src={cubeHighlight.image}
+                                    alt={cubeHighlight.imageAlt}
+                                    width="400"
+                                    height="300"
+                                    loading="lazy"
+                                    decoding="async"
+                                    className={cn(
+                                        "w-full h-full object-cover transition-transform duration-500",
+                                        !reduced && "group-hover:scale-105"
+                                    )}
+                                />
                             </div>
                             <div className="p-3 rounded-2xl bg-primary/10 border border-primary/20 mb-3">
                                 <Icon name={cubeHighlight.icon} size={26} aria-hidden="true" className="text-primary" />

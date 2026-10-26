@@ -58,22 +58,27 @@ export const interestGroups = [
 ];
 
 // Highlighted "Always Exploring" card.
+// Image for the Always Exploring card. Brief asked for "japanese.jpg" with a
+// "mountain.jpg" fallback; neither exists in /public/assets — the real file is
+// "japan.jpg". Swap this ONE constant to change the image.
+export const ALWAYS_EXPLORING_IMAGE = "assets/japan.jpg";
 export const alwaysExploring = {
     title: "Always Exploring",
     icon: "Compass",
+    image: ALWAYS_EXPLORING_IMAGE,
+    imageAlt: "Exploring new places — a trip to Japan",
     description:
         "I love trying new things and exploring new experiences. Whether it's a new hobby, sport, activity, game, technology, or creative project, I enjoy learning by doing and stepping outside my comfort zone.",
 };
 
 // Standout personal detail — the cube collection.
+// Task 2: this card now shows ONLY the single Rubik's cube image (rubik.jpg).
 export const cubeHighlight = {
     count: "60+",
     title: "Cubes Collected",
     icon: "Box",
     image: "assets/rubik.jpg",
-    imageAlt: "Rubik's Cube solving",
-    secondImage: "assets/japan.jpg",
-    secondImageAlt: "Exploring Japan",
+    imageAlt: "Rubik's Cube collection",
     description:
         "A personal collection built from my interest in puzzles, problem-solving, and exploring different cube designs.",
 };
