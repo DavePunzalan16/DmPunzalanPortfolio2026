@@ -37,6 +37,22 @@ const GAMES = [
         controls: "WASD / arrows · bump to attack · R new run",
         load: () => import("@/components/arcade/DungeonGame.jsx"),
     },
+    {
+        id: "emojimatch",
+        name: "Emoji Match",
+        icon: "🧩",
+        description: "Memory card-flip game with difficulty levels, combos, and a star rating.",
+        controls: "Click / tap cards to find matching pairs",
+        load: () => import("@/components/arcade/EmojiMatchGame.jsx"),
+    },
+    {
+        id: "cubesudoku",
+        name: "Cube Sudoku",
+        icon: "🟦",
+        description: "6×6 or 9×9 Sudoku with Rubik-cube color tiles, notes, hints, and a daily puzzle.",
+        controls: "Tap a cell · 1–9 keys / palette · N notes · daily seed",
+        load: () => import("@/components/arcade/CubeSudokuGame.jsx"),
+    },
 ];
 
 export const ArcadeSection = () => {

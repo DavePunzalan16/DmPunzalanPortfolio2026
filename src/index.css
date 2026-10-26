@@ -310,9 +310,19 @@
 .arcade-tabbar {
   display: flex;
   gap: 0.25rem;
-  flex-wrap: wrap;
   padding: 0.5rem;
   border-bottom: 1px solid hsl(var(--border));
+  flex-wrap: wrap;
+}
+/* On small screens, scroll horizontally instead of wrapping to many rows. */
+@media (max-width: 560px) {
+  .arcade-tabbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .arcade-tab { flex: 0 0 auto; }
 }
 .arcade-tab {
   display: inline-flex;
@@ -548,4 +558,15 @@
   .cert-tilt { transition: none; }
   .cert-flip:not(.is-flipped) .cert-tilt { transform: none; }
   .cert-glare, .cert-shine { display: none; }
+}
+
+/* Cube Sudoku completion ripple */
+.cube-sudoku-ripple button { animation: cube-ripple 0.8s ease; }
+@keyframes cube-ripple {
+  0% { transform: scale(1) rotate(0); }
+  40% { transform: scale(1.12) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cube-sudoku-ripple button { animation: none; }
 }
