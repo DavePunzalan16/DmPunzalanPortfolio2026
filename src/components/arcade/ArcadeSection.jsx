@@ -32,9 +32,9 @@ const GAMES = [
         id: "dungeon",
         name: "Dungeon",
         icon: "⚔️",
-        description: "Turn-based mini roguelike with seeded floors.",
-        controls: "WASD / arrows · bump to attack",
-        load: null,
+        description: "Turn-based mini roguelike: 5 floors, fog of war, seeded dungeons, a boss.",
+        controls: "WASD / arrows · bump to attack · R new run",
+        load: () => import("@/components/arcade/DungeonGame.jsx"),
     },
 ];
 
