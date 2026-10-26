@@ -16,9 +16,11 @@ import { GoogleMap } from "../components/GoogleMap";
 import { ContactSection } from "../components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { Chatbot } from "@/components/Chatbot";
+import { ViewNav } from "@/components/ViewNav";
 import { ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { unlockAudio } from "@/lib/sound";
+import { initPagedViews } from "@/lib/pagedViews";
 
 export const Home = () => {
   const [showTop, setShowTop] = useState(false);
@@ -35,6 +37,13 @@ export const Home = () => {
     window.addEventListener("pointerdown", unlock, { once: true });
     window.addEventListener("keydown", unlock, { once: true });
     return () => { window.removeEventListener("pointerdown", unlock); window.removeEventListener("keydown", unlock); };
+  }, []);
+
+  // Initialize the paged-view layer (hash-routed single-section view).
+  // Runs after mount so all sections exist; progressive-enhancement safe.
+  useEffect(() => {
+    const cleanup = initPagedViews();
+    return cleanup;
   }, []);
 
   return (
@@ -58,6 +67,8 @@ export const Home = () => {
         <GoogleMap />
         <ContactSection />
       </main>
+
+      <ViewNav />
 
       <Footer />
 

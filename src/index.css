@@ -570,3 +570,44 @@
 @media (prefers-reduced-motion: reduce) {
   .cube-sudoku-ripple button { animation: none; }
 }
+
+/* ─── Paged views (Task D) ──────────────────────────────────────────────── */
+/* Only active when JS adds .view-paged to <html> (progressive enhancement). */
+.view-paged .view-hidden { display: none !important; }
+.view-paged .view-animate { animation: view-enter 0.4s ease; }
+@keyframes view-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Active navbar link highlight (adds a class; never changes structure). */
+.nav-active { color: hsl(var(--primary)) !important; }
+/* Prev/Next view nav */
+.view-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 72rem;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+}
+.view-nav a {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  font-size: 0.8rem;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  max-width: 48%;
+}
+.view-nav a:hover { border-color: hsl(var(--primary) / 0.5); color: hsl(var(--primary)); transform: translateY(-2px); }
+.view-nav a:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+.view-nav .view-nav__dir { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6; }
+.view-nav a:last-child { text-align: right; margin-left: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .view-paged .view-animate { animation: none; }
+  .view-nav a:hover { transform: none; }
+}
