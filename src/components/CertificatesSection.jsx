@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import { Award, ChevronDown, Search, X, Star, ExternalLink, Images } from "lucide-react";
-import { certImageByTitle, certImageUrl, ITCON_TITLE, ITCON_IMAGES } from "@/data/certImages";
+import { Award, ChevronDown, Search, X, Star, ExternalLink, Images, ZoomIn } from "lucide-react";
+import { matchCertificates, ITCON_TITLE } from "@/data/certMatch";
 import { CertLightbox } from "@/components/CertLightbox";
+import { playSound } from "@/lib/sound";
 
 const LINKEDIN_CERTS_URL = "https://www.linkedin.com/in/davematthewpunzalan/details/certifications/";
 
@@ -167,10 +168,15 @@ const IssuerAvatar = ({ issuer }) => {
     );
 };
 
-// Resolve the image URL for a certificate (null → placeholder card).
-const imageForCert = (cert) => {
-    const file = certImageByTitle[cert.title];
-    return file ? certImageUrl(file) : null;
+// Image URL now comes from the manifest-driven matcher (cert.image), set in
+// the main component via matchCertificates(). null → placeholder card.
+const imageForCert = (cert) => cert.image || null;
+
+// Extract an exact date like "April 26, 2025" from a description, if present.
+const exactDateFrom = (text) => {
+    if (!text) return null;
+    const m = text.match(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s*\d{4}\b/);
+    return m ? m[0] : null;
 };
 
 // Card back — shared details (used by normal + ITCON cards).
@@ -184,8 +190,13 @@ const CertBack = ({ cert, colors, extra }) => (
         </div>
         <h4 className="font-semibold text-sm leading-snug mb-1">{cert.title}</h4>
         <p className="text-xs text-primary mb-1">{cert.issuer}</p>
+        {cert.date && <p className="text-[11px] text-muted-foreground">Issued {cert.date}</p>}
+        {exactDateFrom(cert.description) && (
+            <p className="text-[11px] text-muted-foreground">Completed {exactDateFrom(cert.description)}</p>
+        )}
         {cert.platform && <p className="text-[11px] text-muted-foreground">Platform: {cert.platform}</p>}
         {cert.credentialId && <p className="text-[11px] text-muted-foreground">ID: {cert.credentialId}</p>}
+        {cert.description && <p className="text-[11px] text-muted-foreground mt-1 line-clamp-3">{cert.description}</p>}
         {cert.skills?.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-2">
                 {cert.skills.map((s) => (
@@ -210,13 +221,14 @@ const CertBack = ({ cert, colors, extra }) => (
     </div>
 );
 
-const CertCard = ({ cert, index }) => {
+const CertCard = ({ cert, index, onZoom }) => {
     const colors = categoryColors[cert.category] || categoryColors["Front-End & Web Dev"];
     const [visible, setVisible] = useState(false);
     const [flipped, setFlipped] = useState(false);
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgError, setImgError] = useState(false);
     const ref = useRef(null);
+    const innerRef = useRef(null);
     const imgSrc = imageForCert(cert);
 
     useEffect(() => {
@@ -232,13 +244,30 @@ const CertCard = ({ cert, index }) => {
         return () => observer.disconnect();
     }, [index]);
 
-    const toggle = () => setFlipped((f) => !f);
+    const setFlip = (v) => { setFlipped(v); playSound("flip"); };
+    const toggle = () => setFlip(!flipped);
     const onKeyDown = (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
-        else if (e.key === "Escape" && flipped) { e.preventDefault(); setFlipped(false); }
+        else if (e.key === "Escape" && flipped) { e.preventDefault(); setFlip(false); }
     };
-    const hoverOn = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(true); };
-    const hoverOff = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(false); };
+    const canHover = () => window.matchMedia("(hover: hover)").matches;
+    const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const hoverOn = () => { if (canHover()) setFlip(true); };
+    const hoverOff = () => {
+        if (canHover()) setFlip(false);
+        const n = innerRef.current; if (n) { n.style.setProperty("--cert-rx", "0deg"); n.style.setProperty("--cert-ry", "0deg"); }
+    };
+    // mouse-follow tilt + glare (desktop, non-reduced-motion)
+    const onMove = (e) => {
+        if (!canHover() || reduced()) return;
+        const n = innerRef.current; if (!n) return;
+        const r = n.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        n.style.setProperty("--cert-ry", `${(px - 0.5) * 10}deg`);
+        n.style.setProperty("--cert-rx", `${-(py - 0.5) * 10}deg`);
+        n.style.setProperty("--cert-gx", `${px * 100}%`);
+        n.style.setProperty("--cert-gy", `${py * 100}%`);
+    };
 
     return (
         <div
@@ -249,6 +278,7 @@ const CertCard = ({ cert, index }) => {
             )}
         >
             <div
+                ref={innerRef}
                 role="button"
                 tabIndex={0}
                 aria-pressed={flipped}
@@ -257,12 +287,13 @@ const CertCard = ({ cert, index }) => {
                 onKeyDown={onKeyDown}
                 onMouseEnter={hoverOn}
                 onMouseLeave={hoverOff}
-                className={cn("cert-flip__inner outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl", flipped && "is-flipped")}
+                onMouseMove={onMove}
+                className={cn("cert-flip__inner cert-tilt outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl", flipped && "is-flipped")}
             >
-                {/* FRONT — image or placeholder */}
+                {/* FRONT — certificate image (contain over a blurred, darkened copy) */}
                 <div className="cert-flip__front cert-flip__face border border-border/60 bg-card">
                     {cert.featured && (
-                        <div className="absolute top-2 left-2 z-20">
+                        <div className="absolute top-2 left-2 z-30">
                             <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary text-primary-foreground shadow">
                                 <Star className="h-2.5 w-2.5 fill-current" /> Featured
                             </span>
@@ -271,6 +302,12 @@ const CertCard = ({ cert, index }) => {
                     {imgSrc && !imgError ? (
                         <>
                             {!imgLoaded && <div className="cert-skeleton absolute inset-0" aria-hidden="true" />}
+                            {/* blurred darkened backdrop so the full cert is never cropped */}
+                            <div
+                                className="cert-front-bg"
+                                style={{ backgroundImage: `url("${imgSrc}")` }}
+                                aria-hidden="true"
+                            />
                             <img
                                 src={imgSrc}
                                 alt={cert.title}
@@ -280,17 +317,31 @@ const CertCard = ({ cert, index }) => {
                                 decoding="async"
                                 onLoad={() => setImgLoaded(true)}
                                 onError={() => setImgError(true)}
-                                className="w-full h-full object-cover"
+                                className="relative z-10 w-full h-full object-contain p-1.5"
                             />
+                            {/* light-sweep shine on hover */}
+                            <span className="cert-shine" aria-hidden="true" />
+                            {/* glare highlight */}
+                            <span className="cert-glare" aria-hidden="true" />
+                            {/* Zoom button */}
+                            <button
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); playSound("click"); onZoom?.([imgSrc], cert.title); }}
+                                aria-label={`Zoom ${cert.title}`}
+                                className="absolute top-2 right-2 z-30 p-1.5 rounded-full bg-background/80 border border-border text-foreground hover:text-primary hover:border-primary/40 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                            >
+                                <ZoomIn className="h-3.5 w-3.5" />
+                            </button>
                         </>
                     ) : (
                         <div className={cn("w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-center", colors.bg)}>
                             <Award className={cn("h-8 w-8", colors.text)} />
                             <span className="text-xs font-medium text-foreground line-clamp-3">{cert.issuer}</span>
+                            {cert.tag && <span className="text-[10px] px-2 py-0.5 rounded-full border border-border text-muted-foreground">{cert.tag}</span>}
                         </div>
                     )}
-                    <span className="absolute bottom-2 right-2 z-20 text-[10px] px-2 py-0.5 rounded-full bg-background/80 border border-border text-foreground">
-                        {cert.date}
+                    <span className="absolute bottom-2 right-2 z-30 text-[10px] px-2 py-0.5 rounded-full bg-background/80 border border-border text-foreground">
+                        {cert.date || "—"}
                     </span>
                 </div>
 
@@ -302,14 +353,13 @@ const CertCard = ({ cert, index }) => {
 };
 
 // Special ITCON card: stacked-pages front + gallery.
-const ItconCard = ({ cert, index }) => {
+const ItconCard = ({ cert, index, images = [] }) => {
     const colors = categoryColors[cert.category] || categoryColors["Competitions & Events"];
     const [visible, setVisible] = useState(false);
     const [flipped, setFlipped] = useState(false);
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const ref = useRef(null);
     const triggerRef = useRef(null);
-    const images = ITCON_IMAGES.map((f) => certImageUrl(f));
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -320,12 +370,12 @@ const ItconCard = ({ cert, index }) => {
         return () => observer.disconnect();
     }, [index]);
 
-    const toggle = () => setFlipped((f) => !f);
+    const toggle = () => { setFlipped((f) => !f); playSound("flip"); };
     const onKeyDown = (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
         else if (e.key === "Escape" && flipped) { e.preventDefault(); setFlipped(false); }
     };
-    const hoverOn = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(true); };
+    const hoverOn = () => { if (window.matchMedia("(hover: hover)").matches) { setFlipped(true); playSound("flip"); } };
     const hoverOff = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(false); };
     const closeLightbox = () => { setLightboxOpen(false); triggerRef.current?.focus(); };
 
@@ -377,23 +427,49 @@ export const CertificatesSection = () => {
     const [activeCategory, setActiveCategory] = useState("All");
     const [search, setSearch] = useState("");
     const [showAll, setShowAll] = useState(false);
+    const [zoom, setZoom] = useState(null); // { images, title } | null
     const INITIAL_COUNT = 12;
 
-    const filtered = certificates.filter((c) => {
+    // Manifest-driven matching (image per card + ITCON group + report).
+    const { cards: allCards, itcon, report } = useMemo(
+        () => matchCertificates(certificates),
+        []
+    );
+
+    // Print the MATCH REPORT once (dev only).
+    useEffect(() => {
+        if (import.meta.env.DEV) {
+            console.groupCollapsed("%cCERTIFICATE MATCH REPORT", "color:#8b5cf6;font-weight:bold");
+            console.log("Files on disk:", report.totalFilesOnDisk, "| Used files:", report.usedFiles);
+            console.log("Cards rendered:", report.cardsRendered);
+            console.log("Unmatched files:", report.unmatchedFiles);
+            console.log("Unmatched entries (placeholder):", report.unmatchedEntries);
+            console.log("Auto-generated cards (orphan images):", report.autoCards);
+            console.log("Low-confidence matches:", report.lowConfidence);
+            console.groupEnd();
+        }
+    }, [report]);
+
+    const openZoom = (images, title) => setZoom({ images, title });
+
+    const filtered = allCards.filter((c) => {
         const matchCat = activeCategory === "All" || c.category === activeCategory;
+        const q = search.toLowerCase();
         const matchSearch =
             search === "" ||
-            c.title.toLowerCase().includes(search.toLowerCase()) ||
-            c.issuer.toLowerCase().includes(search.toLowerCase());
+            c.title.toLowerCase().includes(q) ||
+            (c.issuer || "").toLowerCase().includes(q) ||
+            (c.skills || []).some((s) => s.toLowerCase().includes(q));
         return matchCat && matchSearch;
     });
 
     const displayed = showAll ? filtered : filtered.slice(0, INITIAL_COUNT);
+    const totalCount = allCards.length; // includes IT Convention + auto-cards
 
     const stats = [
-        { value: `${certificates.length}`, label: "Certificates" },
-        { value: `${certificates.filter(c => c.featured).length}`, label: "Featured" },
-        { value: `${[...new Set(certificates.map(c => c.issuer))].length}+`, label: "Issuers" },
+        { value: `${totalCount}`, label: "Certificates" },
+        { value: `${allCards.filter(c => c.featured).length}`, label: "Featured" },
+        { value: `${[...new Set(allCards.map(c => c.issuer))].length}+`, label: "Issuers" },
         { value: `${categories.length - 1}`, label: "Categories" },
     ];
 
@@ -463,8 +539,8 @@ export const CertificatesSection = () => {
                 <div className="flex flex-wrap justify-center gap-2 mb-10">
                     {categories.map((cat) => {
                         const count = cat === "All"
-                            ? certificates.length
-                            : certificates.filter(c => c.category === cat).length;
+                            ? totalCount
+                            : allCards.filter(c => c.category === cat).length;
                         const colors = cat !== "All" ? categoryColors[cat] : null;
 
                         return (
@@ -513,12 +589,17 @@ export const CertificatesSection = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {displayed.map((cert, index) =>
                         cert.title === ITCON_TITLE ? (
-                            <ItconCard key={`${cert.title}-${index}`} cert={cert} index={index} />
+                            <ItconCard key={`${cert.title}-${index}`} cert={cert} index={index} images={itcon.images} />
                         ) : (
-                            <CertCard key={`${cert.title}-${index}`} cert={cert} index={index} />
+                            <CertCard key={`${cert.title}-${index}`} cert={cert} index={index} onZoom={openZoom} />
                         )
                     )}
                 </div>
+
+                {/* Shared zoom lightbox (full certificate image) */}
+                {zoom && (
+                    <CertLightbox images={zoom.images} title={zoom.title} onClose={() => setZoom(null)} />
+                )}
 
                 {/* Empty State */}
                 {filtered.length === 0 && (

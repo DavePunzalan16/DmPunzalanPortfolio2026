@@ -2,6 +2,7 @@
 import {
     setupCanvas, createLoop, loadBest, saveBest, prefersReducedMotion, cssColor,
 } from "@/components/arcade/arcadeUtils.js";
+import { playSound } from "@/lib/sound";
 
 const W = 460, H = 560;
 const GAME_ID = "plinko";
@@ -103,6 +104,7 @@ export default function mountPlinko(el, api) {
         if (state.score > state.best) { state.best = state.score; saveBest(GAME_ID, state.best); api.onBest?.(state.best); }
         api.onScore?.(state.score);
         const sx = slotW * (slotIndex + 0.5);
+        playSound("slot", { mult });
         state.flashes.push({ x: sx, y: slotTop, text: `+${gain}${mult >= 3 && state.combo > 1 ? ` x${state.combo}` : ""}`, life: 1, color: slotColor(mult) });
         addParticles(sx, slotTop, slotColor(mult), 10);
         if (state.ballsLeft <= 0 && state.balls.length === 0) state.roundOver = true;
@@ -136,6 +138,7 @@ export default function mountPlinko(el, api) {
                     b.vy = (b.vy - 2 * vn * ny) * REST;
                     // jitter
                     b.vx += (Math.random() - 0.5) * 60;
+                    playSound("peg", { pitch: Math.round((p.y / H) * 300) });
                     addParticles(p.x, p.y, primary, 2);
                 }
             }

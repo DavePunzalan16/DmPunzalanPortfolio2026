@@ -3,6 +3,7 @@
 import {
     loadBest, saveBest, prefersReducedMotion, mulberry32, strToSeed, todaySeedString,
 } from "@/components/arcade/arcadeUtils.js";
+import { playSound } from "@/lib/sound";
 
 const SIZE = 4;
 const GAME_ID = "bomb2048";
@@ -205,6 +206,10 @@ export default function mount2048(el, api) {
 
         const after = serialize();
         if (after === before && explosions.length === 0) return; // no move
+
+        if (explosions.length) playSound("bomb");
+        else if (score > snap.score) playSound("merge");
+        else playSound("slide");
 
         prev = snap;
         spawn();

@@ -18,6 +18,7 @@ import { Footer } from "@/components/Footer";
 import { Chatbot } from "@/components/Chatbot";
 import { ArrowUp } from "lucide-react";
 import { useState, useEffect } from "react";
+import { unlockAudio } from "@/lib/sound";
 
 export const Home = () => {
   const [showTop, setShowTop] = useState(false);
@@ -26,6 +27,14 @@ export const Home = () => {
     const handleScroll = () => setShowTop(window.scrollY > 400);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Unlock WebAudio on the very first user gesture (required by browsers).
+  useEffect(() => {
+    const unlock = () => { unlockAudio(); window.removeEventListener("pointerdown", unlock); window.removeEventListener("keydown", unlock); };
+    window.addEventListener("pointerdown", unlock, { once: true });
+    window.addEventListener("keydown", unlock, { once: true });
+    return () => { window.removeEventListener("pointerdown", unlock); window.removeEventListener("keydown", unlock); };
   }, []);
 
   return (
