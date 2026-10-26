@@ -10,6 +10,7 @@ import { ExperienceSection } from "../components/ExperienceSection";
 import { VolunteerSection } from "../components/VolunteerSection";
 import { ProjectsSection } from "../components/ProjectsSection";
 import { CertificatesSection } from "../components/CertificatesSection";
+import { ArcadeSection } from "../components/arcade/ArcadeSection";
 import { CommunityMoments } from "../components/CommunityMoments";
 import { GoogleMap } from "../components/GoogleMap";
 import { ContactSection } from "../components/ContactSection";
@@ -43,6 +44,7 @@ export const Home = () => {
         <VolunteerSection />
         <ProjectsSection />
         <CertificatesSection />
+        <ArcadeSection />
         <CommunityMoments />
         <GoogleMap />
         <ContactSection />
