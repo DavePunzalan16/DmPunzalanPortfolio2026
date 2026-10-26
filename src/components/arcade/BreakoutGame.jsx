@@ -4,6 +4,7 @@
 import {
     setupCanvas, createLoop, loadBest, saveBest, prefersReducedMotion, cssColor,
 } from "@/components/arcade/arcadeUtils.js";
+import { playSound } from "@/lib/sound";
 
 const W = 560, H = 420;             // fixed logical resolution
 const PADDLE_W = 90, PADDLE_H = 12;
@@ -133,6 +134,7 @@ export default function mountBreakout(el, api) {
     const fireLaser = () => {
         if (!state.effects.laser || state.laserCooldown > 0) return;
         state.laserCooldown = 0.4;
+        playSound("laser");
         state.lasers.push({ x: state.paddleX + 8, y: H - 30 });
         state.lasers.push({ x: state.paddleX + state.paddleW - 8, y: H - 30 });
     };
@@ -153,6 +155,7 @@ export default function mountBreakout(el, api) {
     };
 
     const activate = (type) => {
+        playSound("powerup");
         if (type === "wide") { state.effects.wide = 12; state.paddleW = 140; }
         else if (type === "slow") { state.effects.slow = 10; }
         else if (type === "laser") { state.effects.laser = 12; }
@@ -170,7 +173,7 @@ export default function mountBreakout(el, api) {
     };
 
     const nextLevel = () => {
-        if (state.level >= LEVELS) { state.won = true; state.running = false; saveBest(GAME_ID, state.score); api.onBest?.(loadBest(GAME_ID)); return; }
+        if (state.level >= LEVELS) { state.won = true; state.running = false; playSound("win"); saveBest(GAME_ID, state.score); api.onBest?.(loadBest(GAME_ID)); return; }
         state.level++;
         state.bricks = buildLevel(state.level);
         state.banner = `Level ${state.level}`;
@@ -181,6 +184,7 @@ export default function mountBreakout(el, api) {
 
     const loseLife = () => {
         state.lives--;
+        playSound("lifelost");
         if (state.lives <= 0) {
             state.over = true;
             state.running = false;
@@ -215,6 +219,7 @@ export default function mountBreakout(el, api) {
                 // clamp min vertical speed to avoid horizontal loops
                 if (Math.abs(b.vy) < 120) b.vy = -120;
                 b.y = py - BALL_R;
+                playSound("bounce");
             }
             // bricks — resolve by least penetration
             for (let i = 0; i < state.bricks.length; i++) {
@@ -240,6 +245,7 @@ export default function mountBreakout(el, api) {
         if (br.hp <= 0) {
             state.score += br.maxHp * 10;
             api.onScore?.(state.score);
+            playSound("brick");
             addParticles(br.x + br.w / 2, br.y + br.h / 2, brickColor(br.maxHp, br.maxHp));
             if (Math.random() < 0.15) spawnPowerup(br.x + br.w / 2, br.y + br.h / 2);
             state.bricks.splice(i, 1);

@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "cert-manifest": "node scripts/build-cert-manifest.mjs",
+    "predev": "node scripts/build-cert-manifest.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/build-cert-manifest.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

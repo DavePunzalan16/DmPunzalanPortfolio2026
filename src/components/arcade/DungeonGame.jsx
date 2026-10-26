@@ -2,6 +2,7 @@
 import {
     setupCanvas, loadBest, saveBest, cssColor, mulberry32,
 } from "@/components/arcade/arcadeUtils.js";
+import { playSound } from "@/lib/sound";
 
 const GAME_ID = "dungeon";
 const MAP_W = 40, MAP_H = 28;         // full map
@@ -236,9 +237,10 @@ export default function mountDungeon(el, api) {
         if (G.over || G.won) return;
         const nx = G.player.x + dx, ny = G.player.y + dy;
         const foe = enemyAt(nx, ny);
-        if (foe) { attack(G.player, foe, "player"); enemyTurn(); render(); return; }
+        if (foe) { attack(G.player, foe, "player"); playSound("hit"); enemyTurn(); render(); return; }
         if (!isWalkable(nx, ny)) return;
         G.player.x = nx; G.player.y = ny;
+        playSound("step");
 
         // pickups
         const pi = G.pickups.findIndex((p) => p.x === nx && p.y === ny);
@@ -248,13 +250,14 @@ export default function mountDungeon(el, api) {
             else if (p.kind === "gold") { const g = 10 + Math.floor(rng() * 20); G.player.gold += g; addLog(`You grab ${g} gold.`); }
             else { G.player.atk += 2; addLog("Weapon upgrade! (+2 ATK)"); }
             G.pickups.splice(pi, 1);
+            playSound("pickup");
             api.onScore?.(G.player.gold + G.floor * 100);
         }
 
         // stairs
         if (G.map[ny][nx] === STAIRS) {
             if (G.floor >= FLOORS) { /* boss floor; win via boss */ }
-            else { G.floor++; genFloor(); render(); return; }
+            else { G.floor++; playSound("stairs"); genFloor(); render(); return; }
         }
 
         computeFOV();

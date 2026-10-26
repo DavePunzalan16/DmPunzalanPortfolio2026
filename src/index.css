@@ -310,9 +310,19 @@
 .arcade-tabbar {
   display: flex;
   gap: 0.25rem;
-  flex-wrap: wrap;
   padding: 0.5rem;
   border-bottom: 1px solid hsl(var(--border));
+  flex-wrap: wrap;
+}
+/* On small screens, scroll horizontally instead of wrapping to many rows. */
+@media (max-width: 560px) {
+  .arcade-tabbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .arcade-tab { flex: 0 0 auto; }
 }
 .arcade-tab {
   display: inline-flex;
@@ -480,4 +490,124 @@
 @media (hover: none), (prefers-reduced-motion: reduce) {
   .fx-tilt { transform: none !important; }
   .fx-tilt__glare { display: none; }
+}
+
+/* ─── Certificate card visual upgrades (Task A6) ─────────────────────────── */
+
+/* Mouse-follow tilt layered on top of the flip. The flip sets rotateY(180);
+   the tilt vars add a small extra rotation on the FRONT (not flipped) state. */
+.cert-tilt {
+  transition: transform 0.7s cubic-bezier(.2,.8,.2,1.2); /* slight overshoot */
+}
+.cert-flip:not(.is-flipped) .cert-tilt {
+  transform: perspective(1000px) rotateX(var(--cert-rx, 0deg)) rotateY(var(--cert-ry, 0deg));
+}
+
+/* Blurred, darkened backdrop copy of the certificate so object-fit:contain
+   never leaves ugly empty bars and the cert text is never cropped. */
+.cert-front-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(14px) brightness(0.45) saturate(1.1);
+  transform: scale(1.1);
+  z-index: 0;
+}
+
+/* Glare highlight that follows the cursor (set via --cert-gx/gy). */
+.cert-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  background: radial-gradient(circle at var(--cert-gx, 50%) var(--cert-gy, 50%), rgba(255,255,255,0.22), transparent 42%);
+}
+@media (hover: hover) {
+  .cert-flip:not(.is-flipped):hover .cert-glare { opacity: 1; }
+}
+
+/* Light-sweep shine that crosses the card on hover. */
+.cert-shine {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 50%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent);
+  transform: skewX(-18deg);
+  opacity: 0;
+}
+@media (hover: hover) {
+  .cert-flip:not(.is-flipped):hover .cert-shine {
+    animation: cert-shine-sweep 0.8s ease;
+  }
+}
+@keyframes cert-shine-sweep {
+  0% { left: -60%; opacity: 0; }
+  15% { opacity: 1; }
+  100% { left: 120%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-tilt { transition: none; }
+  .cert-flip:not(.is-flipped) .cert-tilt { transform: none; }
+  .cert-glare, .cert-shine { display: none; }
+}
+
+/* Cube Sudoku completion ripple */
+.cube-sudoku-ripple button { animation: cube-ripple 0.8s ease; }
+@keyframes cube-ripple {
+  0% { transform: scale(1) rotate(0); }
+  40% { transform: scale(1.12) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cube-sudoku-ripple button { animation: none; }
+}
+
+/* ─── Paged views (Task D) ──────────────────────────────────────────────── */
+/* Only active when JS adds .view-paged to <html> (progressive enhancement). */
+.view-paged .view-hidden { display: none !important; }
+.view-paged .view-animate { animation: view-enter 0.4s ease; }
+@keyframes view-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Active navbar link highlight (adds a class; never changes structure). */
+.nav-active { color: hsl(var(--primary)) !important; }
+/* Prev/Next view nav */
+.view-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 72rem;
+  margin: 2.5rem auto 0;
+  padding: 0 1rem;
+}
+.view-nav a {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  font-size: 0.8rem;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  max-width: 48%;
+}
+.view-nav a:hover { border-color: hsl(var(--primary) / 0.5); color: hsl(var(--primary)); transform: translateY(-2px); }
+.view-nav a:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
+.view-nav .view-nav__dir { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6; }
+.view-nav a:last-child { text-align: right; margin-left: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .view-paged .view-animate { animation: none; }
+  .view-nav a:hover { transform: none; }
 }

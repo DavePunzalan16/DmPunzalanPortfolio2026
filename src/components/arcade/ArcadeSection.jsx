@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Gamepad2, Volume2, VolumeX } from "lucide-react";
+import { isMuted as soundIsMuted, toggleMuted as soundToggleMuted, unlockAudio } from "@/lib/sound";
 
 // Game registry — add a 5th game later with one entry.
 // Each game exposes a default export: a factory (mountEl, api) => cleanupFn.
@@ -36,12 +37,28 @@ const GAMES = [
         controls: "WASD / arrows · bump to attack · R new run",
         load: () => import("@/components/arcade/DungeonGame.jsx"),
     },
+    {
+        id: "emojimatch",
+        name: "Emoji Match",
+        icon: "🧩",
+        description: "Memory card-flip game with difficulty levels, combos, and a star rating.",
+        controls: "Click / tap cards to find matching pairs",
+        load: () => import("@/components/arcade/EmojiMatchGame.jsx"),
+    },
+    {
+        id: "cubesudoku",
+        name: "Cube Sudoku",
+        icon: "🟦",
+        description: "6×6 or 9×9 Sudoku with Rubik-cube color tiles, notes, hints, and a daily puzzle.",
+        controls: "Tap a cell · 1–9 keys / palette · N notes · daily seed",
+        load: () => import("@/components/arcade/CubeSudokuGame.jsx"),
+    },
 ];
 
 export const ArcadeSection = () => {
     const [activeId, setActiveId] = useState(GAMES[0].id);
     const [started, setStarted] = useState(false);
-    const [muted, setMuted] = useState(true);
+    const [muted, setMuted] = useState(soundIsMuted());
     const [score, setScore] = useState(0);
     const [best, setBest] = useState(0);
     const [loadError, setLoadError] = useState(false);
@@ -50,7 +67,7 @@ export const ArcadeSection = () => {
     const mountRef = useRef(null);
     const cleanupRef = useRef(null);
     const sectionRef = useRef(null);
-    const mutedRef = useRef(true);
+    const mutedRef = useRef(soundIsMuted());
 
     const active = GAMES.find((g) => g.id === activeId);
 
@@ -127,7 +144,7 @@ export const ArcadeSection = () => {
         else if (e.key === "ArrowLeft") { e.preventDefault(); selectTab(GAMES[(idx - 1 + GAMES.length) % GAMES.length].id); }
     };
 
-    const toggleMute = () => { setMuted((m) => { mutedRef.current = !m; return !m; }); };
+    const toggleMute = () => { const m = soundToggleMuted(); mutedRef.current = m; setMuted(m); };
     const restart = () => { teardown(); setScore(0); setRestartKey((k) => k + 1); setStarted(true); };
 
     return (
@@ -199,7 +216,7 @@ export const ArcadeSection = () => {
                                     {loadError ? (
                                         <p className="text-sm text-red-300">Couldn't load this game. Try again.</p>
                                     ) : active?.load ? (
-                                        <button type="button" className="arcade-btn" onClick={() => setStarted(true)}>
+                                        <button type="button" className="arcade-btn" onClick={() => { unlockAudio(); setStarted(true); }}>
                                             ▶ Click to play
                                         </button>
                                     ) : (
