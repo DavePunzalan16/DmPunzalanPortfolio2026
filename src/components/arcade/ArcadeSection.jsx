@@ -18,23 +18,23 @@ const GAMES = [
         icon: "💣",
         description: "2048 with a rare exploding bomb tile + daily seed.",
         controls: "Arrow keys / WASD / swipe",
-        load: null, // coming soon
+        load: () => import("@/components/arcade/Game2048.jsx"),
     },
     {
         id: "plinko",
         name: "Plinko",
         icon: "🔵",
-        description: "Physics ball drop with multipliers and combos.",
-        controls: "Click / Space to drop",
-        load: null,
+        description: "Physics ball drop with multipliers and combos. Just for fun.",
+        controls: "Move to aim · Click / Space to drop · N new round",
+        load: () => import("@/components/arcade/PlinkoGame.jsx"),
     },
     {
         id: "dungeon",
         name: "Dungeon",
         icon: "⚔️",
-        description: "Turn-based mini roguelike with seeded floors.",
-        controls: "WASD / arrows · bump to attack",
-        load: null,
+        description: "Turn-based mini roguelike: 5 floors, fog of war, seeded dungeons, a boss.",
+        controls: "WASD / arrows · bump to attack · R new run",
+        load: () => import("@/components/arcade/DungeonGame.jsx"),
     },
 ];
 
