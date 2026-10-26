@@ -1,0 +1,411 @@
+{
+  "dir": "Certs",
+  "count": 81,
+  "files": [
+    {
+      "file": "5GEN_5G.jpg",
+      "stem": "5GEN_5G",
+      "url": "assets/Certs/5GEN_5G.jpg"
+    },
+    {
+      "file": "AdvancedExcelUnlockingPowerfulFeaturesFunctions.jpg",
+      "stem": "AdvancedExcelUnlockingPowerfulFeaturesFunctions",
+      "url": "assets/Certs/AdvancedExcelUnlockingPowerfulFeaturesFunctions.jpg"
+    },
+    {
+      "file": "ASONG_GUMAT_S.jpg",
+      "stem": "ASONG_GUMAT_S",
+      "url": "assets/Certs/ASONG_GUMAT_S.jpg"
+    },
+    {
+      "file": "AzureFundamentalsTraining.jpg",
+      "stem": "AzureFundamentalsTraining",
+      "url": "assets/Certs/AzureFundamentalsTraining.jpg"
+    },
+    {
+      "file": "BuildingAIAgentsandAppswithAzureAIFoundry.jpg",
+      "stem": "BuildingAIAgentsandAppswithAzureAIFoundry",
+      "url": "assets/Certs/BuildingAIAgentsandAppswithAzureAIFoundry.jpg"
+    },
+    {
+      "file": "BuildingAToDoAppwithFlask.jpg",
+      "stem": "BuildingAToDoAppwithFlask",
+      "url": "assets/Certs/BuildingAToDoAppwithFlask.jpg"
+    },
+    {
+      "file": "C.LCSC_Codesignal.jpg",
+      "stem": "C.LCSC_Codesignal",
+      "url": "assets/Certs/C.LCSC_Codesignal.jpg"
+    },
+    {
+      "file": "C.O.A_RCYC.jpg",
+      "stem": "C.O.A_RCYC",
+      "url": "assets/Certs/C.O.A_RCYC.jpg"
+    },
+    {
+      "file": "C.O.A_YFA.jpg",
+      "stem": "C.O.A_YFA",
+      "url": "assets/Certs/C.O.A_YFA.jpg"
+    },
+    {
+      "file": "C.O.M_ZENITH.jpg",
+      "stem": "C.O.M_ZENITH",
+      "url": "assets/Certs/C.O.M_ZENITH.jpg"
+    },
+    {
+      "file": "C++_Codesignal.jpg",
+      "stem": "C++_Codesignal",
+      "url": "assets/Certs/C%2B%2B_Codesignal.jpg"
+    },
+    {
+      "file": "CareerAccelerator.jpg",
+      "stem": "CareerAccelerator",
+      "url": "assets/Certs/CareerAccelerator.jpg"
+    },
+    {
+      "file": "COC_WORKSHOP_PAID.jpg",
+      "stem": "COC_WORKSHOP_PAID",
+      "url": "assets/Certs/COC_WORKSHOP_PAID.jpg"
+    },
+    {
+      "file": "CODEACADEMY_JS.COURSE.jpg",
+      "stem": "CODEACADEMY_JS.COURSE",
+      "url": "assets/Certs/CODEACADEMY_JS.COURSE.jpg"
+    },
+    {
+      "file": "Codecademy_HTML.jpg",
+      "stem": "Codecademy_HTML",
+      "url": "assets/Certs/Codecademy_HTML.jpg"
+    },
+    {
+      "file": "CPR_CARAVAN_rCYC.jpg",
+      "stem": "CPR_CARAVAN_rCYC",
+      "url": "assets/Certs/CPR_CARAVAN_rCYC.jpg"
+    },
+    {
+      "file": "CREATIVESCERT.jpg",
+      "stem": "CREATIVESCERT",
+      "url": "assets/Certs/CREATIVESCERT.jpg"
+    },
+    {
+      "file": "DSAcert.jpg",
+      "stem": "DSAcert",
+      "url": "assets/Certs/DSAcert.jpg"
+    },
+    {
+      "file": "EnhancingFlaskwithAdditionalFeatures.jpg",
+      "stem": "EnhancingFlaskwithAdditionalFeatures",
+      "url": "assets/Certs/EnhancingFlaskwithAdditionalFeatures.jpg"
+    },
+    {
+      "file": "ENSCantibullying.jpg",
+      "stem": "ENSCantibullying",
+      "url": "assets/Certs/ENSCantibullying.jpg"
+    },
+    {
+      "file": "ExcelWebinarPaid.jpg",
+      "stem": "ExcelWebinarPaid",
+      "url": "assets/Certs/ExcelWebinarPaid.jpg"
+    },
+    {
+      "file": "F.O.T_HACKTOBERFEST.jpg",
+      "stem": "F.O.T_HACKTOBERFEST",
+      "url": "assets/Certs/F.O.T_HACKTOBERFEST.jpg"
+    },
+    {
+      "file": "Front-EndEngineeringwithReact.jpg",
+      "stem": "Front-EndEngineeringwithReact",
+      "url": "assets/Certs/Front-EndEngineeringwithReact.jpg"
+    },
+    {
+      "file": "FundamentalsOfPythonProgramming.jpg",
+      "stem": "FundamentalsOfPythonProgramming",
+      "url": "assets/Certs/FundamentalsOfPythonProgramming.jpg"
+    },
+    {
+      "file": "GDSC2023_UE.jpg",
+      "stem": "GDSC2023_UE",
+      "url": "assets/Certs/GDSC2023_UE.jpg"
+    },
+    {
+      "file": "GDSCFIGUI.jpg",
+      "stem": "GDSCFIGUI",
+      "url": "assets/Certs/GDSCFIGUI.jpg"
+    },
+    {
+      "file": "GDSCUEWebFoundations.png",
+      "stem": "GDSCUEWebFoundations",
+      "url": "assets/Certs/GDSCUEWebFoundations.png"
+    },
+    {
+      "file": "GettingDeeperintoReact.jpg",
+      "stem": "GettingDeeperintoReact",
+      "url": "assets/Certs/GettingDeeperintoReact.jpg"
+    },
+    {
+      "file": "GettingStartedwithFlaskandWebDevelopment.jpg",
+      "stem": "GettingStartedwithFlaskandWebDevelopment",
+      "url": "assets/Certs/GettingStartedwithFlaskandWebDevelopment.jpg"
+    },
+    {
+      "file": "GettingStartedwithOpenAIWhisperAPIinPython_Codesignal.jpg",
+      "stem": "GettingStartedwithOpenAIWhisperAPIinPython_Codesignal",
+      "url": "assets/Certs/GettingStartedwithOpenAIWhisperAPIinPython_Codesignal.jpg"
+    },
+    {
+      "file": "GSW_JAVA.jpg",
+      "stem": "GSW_JAVA",
+      "url": "assets/Certs/GSW_JAVA.jpg"
+    },
+    {
+      "file": "H.P_YFA.jpg",
+      "stem": "H.P_YFA",
+      "url": "assets/Certs/H.P_YFA.jpg"
+    },
+    {
+      "file": "HASHINGPYTHON.jpg",
+      "stem": "HASHINGPYTHON",
+      "url": "assets/Certs/HASHINGPYTHON.jpg"
+    },
+    {
+      "file": "HTML5_GAMEDEV.jpg",
+      "stem": "HTML5_GAMEDEV",
+      "url": "assets/Certs/HTML5_GAMEDEV.jpg"
+    },
+    {
+      "file": "HTMLCSS.jpg",
+      "stem": "HTMLCSS",
+      "url": "assets/Certs/HTMLCSS.jpg"
+    },
+    {
+      "file": "HTMLCSSCoursera.jpeg",
+      "stem": "HTMLCSSCoursera",
+      "url": "assets/Certs/HTMLCSSCoursera.jpeg"
+    },
+    {
+      "file": "IntegratingASQLDatabasetoFlask_Codesignal.jpg",
+      "stem": "IntegratingASQLDatabasetoFlask_Codesignal",
+      "url": "assets/Certs/IntegratingASQLDatabasetoFlask_Codesignal.jpg"
+    },
+    {
+      "file": "Intro_FrontEndDev.jpeg",
+      "stem": "Intro_FrontEndDev",
+      "url": "assets/Certs/Intro_FrontEndDev.jpeg"
+    },
+    {
+      "file": "INTRO_JS_REACT_DEV.jpg",
+      "stem": "INTRO_JS_REACT_DEV",
+      "url": "assets/Certs/INTRO_JS_REACT_DEV.jpg"
+    },
+    {
+      "file": "IntroductiontoWebDevelopmentinReact_Codesignal.jpg",
+      "stem": "IntroductiontoWebDevelopmentinReact_Codesignal",
+      "url": "assets/Certs/IntroductiontoWebDevelopmentinReact_Codesignal.jpg"
+    },
+    {
+      "file": "ITCON1.jpg",
+      "stem": "ITCON1",
+      "url": "assets/Certs/ITCON1.jpg"
+    },
+    {
+      "file": "ITCON2.jpg",
+      "stem": "ITCON2",
+      "url": "assets/Certs/ITCON2.jpg"
+    },
+    {
+      "file": "ITCON3.jpg",
+      "stem": "ITCON3",
+      "url": "assets/Certs/ITCON3.jpg"
+    },
+    {
+      "file": "ITCON4.jpg",
+      "stem": "ITCON4",
+      "url": "assets/Certs/ITCON4.jpg"
+    },
+    {
+      "file": "ITCON5.jpg",
+      "stem": "ITCON5",
+      "url": "assets/Certs/ITCON5.jpg"
+    },
+    {
+      "file": "ITCON6.jpg",
+      "stem": "ITCON6",
+      "url": "assets/Certs/ITCON6.jpg"
+    },
+    {
+      "file": "iThinkHackathon.jpg",
+      "stem": "iThinkHackathon",
+      "url": "assets/Certs/iThinkHackathon.jpg"
+    },
+    {
+      "file": "J.E.O.S.jpg",
+      "stem": "J.E.O.S",
+      "url": "assets/Certs/J.E.O.S.jpg"
+    },
+    {
+      "file": "L.E.F.G.S.jpg",
+      "stem": "L.E.F.G.S",
+      "url": "assets/Certs/L.E.F.G.S.jpg"
+    },
+    {
+      "file": "L.S.D.S.A_Codesignal.jpg",
+      "stem": "L.S.D.S.A_Codesignal",
+      "url": "assets/Certs/L.S.D.S.A_Codesignal.jpg"
+    },
+    {
+      "file": "LF_PYTHON_FFMPEG_Codesignal.jpg",
+      "stem": "LF_PYTHON_FFMPEG_Codesignal",
+      "url": "assets/Certs/LF_PYTHON_FFMPEG_Codesignal.jpg"
+    },
+    {
+      "file": "LINK.LIST.QUEE_PYTHON.jpg",
+      "stem": "LINK.LIST.QUEE_PYTHON",
+      "url": "assets/Certs/LINK.LIST.QUEE_PYTHON.jpg"
+    },
+    {
+      "file": "LITS_ScanQuest.jpg",
+      "stem": "LITS_ScanQuest",
+      "url": "assets/Certs/LITS_ScanQuest.jpg"
+    },
+    {
+      "file": "MASTERING_ALGO_DSA_PYTHON.jpg",
+      "stem": "MASTERING_ALGO_DSA_PYTHON",
+      "url": "assets/Certs/MASTERING_ALGO_DSA_PYTHON.jpg"
+    },
+    {
+      "file": "MasteringBusinessCommunicationWinClientsinfluenceTeams.jpg",
+      "stem": "MasteringBusinessCommunicationWinClientsinfluenceTeams",
+      "url": "assets/Certs/MasteringBusinessCommunicationWinClientsinfluenceTeams.jpg"
+    },
+    {
+      "file": "MasteringEntraID_paid.jpg",
+      "stem": "MasteringEntraID_paid",
+      "url": "assets/Certs/MasteringEntraID_paid.jpg"
+    },
+    {
+      "file": "Meta_React_Coursera.jpeg",
+      "stem": "Meta_React_Coursera",
+      "url": "assets/Certs/Meta_React_Coursera.jpeg"
+    },
+    {
+      "file": "MicrosoftCybersecurityAnalyst.jpg",
+      "stem": "MicrosoftCybersecurityAnalyst",
+      "url": "assets/Certs/MicrosoftCybersecurityAnalyst.jpg"
+    },
+    {
+      "file": "MicrosoftPowerBIDataAnalystCertification_DSA.jpg",
+      "stem": "MicrosoftPowerBIDataAnalystCertification_DSA",
+      "url": "assets/Certs/MicrosoftPowerBIDataAnalystCertification_DSA.jpg"
+    },
+    {
+      "file": "MVCtodoapp_flask_Codesignal.jpg",
+      "stem": "MVCtodoapp_flask_Codesignal",
+      "url": "assets/Certs/MVCtodoapp_flask_Codesignal.jpg"
+    },
+    {
+      "file": "NYFT_ACSS.jpg",
+      "stem": "NYFT_ACSS",
+      "url": "assets/Certs/NYFT_ACSS.jpg"
+    },
+    {
+      "file": "O.AWS_RECAP2026.jpg",
+      "stem": "O.AWS_RECAP2026",
+      "url": "assets/Certs/O.AWS_RECAP2026.jpg"
+    },
+    {
+      "file": "PAWS_Shelter_Visit,_Tour,_and_Cleaning_Certificate.jpg",
+      "stem": "PAWS_Shelter_Visit,_Tour,_and_Cleaning_Certificate",
+      "url": "assets/Certs/PAWS_Shelter_Visit%2C_Tour%2C_and_Cleaning_Certificate.jpg"
+    },
+    {
+      "file": "Prog_JS.jpeg",
+      "stem": "Prog_JS",
+      "url": "assets/Certs/Prog_JS.jpeg"
+    },
+    {
+      "file": "PrototypeFigma.jpg",
+      "stem": "PrototypeFigma",
+      "url": "assets/Certs/PrototypeFigma.jpg"
+    },
+    {
+      "file": "PYTHONASIA2026_COV.jpg",
+      "stem": "PYTHONASIA2026_COV",
+      "url": "assets/Certs/PYTHONASIA2026_COV.jpg"
+    },
+    {
+      "file": "R.P.E_Codesignal.jpg",
+      "stem": "R.P.E_Codesignal",
+      "url": "assets/Certs/R.P.E_Codesignal.jpg"
+    },
+    {
+      "file": "RoutinginReactApplications.jpg",
+      "stem": "RoutinginReactApplications",
+      "url": "assets/Certs/RoutinginReactApplications.jpg"
+    },
+    {
+      "file": "S.E.W.jpg",
+      "stem": "S.E.W",
+      "url": "assets/Certs/S.E.W.jpg"
+    },
+    {
+      "file": "SecuringFlaskToDoAppwithSessionAuthentication_Codesignal.jpg",
+      "stem": "SecuringFlaskToDoAppwithSessionAuthentication_Codesignal",
+      "url": "assets/Certs/SecuringFlaskToDoAppwithSessionAuthentication_Codesignal.jpg"
+    },
+    {
+      "file": "SharpEN_BOP.jpg",
+      "stem": "SharpEN_BOP",
+      "url": "assets/Certs/SharpEN_BOP.jpg"
+    },
+    {
+      "file": "SLC.jpg",
+      "stem": "SLC",
+      "url": "assets/Certs/SLC.jpg"
+    },
+    {
+      "file": "SORTING_ALGO_PYTHON.jpg",
+      "stem": "SORTING_ALGO_PYTHON",
+      "url": "assets/Certs/SORTING_ALGO_PYTHON.jpg"
+    },
+    {
+      "file": "StudyJamsREPO.jpg",
+      "stem": "StudyJamsREPO",
+      "url": "assets/Certs/StudyJamsREPO.jpg"
+    },
+    {
+      "file": "TECH_EVERYWHERE_GDSC_LOYOLA.jpg",
+      "stem": "TECH_EVERYWHERE_GDSC_LOYOLA",
+      "url": "assets/Certs/TECH_EVERYWHERE_GDSC_LOYOLA.jpg"
+    },
+    {
+      "file": "TREES_PYTHON.jpg",
+      "stem": "TREES_PYTHON",
+      "url": "assets/Certs/TREES_PYTHON.jpg"
+    },
+    {
+      "file": "ULLER_UE.jpg",
+      "stem": "ULLER_UE",
+      "url": "assets/Certs/ULLER_UE.jpg"
+    },
+    {
+      "file": "UnderstandingandUsingAPIsinReact.jpg",
+      "stem": "UnderstandingandUsingAPIsinReact",
+      "url": "assets/Certs/UnderstandingandUsingAPIsinReact.jpg"
+    },
+    {
+      "file": "VersionControl.jpeg",
+      "stem": "VersionControl",
+      "url": "assets/Certs/VersionControl.jpeg"
+    },
+    {
+      "file": "WRP_UE.jpg",
+      "stem": "WRP_UE",
+      "url": "assets/Certs/WRP_UE.jpg"
+    },
+    {
+      "file": "YVFC_RCYC.jpg",
+      "stem": "YVFC_RCYC",
+      "url": "assets/Certs/YVFC_RCYC.jpg"
+    }
+  ]
+}
