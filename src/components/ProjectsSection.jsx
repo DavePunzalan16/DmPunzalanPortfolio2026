@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTiltEnhancer } from "@/components/fx/useTiltEnhancer";
 
 const projects = [
     {
@@ -207,9 +208,14 @@ const badgeStyles = {
 export const ProjectsSection = () => {
     const [hovered, setHovered] = useState(null);
     const [showAll, setShowAll] = useState(false);
+    const gridRef = useRef(null);
 
     const INITIAL_COUNT = 6;
     const displayed = showAll ? projects : projects.slice(0, INITIAL_COUNT);
+
+    // Isolated 3D tilt enhancer (desktop + non-reduced-motion only).
+    // Re-runs when the number of shown cards changes (Show more / less).
+    useTiltEnhancer(gridRef, displayed.length);
 
     return (
         <section id="projects" className="py-16 sm:py-20 md:py-24 px-4 relative">
@@ -243,12 +249,13 @@ export const ProjectsSection = () => {
                 </div>
 
                 {/* Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                     {displayed.map((project, key) => {
                         const badge = badgeStyles[project.badge];
                         return (
                             <div
                                 key={key}
+                                data-fx-tilt
                                 onMouseEnter={() => setHovered(key)}
                                 onMouseLeave={() => setHovered(null)}
                                 className={cn(

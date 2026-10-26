@@ -1,5 +1,6 @@
 import { ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
+import { HeroCube } from "@/components/HeroCube";
 
 const roles = [
     "Full Stack Developer",
@@ -49,6 +50,7 @@ export const HeroSection = () => {
             id="hero"
             className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-28 pb-16 sm:pt-24 sm:pb-20"
         >
+            <HeroCube />
             <div className="container max-w-5xl mx-auto z-10">
                 <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
 
