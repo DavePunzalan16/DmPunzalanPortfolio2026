@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Award, ChevronDown, Search, X, Star, ExternalLink } from "lucide-react";
+import { Award, ChevronDown, Search, X, Star, ExternalLink, Images } from "lucide-react";
+import { certImageByTitle, certImageUrl, ITCON_TITLE, ITCON_IMAGES } from "@/data/certImages";
+import { CertLightbox } from "@/components/CertLightbox";
 
 const LINKEDIN_CERTS_URL = "https://www.linkedin.com/in/davematthewpunzalan/details/certifications/";
 
@@ -165,11 +167,57 @@ const IssuerAvatar = ({ issuer }) => {
     );
 };
 
+// Resolve the image URL for a certificate (null → placeholder card).
+const imageForCert = (cert) => {
+    const file = certImageByTitle[cert.title];
+    return file ? certImageUrl(file) : null;
+};
+
+// Card back — shared details (used by normal + ITCON cards).
+const CertBack = ({ cert, colors, extra }) => (
+    <div className="cert-flip__back cert-flip__face bg-card border border-border/60 p-4 flex flex-col text-left">
+        <div className="flex items-start justify-between gap-2 mb-1">
+            <IssuerAvatar issuer={cert.issuer} />
+            <span className={cn("text-xs px-2 py-0.5 rounded-full border font-medium shrink-0", colors.bg, colors.text, colors.border)}>
+                {cert.date}
+            </span>
+        </div>
+        <h4 className="font-semibold text-sm leading-snug mb-1">{cert.title}</h4>
+        <p className="text-xs text-primary mb-1">{cert.issuer}</p>
+        {cert.platform && <p className="text-[11px] text-muted-foreground">Platform: {cert.platform}</p>}
+        {cert.credentialId && <p className="text-[11px] text-muted-foreground">ID: {cert.credentialId}</p>}
+        {cert.skills?.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-2">
+                {cert.skills.map((s) => (
+                    <span key={s} className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary text-foreground/80 border border-border/50">{s}</span>
+                ))}
+            </div>
+        )}
+        <div className="mt-auto pt-3 flex items-center gap-2 flex-wrap">
+            {extra}
+            {cert.credentialUrl && (
+                <a
+                    href={cert.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className={cn("inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-lg", colors.bg, colors.text)}
+                >
+                    <ExternalLink className="h-3 w-3" /> Show credential
+                </a>
+            )}
+        </div>
+    </div>
+);
+
 const CertCard = ({ cert, index }) => {
     const colors = categoryColors[cert.category] || categoryColors["Front-End & Web Dev"];
     const [visible, setVisible] = useState(false);
-    const [hovered, setHovered] = useState(false);
+    const [flipped, setFlipped] = useState(false);
+    const [imgLoaded, setImgLoaded] = useState(false);
+    const [imgError, setImgError] = useState(false);
     const ref = useRef(null);
+    const imgSrc = imageForCert(cert);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -184,80 +232,143 @@ const CertCard = ({ cert, index }) => {
         return () => observer.disconnect();
     }, [index]);
 
+    const toggle = () => setFlipped((f) => !f);
+    const onKeyDown = (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+        else if (e.key === "Escape" && flipped) { e.preventDefault(); setFlipped(false); }
+    };
+    const hoverOn = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(true); };
+    const hoverOff = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(false); };
+
     return (
         <div
             ref={ref}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
             className={cn(
-                "group relative bg-card rounded-2xl border border-border/50 p-5 flex flex-col gap-3",
-                "transition-all duration-500",
-                hovered && `shadow-[0_0_25px_${colors.glow}] border-opacity-80 -translate-y-1`,
+                "cert-flip h-56 transition-all duration-500",
                 visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             )}
-            style={{
-                borderColor: hovered ? colors.dot.replace("bg-", "") : undefined,
-            }}
         >
-            {/* Featured star */}
-            {cert.featured && (
-                <div className="absolute -top-2 -right-2 z-10">
-                    <div className="bg-primary rounded-full p-1 shadow-[0_0_12px_rgba(139,92,246,0.7)] animate-pulse">
-                        <Star className="h-3 w-3 text-primary-foreground fill-primary-foreground" />
-                    </div>
-                </div>
-            )}
-
-            {/* Top row */}
-            <div className="flex items-start justify-between gap-2">
-                <IssuerAvatar issuer={cert.issuer} />
-                <span className={cn(
-                    "text-xs px-2 py-0.5 rounded-full border font-medium shrink-0 ml-auto",
-                    colors.bg, colors.text, colors.border
-                )}>
-                    {cert.date}
-                </span>
-            </div>
-
-            {/* Title & Issuer */}
-            <div className="flex-1 space-y-1">
-                <h4 className={cn(
-                    "font-semibold text-sm leading-snug transition-colors duration-300 line-clamp-2",
-                    hovered ? colors.text : "text-foreground"
-                )}>
-                    {cert.title}
-                </h4>
-                <p className="text-xs text-muted-foreground line-clamp-1">{cert.issuer}</p>
-            </div>
-
-            {/* Bottom row */}
-            <div className="flex items-center justify-between mt-auto pt-2 border-t border-border/40">
-                <span className={cn(
-                    "text-xs px-2 py-0.5 rounded-full border font-medium",
-                    colors.bg, colors.text, colors.border
-                )}>
-                    <span className={cn("inline-block w-1.5 h-1.5 rounded-full mr-1 align-middle", colors.dot)} />
-                    {cert.category.split(" ")[0]}
-                </span>
-
-                {/* View on LinkedIn */}
-                <a
-                    href={LINKEDIN_CERTS_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className={cn(
-                        "flex items-center gap-1 text-xs font-medium transition-all duration-300 px-2 py-1 rounded-lg",
-                        hovered
-                            ? `${colors.bg} ${colors.text} opacity-100`
-                            : "text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-primary"
+            <div
+                role="button"
+                tabIndex={0}
+                aria-pressed={flipped}
+                aria-label={`${cert.title}. Press to ${flipped ? "hide" : "show"} details.`}
+                onClick={toggle}
+                onKeyDown={onKeyDown}
+                onMouseEnter={hoverOn}
+                onMouseLeave={hoverOff}
+                className={cn("cert-flip__inner outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl", flipped && "is-flipped")}
+            >
+                {/* FRONT — image or placeholder */}
+                <div className="cert-flip__front cert-flip__face border border-border/60 bg-card">
+                    {cert.featured && (
+                        <div className="absolute top-2 left-2 z-20">
+                            <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary text-primary-foreground shadow">
+                                <Star className="h-2.5 w-2.5 fill-current" /> Featured
+                            </span>
+                        </div>
                     )}
-                    aria-label="View on LinkedIn"
-                >
-                    <ExternalLink className="h-3 w-3" />
-                    View
-                </a>
+                    {imgSrc && !imgError ? (
+                        <>
+                            {!imgLoaded && <div className="cert-skeleton absolute inset-0" aria-hidden="true" />}
+                            <img
+                                src={imgSrc}
+                                alt={cert.title}
+                                width="400"
+                                height="224"
+                                loading="lazy"
+                                decoding="async"
+                                onLoad={() => setImgLoaded(true)}
+                                onError={() => setImgError(true)}
+                                className="w-full h-full object-cover"
+                            />
+                        </>
+                    ) : (
+                        <div className={cn("w-full h-full flex flex-col items-center justify-center gap-2 p-4 text-center", colors.bg)}>
+                            <Award className={cn("h-8 w-8", colors.text)} />
+                            <span className="text-xs font-medium text-foreground line-clamp-3">{cert.issuer}</span>
+                        </div>
+                    )}
+                    <span className="absolute bottom-2 right-2 z-20 text-[10px] px-2 py-0.5 rounded-full bg-background/80 border border-border text-foreground">
+                        {cert.date}
+                    </span>
+                </div>
+
+                {/* BACK — details */}
+                <CertBack cert={cert} colors={colors} />
             </div>
+        </div>
+    );
+};
+
+// Special ITCON card: stacked-pages front + gallery.
+const ItconCard = ({ cert, index }) => {
+    const colors = categoryColors[cert.category] || categoryColors["Competitions & Events"];
+    const [visible, setVisible] = useState(false);
+    const [flipped, setFlipped] = useState(false);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const ref = useRef(null);
+    const triggerRef = useRef(null);
+    const images = ITCON_IMAGES.map((f) => certImageUrl(f));
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => { if (entry.isIntersecting) setTimeout(() => setVisible(true), (index % 12) * 50); },
+            { threshold: 0.05 }
+        );
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [index]);
+
+    const toggle = () => setFlipped((f) => !f);
+    const onKeyDown = (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+        else if (e.key === "Escape" && flipped) { e.preventDefault(); setFlipped(false); }
+    };
+    const hoverOn = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(true); };
+    const hoverOff = () => { if (window.matchMedia("(hover: hover)").matches) setFlipped(false); };
+    const closeLightbox = () => { setLightboxOpen(false); triggerRef.current?.focus(); };
+
+    return (
+        <div ref={ref} className={cn("cert-flip h-56 transition-all duration-500", visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8")}>
+            <div
+                role="button"
+                tabIndex={0}
+                aria-pressed={flipped}
+                aria-label={`${cert.title}. ${images.length} photos. Press to show details.`}
+                onClick={toggle}
+                onKeyDown={onKeyDown}
+                onMouseEnter={hoverOn}
+                onMouseLeave={hoverOff}
+                className={cn("cert-flip__inner outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl", flipped && "is-flipped")}
+            >
+                {/* FRONT — stacked pages */}
+                <div className="cert-flip__front cert-flip__face cert-stack border border-border/60 bg-card">
+                    <img src={images[0]} alt={cert.title} width="400" height="224" loading="lazy" decoding="async" className="w-full h-full object-cover" />
+                    <span className="absolute top-2 left-2 z-20 inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-background/80 border border-border text-foreground">
+                        <Images className="h-3 w-3" /> {images.length} photos
+                    </span>
+                    <span className="absolute bottom-2 right-2 z-20 text-[10px] px-2 py-0.5 rounded-full bg-background/80 border border-border text-foreground">{cert.date}</span>
+                </div>
+
+                {/* BACK — details + View all */}
+                <CertBack
+                    cert={cert}
+                    colors={colors}
+                    extra={
+                        <button
+                            ref={triggerRef}
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setLightboxOpen(true); }}
+                            className={cn("inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-lg", colors.bg, colors.text)}
+                        >
+                            <Images className="h-3 w-3" /> View all {images.length}
+                        </button>
+                    }
+                />
+            </div>
+
+            {lightboxOpen && <CertLightbox images={images} title={cert.title} onClose={closeLightbox} />}
         </div>
     );
 };
@@ -280,7 +391,7 @@ export const CertificatesSection = () => {
     const displayed = showAll ? filtered : filtered.slice(0, INITIAL_COUNT);
 
     const stats = [
-        { value: `${certificates.length}+`, label: "Certificates" },
+        { value: `${certificates.length}`, label: "Certificates" },
         { value: `${certificates.filter(c => c.featured).length}`, label: "Featured" },
         { value: `${[...new Set(certificates.map(c => c.issuer))].length}+`, label: "Issuers" },
         { value: `${categories.length - 1}`, label: "Categories" },
@@ -400,9 +511,13 @@ export const CertificatesSection = () => {
 
                 {/* Cards Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                    {displayed.map((cert, index) => (
-                        <CertCard key={`${cert.title}-${index}`} cert={cert} index={index} />
-                    ))}
+                    {displayed.map((cert, index) =>
+                        cert.title === ITCON_TITLE ? (
+                            <ItconCard key={`${cert.title}-${index}`} cert={cert} index={index} />
+                        ) : (
+                            <CertCard key={`${cert.title}-${index}`} cert={cert} index={index} />
+                        )
+                    )}
                 </div>
 
                 {/* Empty State */}

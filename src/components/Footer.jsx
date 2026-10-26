@@ -33,6 +33,7 @@ const footerLinks = {
     resources: [
         { name: "GitHub", href: "https://github.com/DavePunzalan16", external: true },
         { name: "LinkedIn", href: "https://www.linkedin.com/in/davematthewpunzalan/", external: true },
+        { name: "🎮 Play a game", href: "#arcade", external: false },
         { name: "Resume", href: "#", external: false },
         { name: "Blog", href: "#", external: false },
     ],
