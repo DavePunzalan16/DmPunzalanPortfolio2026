@@ -18,7 +18,7 @@ const GAMES = [
         icon: "💣",
         description: "2048 with a rare exploding bomb tile + daily seed.",
         controls: "Arrow keys / WASD / swipe",
-        load: null, // coming soon
+        load: () => import("@/components/arcade/Game2048.jsx"),
     },
     {
         id: "plinko",
