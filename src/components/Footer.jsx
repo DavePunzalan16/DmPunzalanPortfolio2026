@@ -1,6 +1,7 @@
-import { ArrowUp, Mail, Search, Heart, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { ArrowUp, Mail, Search, Heart, ArrowUpRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import "@/components/footer.css";
 
 // Inline GitHub icon
 const GitHubIcon = ({ className }) => (
@@ -54,9 +55,25 @@ const socialLinks = [
 export const Footer = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchFocused, setSearchFocused] = useState(false);
-    const [hoveredLink, setHoveredLink] = useState(null);
 
-    const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+    // One-time fade-up stagger when the footer scrolls into view.
+    const rootRef = useRef(null);
+    const [inView, setInView] = useState(
+        () => typeof window !== "undefined" &&
+            !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    );
+    useEffect(() => {
+        const el = rootRef.current;
+        if (!el || inView) return;
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach((e) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } });
+        }, { threshold: 0.12 });
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, [inView]);
+
+    // Hide dead links (href "#" or empty) — Resume and Blog have no destination.
+    const resources = footerLinks.resources.filter((l) => l.href && l.href !== "#");
 
     const filteredNav = footerLinks.navigation.filter((link) => {
         const q = searchQuery.toLowerCase().trim();
@@ -184,34 +201,28 @@ export const Footer = () => {
                     </div>
                 </div>
 
-                {/* Links Grid */}
-                <div className="border-t border-border/50 py-12 px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-                        {/* Brand */}
-                        <div className="sm:col-span-2 lg:col-span-1">
-                            <a href="#hero" className="inline-block mb-4">
-                                <span className="text-xl font-bold text-glow">
-                                    Dave<span className="text-primary">Punzalan</span>
-                                </span>
+                {/* Redesigned footer: left-aligned, compact */}
+                <div ref={rootRef} className={cn("ft-root", inView && "is-in")}>
+                    <div className="ft-grid">
+                        {/* 1 — Brand */}
+                        <div className="ft-col" style={{ "--ft-i": 0 }}>
+                            <a href="#hero" className="ft-brand__logo">
+                                Dave<span className="ft-accent">Punzalan</span>
                             </a>
-                            <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">
+                            <p className="ft-brand__bio">
                                 BS Computer Science graduate building fast, accessible, and visually stunning web experiences with React and modern tech.
                             </p>
-                            <div className="flex gap-3">
+                            <div className="ft-socials">
                                 {socialLinks.map((social) => {
                                     const Icon = social.icon;
+                                    const isHttp = social.href.startsWith("http");
                                     return (
                                         <a
                                             key={social.name}
                                             href={social.href}
-                                            target={social.href.startsWith("http") ? "_blank" : undefined}
-                                            rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                            className={cn(
-                                                "p-2.5 rounded-xl bg-background/80 border border-border",
-                                                "text-foreground/70 hover:text-primary hover:border-primary/30",
-                                                "hover:shadow-[0_0_15px_rgba(139,92,246,0.2)]",
-                                                "transition-all duration-300 hover:scale-110 hover:-translate-y-1"
-                                            )}
+                                            target={isHttp ? "_blank" : undefined}
+                                            rel={isHttp ? "noopener noreferrer" : undefined}
+                                            className="ft-social"
                                             aria-label={social.name}
                                         >
                                             <Icon className="h-4 w-4" />
@@ -219,56 +230,39 @@ export const Footer = () => {
                                     );
                                 })}
                             </div>
+                            <span className="ft-status">
+                                <span className="ft-status__dot" aria-hidden="true" />
+                                Available for opportunities
+                            </span>
                         </div>
 
-                        {/* Navigate */}
-                        <div>
-                            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-                                Navigate
-                            </h4>
-                            <ul className="space-y-3">
+                        {/* 2 — Navigate (two sub-columns) */}
+                        <div className="ft-col" style={{ "--ft-i": 1 }}>
+                            <h4 className="ft-h">Navigate</h4>
+                            <ul className="ft-nav">
                                 {footerLinks.navigation.map((link) => (
                                     <li key={link.name}>
-                                        <a
-                                            href={link.href}
-                                            className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                                            onMouseEnter={() => setHoveredLink(link.name)}
-                                            onMouseLeave={() => setHoveredLink(null)}
-                                        >
-                                            <span className={cn(
-                                                "h-px bg-primary transition-all duration-300",
-                                                hoveredLink === link.name ? "w-4" : "w-0"
-                                            )} />
-                                            {link.name}
-                                        </a>
+                                        <a href={link.href} className="ft-link">{link.name}</a>
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
-                        {/* Resources */}
-                        <div>
-                            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-                                Resources
-                            </h4>
-                            <ul className="space-y-3">
-                                {footerLinks.resources.map((link) => (
+                        {/* 3 — Resources (dead links hidden) */}
+                        <div className="ft-col" style={{ "--ft-i": 2 }}>
+                            <h4 className="ft-h">Resources</h4>
+                            <ul className="ft-list">
+                                {resources.map((link) => (
                                     <li key={link.name}>
                                         <a
                                             href={link.href}
                                             target={link.external ? "_blank" : undefined}
                                             rel={link.external ? "noopener noreferrer" : undefined}
-                                            className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                                            onMouseEnter={() => setHoveredLink(link.name)}
-                                            onMouseLeave={() => setHoveredLink(null)}
+                                            className="ft-link"
                                         >
-                                            <span className={cn(
-                                                "h-px bg-primary transition-all duration-300",
-                                                hoveredLink === link.name ? "w-4" : "w-0"
-                                            )} />
                                             {link.name}
                                             {link.external && (
-                                                <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpRight className="ft-link__ext" size={13} aria-hidden="true" />
                                             )}
                                         </a>
                                     </li>
@@ -276,64 +270,35 @@ export const Footer = () => {
                             </ul>
                         </div>
 
-                        {/* Built With */}
-                        <div>
-                            <h4 className="text-sm font-semibold text-foreground mb-4 uppercase tracking-wider">
-                                Built With
-                            </h4>
-                            <ul className="space-y-3">
+                        {/* 4 — Built with (pill chips) */}
+                        <div className="ft-col" style={{ "--ft-i": 3 }}>
+                            <h4 className="ft-h">Built With</h4>
+                            <div className="ft-chips">
                                 {footerLinks.tech.map((link) => (
-                                    <li key={link.name}>
-                                        <a
-                                            href={link.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="group flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
-                                            onMouseEnter={() => setHoveredLink(link.name)}
-                                            onMouseLeave={() => setHoveredLink(null)}
-                                        >
-                                            <span className={cn(
-                                                "h-px bg-primary transition-all duration-300",
-                                                hoveredLink === link.name ? "w-4" : "w-0"
-                                            )} />
-                                            {link.name}
-                                            <ExternalLink className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        </a>
-                                    </li>
+                                    <a
+                                        key={link.name}
+                                        href={link.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="ft-chip"
+                                    >
+                                        {link.name}
+                                    </a>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Bottom Bar */}
-                <div className="border-t border-border/50 py-6 px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <p className="text-xs sm:text-sm text-muted-foreground flex items-center gap-1">
-                            &copy; {new Date().getFullYear()}{" "}
-                            <span className="font-semibold text-foreground/80">DavePunzalan</span>
-                            . Crafted with{" "}
-                            <Heart className="h-3 w-3 text-red-400 fill-red-400 animate-pulse-subtle inline" />{" "}
-                            and lots of coffee.
-                        </p>
-
-                        <div className="flex items-center gap-4">
-                            <span className="text-xs text-muted-foreground">All rights reserved.</span>
-                            <button
-                                onClick={scrollToTop}
-                                className={cn(
-                                    "group flex items-center gap-2 px-4 py-2 rounded-full",
-                                    "bg-background/80 border border-border",
-                                    "text-sm text-muted-foreground hover:text-primary",
-                                    "hover:border-primary/30 hover:shadow-[0_0_15px_rgba(139,92,246,0.15)]",
-                                    "transition-all duration-300 hover:scale-105"
-                                )}
-                                aria-label="Back to top"
-                            >
-                                <span className="text-xs font-medium">Top</span>
-                                <ArrowUp className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" />
-                            </button>
-                        </div>
+                    {/* Bottom bar */}
+                    <div className="ft-bottom">
+                        <span>
+                            &copy; {new Date().getFullYear()} Dave Matthew S. Punzalan. All rights reserved.
+                        </span>
+                        <span>
+                            Crafted with{" "}
+                            <Heart className="ft-heart" size={13} aria-hidden="true" />{" "}
+                            and lots of coffee
+                        </span>
                     </div>
                 </div>
             </div>
