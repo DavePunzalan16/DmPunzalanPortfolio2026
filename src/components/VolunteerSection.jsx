@@ -205,6 +205,13 @@ const experiences = [
     },
 ];
 
+// Lightweight summary for the Home preview card (no render change).
+// eslint-disable-next-line react-refresh/only-export-components
+export const volunteerSummary = {
+    orgs: experiences.slice(0, 4).map((e) => e.org),
+    count: experiences.length,
+};
+
 export const VolunteerSection = () => {
     const [activeCategory, setActiveCategory] = useState("All");
     const [expanded, setExpanded] = useState(null);

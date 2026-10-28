@@ -44,6 +44,18 @@ const experiences = [
     },
 ];
 
+// Lightweight summary for the Home preview card (no render change). The array
+// holds lucide component refs, so we expose only plain data derived from it.
+// eslint-disable-next-line react-refresh/only-export-components
+export const experienceSummary = {
+    latest: {
+        role: experiences[0].role,
+        org: experiences[0].org,
+        period: experiences[0].period,
+    },
+    count: experiences.length,
+};
+
 export const ExperienceSection = () => {
     return (
         <section id="experience" className="py-16 sm:py-20 md:py-24 px-3 sm:px-4 relative">

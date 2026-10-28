@@ -2,6 +2,7 @@ import { ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { HeroCube } from "@/components/HeroCube";
 import { useCountUp } from "@/hooks/useCountUp";
+import { PreviewGrid } from "@/components/home/PreviewGrid";
 
 // Single stat that counts up once when scrolled into view (Task A).
 const HeroStat = ({ value, label }) => {
@@ -60,8 +61,9 @@ export const HeroSection = () => {
     return (
         <section
             id="hero"
-            className="home-hero relative flex flex-col items-center justify-center px-4 pb-16 sm:pb-20"
+            className="relative flex flex-col px-4 pb-16 sm:pb-20"
         >
+          <div className="home-hero relative w-full">
             <HeroCube />
             <div className="container max-w-5xl mx-auto z-10">
                 <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-8 lg:gap-12">
@@ -202,6 +204,12 @@ export const HeroSection = () => {
                 <span className="text-xs text-primary font-medium tracking-widest uppercase">Scroll</span>
                 <ArrowDown className="h-4 w-4 text-primary" />
             </div>
+          </div>
+
+          {/* Home-only blocks belong to the Home view (shown/hidden with #hero). */}
+          <div className="home-after-hero">
+            <PreviewGrid />
+          </div>
         </section>
     );
 };
