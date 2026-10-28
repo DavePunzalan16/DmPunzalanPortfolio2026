@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { HeroCube } from "@/components/HeroCube";
 import { useCountUp } from "@/hooks/useCountUp";
 import { PreviewGrid } from "@/components/home/PreviewGrid";
+import { TechMarquee } from "@/components/home/TechMarquee";
 
 // Single stat that counts up once when scrolled into view (Task A).
 const HeroStat = ({ value, label }) => {
@@ -207,6 +208,9 @@ export const HeroSection = () => {
           </div>
 
           {/* Home-only blocks belong to the Home view (shown/hidden with #hero). */}
+          <div className="home-after-hero">
+            <TechMarquee />
+          </div>
           <div className="home-after-hero">
             <PreviewGrid />
           </div>

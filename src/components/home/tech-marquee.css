@@ -1,0 +1,73 @@
+/* ============================================================================
+   Tech-stack marquee (Task C). Pure-CSS seamless infinite horizontal strip.
+   Namespaced `mq-`. No JS timers/rAF. Respects prefers-reduced-motion.
+   ============================================================================ */
+
+.mq-wrap {
+    width: 100%;
+    overflow: hidden;
+    /* Edge fade so pills appear/disappear softly at both ends. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* The track holds TWO copies of the list back-to-back (width = 2x content),
+   so translating by -50% loops seamlessly. */
+.mq-track {
+    display: flex;
+    width: max-content;
+    gap: 0.75rem;
+    animation: mq-scroll 40s linear infinite;
+    will-change: transform;
+}
+@keyframes mq-scroll {
+    to { transform: translateX(-50%); }
+}
+
+/* Pause when the user hovers or focuses anything inside the strip. */
+.mq-wrap:hover .mq-track,
+.mq-wrap:focus-within .mq-track {
+    animation-play-state: paused;
+}
+
+.mq-group {
+    display: flex;
+    gap: 0.75rem;
+    padding-right: 0.75rem; /* keep spacing consistent across the seam */
+    flex: 0 0 auto;
+}
+
+.mq-pill {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 9999px;
+    color: hsl(var(--foreground) / 0.82);
+    background: hsl(var(--foreground) / 0.05);
+    border: 1px solid hsl(var(--border));
+}
+
+/* Reduced motion: no animation — a single static wrapped row. */
+@media (prefers-reduced-motion: reduce) {
+    .mq-wrap {
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+    .mq-track {
+        animation: none;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+        row-gap: 0.75rem;
+    }
+    /* Only the first (visible) group wraps; drop the duplicate copy. */
+    .mq-group[aria-hidden="true"] { display: none; }
+    .mq-group {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-right: 0;
+    }
+}
