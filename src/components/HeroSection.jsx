@@ -4,6 +4,7 @@ import { HeroCube } from "@/components/HeroCube";
 import { useCountUp } from "@/hooks/useCountUp";
 import { PreviewGrid } from "@/components/home/PreviewGrid";
 import { TechMarquee } from "@/components/home/TechMarquee";
+import { SpotlightStrip } from "@/components/home/SpotlightStrip";
 
 // Single stat that counts up once when scrolled into view (Task A).
 const HeroStat = ({ value, label }) => {
@@ -212,6 +213,7 @@ export const HeroSection = () => {
             <TechMarquee />
           </div>
           <div className="home-after-hero">
+            <SpotlightStrip />
             <PreviewGrid />
           </div>
         </section>

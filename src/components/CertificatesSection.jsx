@@ -132,6 +132,25 @@ const certificates = [
     { title: "HTML5 Game Development — Lessons and Development Planning", issuer: "Alison", date: "Apr 2025", category: "Competitions & Events", platform: "Online" },
 ];
 
+// Latest certificate for the Home spotlight strip (no render change). Parses the
+// "MMM YYYY" date strings and returns the most recent { title, date }.
+// eslint-disable-next-line react-refresh/only-export-components
+export const latestCertificate = (() => {
+    const MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+    const toValue = (d) => {
+        const m = /^([A-Za-z]{3})\s+(\d{4})$/.exec((d || "").trim());
+        if (!m || !(m[1] in MONTHS)) return null;
+        return parseInt(m[2], 10) * 12 + MONTHS[m[1]];
+    };
+    let best = null;
+    let bestVal = -Infinity;
+    for (const c of certificates) {
+        const v = toValue(c.date);
+        if (v !== null && v > bestVal) { bestVal = v; best = c; }
+    }
+    return best ? { title: best.title, date: best.date } : null;
+})();
+
 const IssuerAvatar = ({ issuer }) => {
     const logoUrl = Object.entries(issuerLogos).find(([key]) =>
         issuer.toLowerCase().includes(key.toLowerCase())
