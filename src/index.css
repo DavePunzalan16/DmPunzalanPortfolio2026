@@ -650,6 +650,14 @@ section[id="location"] {
   justify-content: center;
 }
 
+/* Remove the leftover outlined rectangle around the hero heading: the paged-view
+   layer sets tabindex="-1" + programmatically .focus()es each view's heading,
+   which paints a focus ring on #hero h1. Suppress it for programmatic (mouse)
+   focus only; real keyboard focus-visible rings elsewhere are untouched. */
+section[id="hero"] h1:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* (4) The block that follows the hero content starts directly after it with
    consistent spacing (no dead gap). */
 .home-after-hero {

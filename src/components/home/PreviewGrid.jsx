@@ -9,7 +9,7 @@ import { PreviewCard } from "@/components/home/PreviewCard";
 import { useCountUp } from "@/hooks/useCountUp";
 import "@/components/home/preview-grid.css";
 
-import { skills, SKILL_STATUS } from "@/data/skills";
+import { skills } from "@/data/skills";
 import { experienceSummary } from "@/components/ExperienceSection";
 import { volunteerSummary } from "@/components/VolunteerSection";
 import { featuredProject } from "@/components/ProjectsSection";
@@ -85,6 +85,38 @@ const LazyImg = ({ src, alt, width, height, fallback }) => {
     );
 };
 
+// Email as copy-on-click text (does not navigate the card — stopPropagation).
+const CopyEmail = ({ email }) => {
+    const [copied, setCopied] = useState(false);
+    const onClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+            navigator.clipboard?.writeText(email);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1400);
+        } catch {
+            /* clipboard unavailable — ignore */
+        }
+    };
+    return (
+        <button type="button" className="pv-contact__email" onClick={onClick} title="Click to copy">
+            {copied ? "Copied!" : email}
+        </button>
+    );
+};
+
+// Big certificate count that counts up once when scrolled into view.
+const CertCount = ({ total }) => {
+    const [ref, display] = useCountUp(`${total}`);
+    return (
+        <div className="pv-cert__meta">
+            <span ref={ref} className="pv-cert__num">{display}</span>
+            <span className="pv-cert__label">certificates earned</span>
+        </div>
+    );
+};
+
 // Volunteer count-up (uses the shared hook; falls back to "11+").
 const VolunteerCount = () => {
     const count = volunteerSummary?.count;
@@ -125,6 +157,37 @@ export const PreviewGrid = () => {
         return () => obs.disconnect();
     }, []);
 
+    // Cursor-glow: ONE delegated, rAF-throttled pointermove on the grid sets
+    // --mx/--my (px, relative to the hovered card). No per-card listeners, no
+    // re-renders. Hover-capable + fine-pointer devices only.
+    useEffect(() => {
+        const el = gridRef.current;
+        if (!el || typeof window === "undefined" || !window.matchMedia) return;
+        if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+        let frame = 0;
+        let lastEvt = null;
+        const apply = () => {
+            frame = 0;
+            const e = lastEvt;
+            if (!e) return;
+            const card = e.target.closest?.(".pv-card");
+            if (!card) return;
+            const r = card.getBoundingClientRect();
+            card.style.setProperty("--mx", `${(e.clientX - r.left).toFixed(1)}px`);
+            card.style.setProperty("--my", `${(e.clientY - r.top).toFixed(1)}px`);
+        };
+        const onMove = (e) => {
+            lastEvt = e;
+            if (!frame) frame = requestAnimationFrame(apply);
+        };
+        el.addEventListener("pointermove", onMove, { passive: true });
+        return () => {
+            el.removeEventListener("pointermove", onMove);
+            if (frame) cancelAnimationFrame(frame);
+        };
+    }, []);
+
     const chosenSkills = pickSkills();
     const chosenCerts = pickCerts();
     const certTotal = Array.isArray(certManifest) ? certManifest.length : 0;
@@ -134,7 +197,8 @@ export const PreviewGrid = () => {
     return (
         <section className="pv-section" aria-label="Quick navigate preview cards">
             <div className="pv-head">
-                <h2 className="pv-title">Quick Navigate</h2>
+                <span className="pv-eyebrow">Explore</span>
+                <h2 className="pv-title">Quick <span className="pv-title__grad">Navigate</span></h2>
                 <p className="pv-subtitle">A quick peek at everything. Click any card to dive in.</p>
             </div>
 
@@ -170,15 +234,11 @@ export const PreviewGrid = () => {
                 <PreviewCard href="#skills" icon={Code2} title="Skills" caption="Core tools I build with" index={1}>
                     {chosenSkills.length > 0 ? (
                         <div className="pv-skills">
-                            {chosenSkills.map((s, i) => {
-                                const dotClass = SKILL_STATUS?.[s.status]?.dot || "bg-primary";
-                                return (
-                                    <span key={s.name} className="pv-skill" style={{ "--pv-si": i }}>
-                                        <span className={`pv-skill__dot ${dotClass}`} aria-hidden="true" />
-                                        {s.name}
-                                    </span>
-                                );
-                            })}
+                            {chosenSkills.map((s, i) => (
+                                <span key={s.name} className="pv-skill" style={{ "--pv-si": i }}>
+                                    {s.name}
+                                </span>
+                            ))}
                         </div>
                     ) : (
                         <p className="pv-card__caption">Skills coming soon.</p>
@@ -253,33 +313,37 @@ export const PreviewGrid = () => {
                     href="#certificates"
                     icon={Award}
                     title="Certificates"
-                    caption={<><span className="pv-cert__count">{certTotal}</span> certificates earned</>}
+                    caption="View every credential"
                     index={5}
                     wide
+                    certSpin
                 >
-                    {chosenCerts.length > 0 ? (
-                        <div className="pv-cert__stack">
-                            {chosenCerts.map((c, i) => (
-                                <span key={c.file || i} className={`pv-cert__img pv-cert__img--${i}`}>
-                                    <LazyImg
-                                        src={c.url}
-                                        alt={c.stem || "Certificate"}
-                                        width={180}
-                                        height={135}
-                                        fallback={<span className="pv-cert__fallback">{c.stem || "Certificate"}</span>}
-                                    />
-                                </span>
-                            ))}
-                        </div>
-                    ) : (
-                        <p className="pv-card__caption">Certificates coming soon.</p>
-                    )}
+                    <div className="pv-cert">
+                        <CertCount total={certTotal} />
+                        {chosenCerts.length > 0 ? (
+                            <div className="pv-cert__stack">
+                                {chosenCerts.map((c, i) => (
+                                    <span key={c.file || i} className={`pv-cert__img pv-cert__img--${i}`}>
+                                        <LazyImg
+                                            src={c.url}
+                                            alt={c.stem || "Certificate"}
+                                            width={180}
+                                            height={135}
+                                            fallback={<span className="pv-cert__fallback">{c.stem || "Certificate"}</span>}
+                                        />
+                                    </span>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="pv-card__caption">Certificates coming soon.</p>
+                        )}
+                    </div>
                 </PreviewCard>
 
                 {/* 7 — Contact */}
                 <PreviewCard href="#contact" icon={Mail} title="Contact" caption="Let's build something together" index={6}>
                     <div>
-                        <div className="pv-contact__email">{EMAIL}</div>
+                        <CopyEmail email={EMAIL} />
                         <span className="pv-contact__cta">Let's talk</span>
                         <div className="pv-contact__socials">
                             <a

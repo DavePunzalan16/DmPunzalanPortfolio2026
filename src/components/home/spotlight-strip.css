@@ -1,45 +1,52 @@
 /* ============================================================================
-   Spotlight strip (Task D). Thin row of up to 3 mini stat chips near the
-   preview grid. Namespaced `sp-`. Only renders chips whose data exists.
-   Uses confirmed tokens; respects prefers-reduced-motion.
+   Spotlight strip (Task D, polished). ONE centered glass pill bar holding up
+   to 3 highlight items separated by 1px dividers. Namespaced `sp-`. Only
+   renders chips whose data exists. Confirmed tokens only; reduced-motion safe.
    ============================================================================ */
 
-.sp-strip {
+.sp-wrap {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 0.6rem;
     width: 100%;
     max-width: 72rem;
     margin-inline: auto;
     padding-inline: 1rem;
-    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+    margin-bottom: clamp(1.25rem, 3vw, 2rem);
 }
 
+/* Single rounded glass container. */
+.sp-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    border-radius: 999px;
+    border: 1px solid hsl(var(--border));
+    background: linear-gradient(180deg, hsl(var(--card) / 0.75), hsl(var(--card) / 0.45));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.06), 0 10px 28px -16px rgb(0 0 0 / 0.5);
+    padding: 0.2rem 0.4rem;
+    max-width: 100%;
+}
+
+/* Each item: padding + a 1px left divider (not on the first). */
 .sp-chip {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.45rem 0.9rem;
-    border-radius: 9999px;
-    border: 1px solid hsl(var(--border));
-    background: hsl(var(--card));
+    padding: 0.5rem 1.1rem;
     color: hsl(var(--foreground));
     font-size: 0.8rem;
     text-decoration: none;
-    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 999px;
+    transition: background 0.2s ease;
 }
+.sp-chip + .sp-chip { box-shadow: -1px 0 0 hsl(var(--border)); }
 
-/* Interactive (anchor) chip affordance. */
-a.sp-chip:hover {
-    border-color: hsl(var(--primary) / 0.5);
-    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.2);
-    transform: translateY(-1px);
-}
-a.sp-chip:focus-visible {
-    outline: 2px solid hsl(var(--primary));
-    outline-offset: 2px;
-}
+a.sp-chip:hover { background: hsl(var(--primary) / 0.1); }
+a.sp-chip:focus-visible { outline: 2px solid hsl(var(--primary)); outline-offset: 2px; }
 
 .sp-chip__dot {
     width: 0.5rem;
@@ -55,17 +62,17 @@ a.sp-chip:focus-visible {
     50% { box-shadow: 0 0 0 5px hsl(var(--primary) / 0.28); }
 }
 
-.sp-chip__label {
-    color: hsl(var(--foreground) / 0.6);
-    font-weight: 500;
-}
-.sp-chip__value {
-    color: hsl(var(--foreground));
-    font-weight: 600;
-}
+.sp-chip__label { color: hsl(var(--foreground) / 0.6); font-weight: 500; }
+.sp-chip__value { color: hsl(var(--foreground)); font-weight: 600; }
 .sp-chip__value--accent { color: hsl(var(--primary)); }
+
+/* Mobile: stack vertically, dividers become horizontal. */
+@media (max-width: 640px) {
+    .sp-bar { flex-direction: column; border-radius: 1.25rem; width: 100%; }
+    .sp-chip { width: 100%; justify-content: center; }
+    .sp-chip + .sp-chip { box-shadow: 0 -1px 0 hsl(var(--border)); }
+}
 
 @media (prefers-reduced-motion: reduce) {
     .sp-chip__dot { animation: none; }
-    a.sp-chip:hover { transform: none; }
 }

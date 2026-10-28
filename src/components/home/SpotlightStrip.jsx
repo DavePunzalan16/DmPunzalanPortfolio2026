@@ -71,8 +71,10 @@ export const SpotlightStrip = () => {
     if (chips.length === 0) return null;
 
     return (
-        <div className="sp-strip" role="list" aria-label="Portfolio highlights">
-            {chips}
+        <div className="sp-wrap">
+            <div className="sp-bar" role="list" aria-label="Portfolio highlights">
+                {chips}
+            </div>
         </div>
     );
 };

@@ -22,10 +22,13 @@ export const TechMarquee = () => {
     );
 
     return (
-        <div className="mq-wrap" aria-label="Tech stack" role="group">
-            <div className="mq-track">
-                {renderGroup(false)}
-                {renderGroup(true)}
+        <div className="mq-outer">
+            <span className="mq-label">Tech I use</span>
+            <div className="mq-wrap" aria-label="Tech stack" role="group">
+                <div className="mq-track">
+                    {renderGroup(false)}
+                    {renderGroup(true)}
+                </div>
             </div>
         </div>
     );
