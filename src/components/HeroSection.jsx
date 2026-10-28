@@ -1,6 +1,18 @@
 import { ArrowDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { HeroCube } from "@/components/HeroCube";
+import { useCountUp } from "@/hooks/useCountUp";
+
+// Single stat that counts up once when scrolled into view (Task A).
+const HeroStat = ({ value, label }) => {
+    const [ref, display] = useCountUp(value);
+    return (
+        <div className="text-center lg:text-left">
+            <div ref={ref} className="text-2xl font-bold text-primary">{display}</div>
+            <div className="text-xs text-muted-foreground">{label}</div>
+        </div>
+    );
+};
 
 const roles = [
     "Full Stack Developer",
@@ -48,7 +60,7 @@ export const HeroSection = () => {
     return (
         <section
             id="hero"
-            className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-28 pb-16 sm:pt-24 sm:pb-20"
+            className="home-hero relative flex flex-col items-center justify-center px-4 pb-16 sm:pb-20"
         >
             <HeroCube />
             <div className="container max-w-5xl mx-auto z-10">
@@ -88,10 +100,7 @@ export const HeroSection = () => {
                                 { value: "11+", label: "Org Roles" },
                                 { value: "3+", label: "Years Active" },
                             ].map((stat, i) => (
-                                <div key={i} className="text-center lg:text-left">
-                                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
-                                    <div className="text-xs text-muted-foreground">{stat.label}</div>
-                                </div>
+                                <HeroStat key={i} value={stat.value} label={stat.label} />
                             ))}
                         </div>
                         <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2 opacity-0 animate-fade-in-delay-4">
@@ -143,6 +152,8 @@ export const HeroSection = () => {
                     </div>
                     <div className="shrink-0 opacity-0 animate-fade-in-delay-2">
                         <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80">
+                            {/* Subtle animated gradient glow behind the photo (Task A, additive). */}
+                            <span className="home-hero-glow" aria-hidden="true" />
                             {/* Local keyframes so the orbit always spins regardless of Tailwind's spin utility. */}
                             <style>{`@keyframes heroOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
                             <div

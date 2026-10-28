@@ -74,6 +74,12 @@
     --primary: 250 47% 60%;
     --primary-foreground: 210 40% 98%;
     --border: 214 32% 91%;
+
+    /* Fixed-navbar clearance (Task A). Measured: Navbar.jsx is position:fixed,
+       py-4 (32px) at rest / py-2.5 (20px) scrolled, with a 40px icon button that
+       dominates content height → ~60-72px at rest. 64px is a safe clearance
+       value (>= the tallest navbar state) so no section starts under the bar. */
+    --nav-h: 64px;
   }
 
   .dark {
@@ -610,4 +616,70 @@
 @media (prefers-reduced-motion: reduce) {
   .view-paged .view-animate { animation: none; }
   .view-nav a:hover { transform: none; }
+}
+
+/* ─── Home layout fixes (Task A) ─────────────────────────────────────────── */
+/* (1) Navbar offset for EVERY view section: scroll-margin-top so anchor landing
+   (native scroll fallback when ENABLE_PAGED_VIEWS=false) never hides a heading
+   under the fixed navbar. Scoped to the exact section ids (no bare `section{}`).
+   Also covers the sub-sections that live inside a view (#arcade,#location, …). */
+section[id="hero"],
+section[id="about"],
+section[id="beyond-the-code"],
+section[id="skills"],
+section[id="experience"],
+section[id="volunteer"],
+section[id="projects"],
+section[id="certificates"],
+section[id="arcade"],
+section[id="community"],
+section[id="contact"],
+section[id="location"] {
+  scroll-margin-top: var(--nav-h);
+}
+
+/* (3) Hero fills the screen minus the navbar; content vertically centered.
+   vh first as a fallback, then svh override for mobile browser chrome. */
+.home-hero {
+  min-height: calc(100vh - var(--nav-h));
+  min-height: calc(100svh - var(--nav-h));
+  padding-top: var(--nav-h);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* (4) The block that follows the hero content starts directly after it with
+   consistent spacing (no dead gap). */
+.home-after-hero {
+  margin-top: clamp(48px, 8vw, 96px);
+  width: 100%;
+}
+
+/* (5a) Subtle animated gradient glow behind the profile photo. Absolutely
+   positioned BEHIND the photo wrapper; primary-tinted; slow opacity/scale. */
+.home-hero-glow {
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    hsl(var(--primary) / 0.45),
+    hsl(var(--primary) / 0.12) 45%,
+    transparent 70%
+  );
+  filter: blur(26px);
+  opacity: 0.55;
+  animation: home-hero-glow-pulse 7s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+@keyframes home-hero-glow-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.92); }
+  50% { opacity: 0.7; transform: scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-glow { animation: none; opacity: 0.5; transform: none; }
 }
